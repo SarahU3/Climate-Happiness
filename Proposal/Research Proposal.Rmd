@@ -65,7 +65,11 @@ Most recently, @goetzke2015 expand on the ideas of @vanpraag2005, @mackerron2009
 
 
 ## Data
+The data for the project will be supplied by a mixture of sources. The first layer of the analysis builds on the individual-level data taken from the longitudinal German Socio-Economic Survey (GSOEP) from 1984 to 2013. The German Institute for Economic Research (DIW Berlin) supplied the main GSOEP dataset (reduced in size due to the data restrictions and confidentiality). The variables included in the dataset cover life satisfaction, gender, age, family status, education, employment, income, health, and environmental perception of the respondents across the German federal states. All the names of the variables are available in the GSOEP codebook. The number of the observations in the original dta file is 192,841. 
 
+The second layer of the analysis requires data on GHG emissions by the Federal State. While the data on country-level is widely available, the information per state is limited, especially in a user-friendly format. The report conducted by the German Environmental Agency (Umwelt Bundesamt), ["Submission under the United Nations Framework Convention on Climate Change and the Kyoto Protocol 2014"] (http://www.umweltbundesamt.de/publikationen/submission-under-the-united-nations-framework), has the necessary indicators on state GHG emissions from 1990 to 2012 in a PDF format, which will be transformed for the project. 
+
+Another alternative for the information could the Statista Database that distinguishes information on state emissions for the same time period, but in a table format. An example of the Statista webpage can be found [here] (http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/).
 
 ## Bibliography
 #References
