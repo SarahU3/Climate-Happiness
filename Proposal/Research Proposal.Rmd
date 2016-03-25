@@ -18,7 +18,7 @@ To examine this question, we will look at data from Germany. Germany is a leader
 
 > *H1: Bundeslaender with higher emissions will have lower reported levels of health, well-being, or life satisfaction.* 
 
-We will also investigate whether there is a time component to perceptions of life satisfaction and well-being. Germany's emissions have been reduced since 1990, though reductions have stagnated recently. Using data going back to 1990, and again using emissions as the independent variable of primary interest, our second hypothesis is:
+We will also investigate whether there is a time component to perceptions of life satisfaction and well-being. This is important because, as explained in more depth in the literature review, there is a possibe endogeneity problem. Individuals may be unhappy with more pollution, but unhappy individuals may be bothered more by pollution. Germany's emissions have been reduced since 1990, though reductions have stagnated recently. By tracking responses over time, we hope to tell if there is a time component: do changes in emissions precede changes in life satisfaction? There are some studies that have used a time series approach, but not many have done so a a country level. Using German emissions and happiness data going back to 1990, our second hypothesis is:
 
 > *H2: Reported levels of health, well-being or life satisfaction will reflect changes in emissions in line with hypothesis above, i.e. as emissions decline, reported levels of health, well-being, and life satisfaction will rise.* 
 
