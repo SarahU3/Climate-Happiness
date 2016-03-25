@@ -51,9 +51,14 @@ The second layer of the analysis requires data on GHG emissions by the Federal S
 
 Another alternative for the same information could the Statista Database that distinguishes information on state carob dioxide emissions for the same time period, but in a table format. An example of the Statista webpage can be found [here](http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/).
 
-Individual-level data, such as emissions from primary energy consumption per capita in each Federal State, are available from 1995 to 2012 at the [Working Group on Environmental-Economic Accounting of the Länder]( http://www.ugrdl.de/tab34.htm). Although these numbers are listed in a convenient table and would be a better match for the individual levels of happiness, the data is cross-sectional for each five years, which leaves gaps for other variables. 
+Other state indicators, such as per capita emissions from primary energy consumption and air quality, are available from 1995 to 2012 at the [Working Group on Environmental-Economic Accounting of the Länder]( http://www.ugrdl.de/tab34.htm). Although these numbers are listed in a convenient table and would be a better match for the individual levels of happiness, the data is cross-sectional for each five years, which leaves gaps for other variables. 
 
-Evidently, there are several options for the data sources. The final model used for the analysis will determine the specific information type for GHG emissions, the necessary format, and the data frame. The minimum starting year of the analysis will have to be later than 1990 after the German reunification.  
+Evidently, there are several options for the data sources. The final model used for the analysis will determine the specific information type for GHG emissions, the necessary format, and the data frame. The minimum starting year of the analysis will have to be later than 1990 after the German reunification.
+
+
+## Methodology
+The analysis will focus on a mixture of two levels of interest: *the individual* - e.g. the socioeconomic status of the respondent, gender, age, and the *Federal State* - e.g. reported emissions and perceived of air quality. In order to account for such clustering and track differences between the German States, multilevel modelling will be applied in this project. Given approach, unlike the traditional multivariate regression, will partition the residual variance into a between-state component (the variance of the state-level residuals) and a within-state component (the variance of the individual-level residuals). Such grouping will produce more robust and reliable results, which could be potentially inferred to a larger population. Therefore, multilevel modelling is preferred over a fixed effects model, which cannot separate out effects due to observes and unobserved characteristics. 
+  
 
 
 
