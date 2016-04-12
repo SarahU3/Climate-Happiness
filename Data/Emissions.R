@@ -43,11 +43,11 @@ for (i in all_files) {
 # Add file directory as needed
 export(all_subbed, file = 'Emissions_cleaned.csv')
 
-# EXTRA: Cleaning individual file
-data <- read.xlsx2(all_files[3], sheetIndex=2, startRow=6, header=FALSE)
-colnames(data) <- c("Year", "Emissions")
-test <- read.xlsx(all_files[3], sheetIndex=2, startRow=3, colIndex=2:2, endRow=3, header=FALSE)
-data$Bundesland <- paste(test[1,1]) #create a new column with same values for all rows
+# # EXTRA: Cleaning individual file
+# data <- read.xlsx2(all_files[3], sheetIndex=2, startRow=6, header=FALSE)
+# colnames(data) <- c("Year", "Emissions")
+# test <- read.xlsx(all_files[3], sheetIndex=2, startRow=3, colIndex=2:2, endRow=3, header=FALSE)
+# data$Bundesland <- paste(test[1,1]) #create a new column with same values for all rows
 
 # 5. Extract missing info on NRW, while also modifying the excel file (see Appendix 1)
 library(XML)
@@ -59,4 +59,10 @@ export(Gase.table, file = 'Gase.csv')
 # 6. Merging files
 NRW <- read.csv('NRW.csv', header=TRUE)
 general <- rbind(all_subbed, NRW)
-export(general, file="General.csv")
+
+# 7. Cleaning up names
+install.packages('gsubfn')
+library(gsubfn)
+Final <- as.data.frame(sapply(general, gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012|\\**",replacement=""))
+export(Final, file="Final.csv") ## has no extra words
+                                ## | means "and", //is used for special characteristics such as *
