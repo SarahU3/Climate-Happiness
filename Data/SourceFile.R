@@ -16,13 +16,20 @@ URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=ind
 # but manually downloaded Excel spreadsheets
 messynrgprime <- read.xlsx('~/GitHub/Climate-Happiness/Data/export_land_primary.xlsx', 1, startRow = 4, endRow = 21)
 messynrgelec <- read.xlsx('~/GitHub/Climate-Happiness/Data/export_land_strom.xlsx', 1, startRow = 4, endRow = 21)
+messynrguse <- read.xlsx('~/GitHub/Climate-Happiness/Data/export_land_energyuse.xlsx', 1, startRow = 4, endRow = 21)
 
 # convert K.D. (keine Daten) to NA
 NAs <- messynrgelec == "K.D."
 is.na(messynrgelec)[NAs] <- TRUE
+NAs2 <- messynrgprime == "K.D."
+is.na(messynrgprime)[NAs2] <- TRUE
+NAs3 <- messynrguse == "K.D."
+is.na(messynrguse)[NAs3] <- TRUE
 
 # transform to numeric values, need to correct decimal places and loop but major issue: , instead of .
 transform(messynrgelec, X1990 = as.numeric(X1990))
 
 # convert data to tidy format (one variable per column) currently doesn't work bc they're not numerical
-tidyNRGprime <- gather(messynrgelec, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
+NRGprime <- gather(messynrgprime, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
+NRGelec <- gather(messynrgelec, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
+NRGuse <- gather(messynrguse, year, percentrenewable, 2:26, na.rm = FALSE, convert = TRUE)
