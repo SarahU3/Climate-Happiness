@@ -63,6 +63,11 @@ general <- rbind(all_subbed, NRW)
 # 7. Cleaning up names
 install.packages('gsubfn')
 library(gsubfn)
-Final <- as.data.frame(sapply(general, gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012|\\**",replacement=""))
+Final <- as.data.frame(sapply(general, 
+                              gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012| bis 2010| bis 2011|\\**",replacement=""))
 export(Final, file="Final.csv") ## has no extra words
                                 ## | means "and", //is used for special characteristics such as *
+
+# 8. Make sure Bundeslander match
+emissions <- as.data.frame(levels(Final$State))
+export(emissions, file="C:\\Users\\meerim\\Desktop\\emissions.csv")

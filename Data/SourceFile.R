@@ -33,3 +33,20 @@ transform(messynrgelec, X1990 = as.numeric(X1990))
 NRGprime <- gather(messynrgprime, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
 NRGelec <- gather(messynrgelec, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
 NRGuse <- gather(messynrguse, year, percentrenewable, 2:26, na.rm = FALSE, convert = TRUE)
+
+# Matching labels
+colnames(NRGelec) <- c("State", "Year", "PercentRenewable")
+colnames(NRGprime) <- c("State", "Year", "PercentRenewable")
+colnames(NRGuse) <- c("State", "Year", "PercentRenewable")
+NRG <- rbind(NRGprime, NRGelec, NRGuse)
+
+install.packages('gsubfn')
+library(gsubfn)
+
+NRG.final <- as.data.frame(sapply(NRG, gsub, pattern="X",replacement=""))
+export(NRG.final, file="NRG.final.csv") 
+
+# Make sure Bundeslander match
+nrg <- as.data.frame(levels(NRG.final$State))
+export(nrg, file="C:\\Users\\meerim\\Desktop\\nrg.csv")
+# All states should match except the observations for Deutschland - maybe we should drop them out.
