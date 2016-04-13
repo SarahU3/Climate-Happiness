@@ -8,7 +8,7 @@ library(tidyr)      # tool for reshaping, though not actually done here
 
 
 # 2. Setting the directory to the folder with files on the local machine
-setwd("C:\\Users\\meerim\\Documents\\GitHub\\Climate-Happiness\\emissions")
+setwd('~\\GitHub\\Climate-Happiness\\Data\\emissions')
 all_files <- list.files(pattern=".xlsx")
 all_subbed <- NULL
 
