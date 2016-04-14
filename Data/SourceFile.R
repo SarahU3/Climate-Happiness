@@ -3,17 +3,21 @@
 
 # load packages
 library(dplyr)
+library(car) #scatterplots with panel data
 library(httr)
-library(foreign)
+library(foreign) #to read .dta files
 library(rJava)
 library(xlsxjars)
 library(xlsx)
 library(ggplot2)
-library(tidyr)
+library(tidyr) #
 library(repmis)
 library(rio)
 library(xml2)
 library(rvest)
+library(psych) #multilevel analysis
+library(plm) #panel data regression
+library(gsubfn) #replacing characters
 
 # get data on renewable energy in Bundeslaender
 getwd()
@@ -58,8 +62,7 @@ export(NRG.final, file="NRG.final.csv")
 
 ### R-script for cleaning and merging excel files for CO2 emissions ###
 
-# 1. Setting the directory to the folder with files on the local machine
-getwd()
+# 1. Merging files using file name pattern
 
 all_files <- list.files(pattern="statistic_id")
 all_subbed <- NULL
@@ -122,20 +125,23 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 
 ### R-Script for Merging GSOEP, Emissions and Energy files
 
-### R-script for merging excel files for emissions, renewables and gsoep data ###
-
+#1. Tranforming GSOEP dta file to csv for merging
 
 GSOEP = read.dta("SOEP_short12.dta")
-#And then you simply write it to CSV
+
+#2. And then you simply write it to CSV
 
 write.csv(GSOEP, file = "GSOEP.csv", row.names = FALSE)
 
+#3. Read all files to be merged together
 emissions = read.csv("Emissions_Final.csv")
 GSOEP = read.csv("GSOEP.csv")
 energy = read.csv("NRG.final.csv")
 
+#4. Merge all 3 files together using State and Year as unique IDs
 alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,energy,by=c("Year","State"))
 
+#5. export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
 
