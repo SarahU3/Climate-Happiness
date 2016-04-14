@@ -8,7 +8,7 @@ library(tidyr)      # tool for reshaping, though not actually done here
 
 
 # 2. Setting the directory to the folder with files on the local machine
-setwd('~\\GitHub\\Climate-Happiness\\Data\\emissions')
+setwd("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/emissions")
 all_files <- list.files(pattern=".xlsx")
 all_subbed <- NULL
 
@@ -71,3 +71,4 @@ export(Final, file="Final.csv") ## has no extra words
 # 8. Make sure Bundeslander match
 emissions <- as.data.frame(levels(Final$State))
 export(emissions, file="C:\\Users\\meerim\\Desktop\\emissions.csv")
+
