@@ -1,6 +1,6 @@
 *** Clean-up for R ***
 clear
-use "C:\Users\meerim\Documents\GitHub\Climate-Happiness\Data\GSOEP\SOEP_Meerim_12.dta"
+use "C:\Users\meerim\Documents\GitHub\Climate-Happiness\Data\SOEP_Meerim_12.dta"
 count
 * 192,841 individual-years 
 
