@@ -27,9 +27,18 @@ names(data)
 data.frame(data)
 boxplot(Emissions~State,
   data=data,
-  main="Different boxplots for each month",
-  xlab="Month Number",
-  ylab="Degree Fahrenheit",
+  main="Emissions by State",
+  xlab="State",
+  ylab="Emissions",
+  col="orange",
+  border="brown"
+)
+
+boxplot(Satisfaction~State,
+  data=data,
+  main="Satisfaction by State",
+  xlab="State",
+  ylab="Satisfaction (1-10)",
   col="orange",
   border="brown"
 )
