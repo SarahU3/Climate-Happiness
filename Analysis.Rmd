@@ -9,6 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r setup, include=FALSE}
+install.packages("psych")
+library(ggplot2)
+library(psych)
+```
+
+
 ```{r, include=FALSE}
 # Run main analysis
 source("/Analysis_Source_Code.R")
@@ -23,6 +30,12 @@ summary(data)
 ```
 
 ```{r, echo=FALSE}
+aggregate(formula=Satisfaction~Emissions+Year+State, data=data, FUN=mean)
+
+data[data$State=="Berlin", ]
+```
+
+```{r, echo=FALSE}
 names(data)
 data.frame(data)
 boxplot(Emissions~State,
@@ -30,16 +43,52 @@ boxplot(Emissions~State,
   main="Emissions by State",
   xlab="State",
   ylab="Emissions",
-  col="orange",
-  border="brown"
+  col="royalblue1",
+  border="royalblue4"
 )
+```
 
+```{r, echo=FALSE}
 boxplot(Satisfaction~State,
   data=data,
   main="Satisfaction by State",
   xlab="State",
   ylab="Satisfaction (1-10)",
-  col="orange",
-  border="brown"
+  col="royalblue1",
+  border="royalblue4"
 )
+```
+
+```{r, echo=FALSE}
+qplot(data$State, data$Emissions, geom = "boxplot", main = "MPG by Transmission Type", xlab = "Transmission", ylab = "MPG", fill = factor(data$State)) + guides(fill=FALSE)
+```
+
+```{r, echo=FALSE}
+library(foreign)
+Panel <- read.csv("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/AllMergedData.csv")
+library(car)
+scatterplot(Satisfaction~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE, data=Panel)
+```
+
+
+```{r, echo=FALSE}
+#Fixed effects using Least squares dummy variable model
+fixed.dum <-lm(Satisfaction ~ Emissions + factor(State) - 1, data=Panel)
+summary(fixed.dum)
+
+#Least squares dummy variable model
+yhat <- fixed.dum$fitted
+library(car)
+scatterplot(yhat~Panel$Satisfaction|Panel$State,boxplots=FALSE, xlab="Satisfaction", ylab="yhat",smooth=FALSE)
+abline(lm(Panel$y~Panel$Satisfaction),lwd=3,col="red")
+ 
+#Random Effects (Using PLM)
+install.packages("plm")
+library(plm)
+random <-plm(Satisfaction~Emissions+State, data=Panel, model = "random")
+summary(random)
+
+
+year.dum <-lm(Satisfaction ~ Emissions + factor(Year) - 1, data=Panel)
+summary(year.dum)
 ```
