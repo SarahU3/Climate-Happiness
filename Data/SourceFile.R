@@ -39,7 +39,8 @@ NRGuse <- gather(messynrguse, year, percentrenewable, 2:26, na.rm = FALSE, conve
 colnames(NRGelec) <- c("State", "Year", "PercentRenewable")
 colnames(NRGprime) <- c("State", "Year", "PercentRenewable")
 colnames(NRGuse) <- c("State", "Year", "PercentRenewable")
-NRG <- rbind(NRGprime, NRGelec, NRGuse)
+NRG <- merge(NRGprime, NRGelec, by=c("Year","State"))
+NRG <- merge(NRG, NRGuse, by=c("Year","State"))
 
 install.packages('gsubfn')
 library(gsubfn)

@@ -9,7 +9,7 @@ install.packages("foreign")
 library(foreign)
 
 emissions = read.csv("Data/emissions/Final.csv")
-GSOEP = read.dta("Data/GSOEP/SOEP_short12.dta")
+GSOEP = read.csv("GSOEP.csv")
 energy = read.csv("Data/emissions/NRG.final.csv")
 
 fulldata = merge(emissions, GSOEP)
