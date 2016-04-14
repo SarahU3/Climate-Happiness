@@ -20,10 +20,10 @@ Basic statistics
 
 ```{r descr, echo=FALSE}
 summary(data)
-desc(data)
 ```
 
 ```{r, echo=FALSE}
+names(data)
 boxplot(State~plh0182,
   data=data,
   main="Different boxplots for each month",
