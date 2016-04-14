@@ -53,3 +53,4 @@ nrg <- as.data.frame(levels(NRG.final$State))
 export(nrg, file="nrg.csv")
 # All states should match except the observations for Deutschland - maybe we should drop them out.
 
+
