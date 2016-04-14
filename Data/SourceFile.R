@@ -13,6 +13,7 @@ library(rvest)
 
 # get data on renewable energy in Bundeslaender
 URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi'
+setwd("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/Data/emissions")
 # but manually downloaded Excel spreadsheets
 messynrgprime <- read.xlsx('~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/Data/export_land_primary.xlsx', 1, startRow = 4, endRow = 21)
 messynrgelec <- read.xlsx('~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/Data/export_land_strom.xlsx', 1, startRow = 4, endRow = 21)
@@ -48,6 +49,6 @@ export(NRG.final, file="NRG.final.csv")
 
 # Make sure Bundeslander match
 nrg <- as.data.frame(levels(NRG.final$State))
-export(nrg, file="C:\\Users\\meerim\\Desktop\\nrg.csv")
+export(nrg, file="nrg.csv")
 # All states should match except the observations for Deutschland - maybe we should drop them out.
 
