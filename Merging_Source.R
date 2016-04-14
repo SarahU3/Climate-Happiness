@@ -1,5 +1,6 @@
 ### R-script for merging excel files for emissions, renewables and gsoep data ###
 
+
 install.packages("foreign")
 library(foreign)
 
@@ -12,8 +13,11 @@ emissions = read.csv("Data/emissions/Final.csv")
 GSOEP = read.csv("GSOEP.csv")
 energy = read.csv("Data/emissions/NRG.final.csv")
 
-alldata <- merge(emissions,GSOEP,by=c("Year","State"))
-alldata = merge(alldata,energy,by=c("Year","State"))
+alldata <- merge(emissions,energy,by=c("Year","State"))
+finalmerge = merge(alldata,GSOEP,by=c("Year","State"))
+
+levels(data$State)
 
 export(alldata, file="All_Merged_Data.csv")
+
 
