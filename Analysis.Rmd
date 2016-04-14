@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Run main analysis
 source("/Analysis_Source_Code.R")
 
-data <- read.csv("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/All_Merged_Data.csv")
+data <- read.csv("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/AllMergedData.csv")
 ```
 
 Basic statistics
@@ -24,7 +24,8 @@ summary(data)
 
 ```{r, echo=FALSE}
 names(data)
-boxplot(State~plh0182,
+data.frame(data)
+boxplot(Emissions~State,
   data=data,
   main="Different boxplots for each month",
   xlab="Month Number",
