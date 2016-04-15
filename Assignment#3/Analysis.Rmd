@@ -1,5 +1,5 @@
 ---
-title: "Analysis"
+title: "Assignment #3"
 author: "Katie Levesque, Sarah Unbehaun, Meerim Ruslanova"
 date: "April 14, 2016"
 output: html_document
