@@ -68,7 +68,7 @@ scatterplot(Satisfaction~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE
 
 #Declare X and Y variables for panel data
 Y1<-cbind(satis_labels)
-X1<-cbind(emissions, Use, concerned)
+X1<-cbind(emissions, Use, concerned)#needs to be updated based on updatedvariable list
 
 #set data as panel data
 pdataind<-plm.data(data, index=c("PID","Year"))
@@ -77,30 +77,35 @@ summary(X1)
 summary(Y1)
 
 #pooled OLS estimator
-poolingind<-plm(Y1~X1, data=pdataind, model="pooling")
-summary(pooling)
+L1<-plm(Y1~X1, data=pdataind, model="pooling")
+summary(L1)
 
 #between estimator
-betweenind<-plm(Y1~X1, data=pdataind, model="between")
-summary(between)
+L2<-plm(Y1~X1, data=pdataind, model="between")
+summary(L2)
 
 #first difference estimator
-firstdiffind<-plm(Y1~X1, data=pdataind, model="fd")
-summary(firstdiff)
+L3<-plm(Y1~X1, data=pdataind, model="fd")
+summary(L3)
 
 #fixed effects or within estimator
-within<-plm(Y1~X1, data=pdataind, model="within")
+L4<-plm(Y1~X1, data=pdataind, model="within")
+summary(L4)
 
 #LM test for fixed effects vs OLS
 pFtest(fixed,pooling)
+
+stargazer::stargazer(L1, L2, L3, L4, covariate.labels = labels,
+    title = 'Regression Estimates of Life Satisfaction',
+    digits = 2, type = 'html')
 ```
 
-```{r descr, echo=FALSE}
+```{r, echo=FALSE}
 ##Regression using State level data
 
 #Declare X and Y variables for panel data
 Y2<-cbind(satis_labels)
-X2<-cbind(emissions, Use, concerned)
+X2<-cbind(emissions, Use, concerned)#needs to be updated based on updatedvariable list
 
 #set data as panel data
 pdatastate<-plm.data(data, index=c("State","Year"))
@@ -109,25 +114,75 @@ summary(X2)
 summary(Y2)
 
 #pooled OLS estimator
-poolingstate<-plm(Y2~X2, data=pdatastate, model="pooling")
-summary(poolingstate)
+L5<-plm(Y2~X2, data=pdatastate, model="pooling")
+summary(L5)
 
 #between estimator
-betweenstate<-plm(Y2~X2, data=pdatastate, model="between")
-summary(betweenstate)
+L6<-plm(Y2~X2, data=pdatastate, model="between")
+summary(L6)
 
 #first difference estimator
-firstdiffstate<-plm(Y2~X2, data=pdatastate, model="fd")
-summary(firstdiffstate)
+L7<-plm(Y2~X2, data=pdatastate, model="fd")
+summary(L7)
 
 #fixed effects or within estimator
-withinstate<-plm(Y2~X2, data=pdatastate, model="within")
-summary(withinstate)
+L8<-plm(Y2~X2, data=pdatastate, model="within")
+summary(L8)
 
 #LM test for fixed effects vs OLS
 pFtest(fixed,pooling)
 
 #Likelihood ratio test determining which model fits better
-lrtest(fixed,pooling)  
+lrtest(fixed,pooling) 
+
+stargazer::stargazer(L5, L6, L7, L8, covariate.labels = labels,
+    title = 'Logistic Regression Estimates of Grad School Acceptance',
+    digits = 2, type = 'html')
 ```
 
+```{r descr, echo=FALSE}
+#Find the range pf emissions values to create a 95% confidence interval for between regression
+range(satis_lables$Emissions)
+Emissions_range<-1:17 #need to fix this range
+
+#extract point estimates and co-variance matrix
+L6_coef <- matrix(coef(L6))
+L6_vcov <- vcov(L6)
+
+#draw 1000 simulations of the point estimates
+library(MASS) # contains the mvrnorm function
+drawn <- mvrnorm(n = 1000, mu = L6_coef, Sigma = L6_vcov) %>% 
+            data.frame
+head(drawn)[1:3, ]
+
+drawn_sim <- merge(drawn, Emissions_range)
+
+# Rename the fitted value variable
+drawn_sim <- dplyr::rename(drawn_sim, fitted_emissions = y)
+
+nrow(drawn)
+nrow(drawn_sim)
+
+#calculate the quantity of interest 
+names(drawn_sim)
+drawn_sim$sim_wc <- drawn_sim[, 1] + drawn_sim[, 2] * drawn_sim[, 5] + 
+                        drawn_sim[, 3]
+
+#plot points
+ggplot(drawn_sim, aes(fitted_emissions, sim_wc)) + 
+        geom_point(alpha = 0.2) + stat_smooth(se = FALSE) +
+        theme_bw()
+
+# Find 95% central interval and median at each fitted value of edu
+central <- drawn_sim %>% group_by(fitted_emissions) %>%
+            summarise(median_sim = median(sim_wc),
+                      lower_95 = quantile(sim_wc, probs = 0.025),
+                      upper_95 = quantile(sim_wc, probs = 0.975)
+            )
+
+#plot 95% confidence interval
+ggplot(central, aes(fitted_emissions, median_sim)) +
+    geom_ribbon(aes(ymin = lower_95, ymax = upper_95), alpha = 0.3) +
+    geom_line() + theme_bw()
+
+```
