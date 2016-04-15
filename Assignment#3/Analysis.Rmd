@@ -18,35 +18,6 @@ attach(data)
 
 Basic statistics
 
-```{r descr, echo=FALSE}
-#Declare X and Y variables for panel data
-Y<-cbind(satis_labels)
-X<-cbind(emissions, Use, concerned)
-
-#set data as panel data
-pdata<-plm.data(data, index=c("PID","Year"))
-
-summary(X)
-summary(Y)
-
-#pooled OLS estimator
-pooling<-plm(Y~X, data=pdata, model="pooling")
-summary(pooling)
-
-#between estimator
-between<-plm(Y~X, data=pdata, model="between")
-summary(between)
-
-#first difference estimator
-firstdiff<-plm(Y~X, data=pdata, model="fd")
-summary(firstdiff)
-
-#fixed effects or within estimator
-within<-plm(Y~X, data=pdata, model="within")
-
-levels(data$State)
-```
-
 ```{r, echo=FALSE}
 aggregate(formula=Satisfaction~Emissions+Year+State, data=data, FUN=mean)
 
@@ -54,9 +25,11 @@ data[data$State=="Berlin", ]
 ```
 
 ```{r, echo=FALSE}
+
+#Boxplot of emissions levels by state
 names(data)
 data.frame(data)
-boxplot(Emissions~State,
+boxplot(emissions~State,
   data=data,
   main="Emissions by State",
   xlab="State",
@@ -67,6 +40,7 @@ boxplot(Emissions~State,
 ```
 
 ```{r, echo=FALSE}
+#Boxplot of life satisfaction by state
 boxplot(satis~State,
   data=data,
   main="Satisfaction by State",
@@ -78,36 +52,82 @@ boxplot(satis~State,
 ```
 
 ```{r, echo=FALSE}
-qplot(data$State, data$Emissions, geom = "boxplot", main = "MPG by Transmission Type", xlab = "Transmission", ylab = "MPG", fill = factor(data$State)) + guides(fill=FALSE)
+qplot(data$State, data$Emissions, geom = "boxplot", main = "Emissions by State", xlab = "State", ylab = "Emissions", fill = factor(data$State)) + guides(fill=FALSE)
 ```
 
 ```{r, echo=FALSE}
 library(foreign)
-Panel <- read.csv("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness-Repository/AllMergedData.csv")
 library(car)
+#panel data scatterplot of aggregate state satisfaction over years
 scatterplot(Satisfaction~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE, data=Panel)
 ```
 
 
 ```{r, echo=FALSE}
-#Fixed effects using Least squares dummy variable model
-fixed.dum <-lm(Satisfaction ~ Emissions + factor(State) - 1, data=Panel)
-summary(fixed.dum)
+##Regression using individual level data
 
-#Least squares dummy variable model
-yhat <- fixed.dum$fitted
-library(car)
-scatterplot(yhat~Panel$Satisfaction|Panel$State,boxplots=FALSE, xlab="Satisfaction", ylab="yhat",smooth=FALSE)
-abline(lm(Panel$y~Panel$Satisfaction),lwd=3,col="red")
- 
-#Random Effects (Using PLM)
-install.packages("plm")
-library(plm)
-random <-plm(Satisfaction~Emissions+State, data=Panel, model = "random")
-summary(random)
+#Declare X and Y variables for panel data
+Y1<-cbind(satis_labels)
+X1<-cbind(emissions, Use, concerned)
 
+#set data as panel data
+pdataind<-plm.data(data, index=c("PID","Year"))
 
-year.dum <-lm(Satisfaction ~ Emissions + factor(Year) - 1, data=Panel)
-summary(year.dum)
+summary(X1)
+summary(Y1)
+
+#pooled OLS estimator
+poolingind<-plm(Y1~X1, data=pdataind, model="pooling")
+summary(pooling)
+
+#between estimator
+betweenind<-plm(Y1~X1, data=pdataind, model="between")
+summary(between)
+
+#first difference estimator
+firstdiffind<-plm(Y1~X1, data=pdataind, model="fd")
+summary(firstdiff)
+
+#fixed effects or within estimator
+within<-plm(Y1~X1, data=pdataind, model="within")
+
+#LM test for fixed effects vs OLS
+pFtest(fixed,pooling)
+```
+
+```{r descr, echo=FALSE}
+##Regression using State level data
+
+#Declare X and Y variables for panel data
+Y2<-cbind(satis_labels)
+X2<-cbind(emissions, Use, concerned)
+
+#set data as panel data
+pdatastate<-plm.data(data, index=c("State","Year"))
+
+summary(X2)
+summary(Y2)
+
+#pooled OLS estimator
+poolingstate<-plm(Y2~X2, data=pdatastate, model="pooling")
+summary(poolingstate)
+
+#between estimator
+betweenstate<-plm(Y2~X2, data=pdatastate, model="between")
+summary(betweenstate)
+
+#first difference estimator
+firstdiffstate<-plm(Y2~X2, data=pdatastate, model="fd")
+summary(firstdiffstate)
+
+#fixed effects or within estimator
+withinstate<-plm(Y2~X2, data=pdatastate, model="within")
+summary(withinstate)
+
+#LM test for fixed effects vs OLS
+pFtest(fixed,pooling)
+
+#Likelihood ratio test determining which model fits better
+lrtest(fixed,pooling)  
 ```
 
