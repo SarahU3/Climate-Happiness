@@ -101,7 +101,7 @@ stargazer(L1, L2, L3, L4,
 
 #Declare X and Y variables for panel data
 Y2<-cbind(satis_labels)
-X2<-cbind(emissions, Use, concerned)#needs to be updated based on updatedvariable list
+X2<-cbind(Emissions, Use, environ, gender, age)
 
 #set data as panel data
 pdatastate<-plm.data(data, index=c("State","Year"))
@@ -139,8 +139,8 @@ stargazer(L5, L6, L7, L8,
 
 ```{r descr, echo=FALSE}
 #Find the range pf emissions values to create a 95% confidence interval for between regression
-range(satis_lables$Emissions)
-Emissions_range<-1:17 #need to fix this range
+range(satis)
+Satisfaction_range<-1:4 #need to fix this range
 
 #extract point estimates and co-variance matrix
 L6_coef <- matrix(coef(L6))
