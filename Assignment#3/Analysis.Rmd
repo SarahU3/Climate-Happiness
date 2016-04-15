@@ -13,12 +13,36 @@ source("SourceFile.R")
 
 ```{r, include=FALSE}
 data <- read.csv("All_Merged_Data.csv")
+attach(data)
 ```
 
 Basic statistics
 
 ```{r descr, echo=FALSE}
-summary(data)
+#Declare X and Y variables for panel data
+Y<-cbind(satis_labels)
+X<-cbind(emissions, Use, concerned)
+
+#set data as panel data
+pdata<-plm.data(data, index=c("PID","Year"))
+
+summary(X)
+summary(Y)
+
+#pooled OLS estimator
+pooling<-plm(Y~X, data=pdata, model="pooling")
+summary(pooling)
+
+#between estimator
+between<-plm(Y~X, data=pdata, model="between")
+summary(between)
+
+#first difference estimator
+firstdiff<-plm(Y~X, data=pdata, model="fd")
+summary(firstdiff)
+
+#fixed effects or within estimator
+within<-plm(Y~X, data=pdata, model="within")
 
 levels(data$State)
 ```
