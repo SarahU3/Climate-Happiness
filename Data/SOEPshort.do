@@ -1,6 +1,6 @@
 *** Clean-up for R ***
 clear
-use "C:\Users\meerim\Documents\GitHub\Climate-Happiness\Data\SOEP_Meerim_12.dta"
+use "/Users/katielevesque/Desktop/SOEP_Meerim_12.dta"
 count
 * 192,841 individual-years 
 
@@ -94,6 +94,5 @@ sort Year State pid
 
 xtset pid Year
 
-save "C:\Users\meerim\Documents\GitHub\Climate-Happiness\Data\GSOEP\SOEP_short12.dta", replace
-
+save "/Users/katielevesque/Desktop/SOEP_short12.dta", replace
 

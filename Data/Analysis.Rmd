@@ -5,12 +5,6 @@ date: "April 14, 2016"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-source("SourceFile.R")
-```
-
-
 ```{r, include=FALSE}
 data <- read.csv("All_Merged_Data.csv")
 attach(data)
@@ -19,7 +13,7 @@ attach(data)
 Basic statistics
 
 ```{r, echo=FALSE}
-aggregate(formula=Satisfaction~Emissions+Year+State, data=data, FUN=mean)
+aggregate(formula=satis_labels~Emissions+Year+State, data=data, FUN=mean)
 
 data[data$State=="Berlin", ]
 ```
@@ -29,7 +23,7 @@ data[data$State=="Berlin", ]
 #Boxplot of emissions levels by state
 names(data)
 data.frame(data)
-boxplot(emissions~State,
+boxplot(Emissions~State,
   data=data,
   main="Emissions by State",
   xlab="State",
@@ -45,7 +39,7 @@ boxplot(satis~State,
   data=data,
   main="Satisfaction by State",
   xlab="State",
-  ylab="Satisfaction (1-10)",
+  ylab="Satisfaction (1-4)",
   col="royalblue1",
   border="royalblue4"
 )
@@ -59,7 +53,7 @@ qplot(data$State, data$Emissions, geom = "boxplot", main = "Emissions by State",
 library(foreign)
 library(car)
 #panel data scatterplot of aggregate state satisfaction over years
-scatterplot(Satisfaction~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE, data=Panel)
+scatterplot(satis~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE, data=data)
 ```
 
 
@@ -68,10 +62,10 @@ scatterplot(Satisfaction~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE
 
 #Declare X and Y variables for panel data
 Y1<-cbind(satis_labels)
-X1<-cbind(emissions, Use, concerned)#needs to be updated based on updatedvariable list
+X1<-cbind(Emissions, Use, environ, gender, age)
 
 #set data as panel data
-pdataind<-plm.data(data, index=c("PID","Year"))
+pdataind<-plm.data(data, index=c("pid","Year"))
 
 summary(X1)
 summary(Y1)
@@ -93,11 +87,13 @@ L4<-plm(Y1~X1, data=pdataind, model="within")
 summary(L4)
 
 #LM test for fixed effects vs OLS
-pFtest(fixed,pooling)
+pFtest(L2,L1)
 
-stargazer::stargazer(L1, L2, L3, L4, covariate.labels = labels,
+library(stargazer)
+stargazer(L1, L2, L3, L4,
     title = 'Regression Estimates of Life Satisfaction',
-    digits = 2, type = 'html')
+    digits = 2, type = 'html'
+    )
 ```
 
 ```{r, echo=FALSE}
@@ -130,14 +126,15 @@ L8<-plm(Y2~X2, data=pdatastate, model="within")
 summary(L8)
 
 #LM test for fixed effects vs OLS
-pFtest(fixed,pooling)
+pFtest(L5,L6)
 
 #Likelihood ratio test determining which model fits better
 lrtest(fixed,pooling) 
 
-stargazer::stargazer(L5, L6, L7, L8, covariate.labels = labels,
-    title = 'Logistic Regression Estimates of Grad School Acceptance',
-    digits = 2, type = 'html')
+stargazer(L5, L6, L7, L8,
+    title = 'Regression Estimates of Life Satisfaction',
+    digits = 2, type = 'html'
+    )
 ```
 
 ```{r descr, echo=FALSE}
