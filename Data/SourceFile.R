@@ -18,10 +18,9 @@ library(rvest)
 library(psych) #multilevel analysis
 library(plm) #panel data regression
 library(gsubfn) #replacing characters
-
-# get data on renewable energy in Bundeslaender
 getwd()
-
+setwd('~/GitHub/Climate-Happiness/Data')
+# get data on renewable energy in Bundeslaender
 URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi'
 # but manually downloaded Excel spreadsheets
 messynrgprime <- read.xlsx("export_land_primary.xlsx", 1, startRow = 4, endRow = 21)
@@ -53,8 +52,6 @@ colnames(NRGuse) <- c("State", "Year", "Use")
 NRG <- merge(NRGprime, NRGelec, by=c("Year","State"))
 NRG2 <- merge(NRG, NRGuse, by=c("Year","State"))
 
-install.packages('gsubfn')
-library(gsubfn)
 
 NRG.final <- as.data.frame(sapply(NRG2, gsub, pattern="X",replacement=""))
 export(NRG.final, file="NRG.final.csv") 
@@ -116,8 +113,6 @@ NRW <- read.csv('NRW.csv', header=TRUE) #original file was amended by combining 
 general <- rbind(all_subbed, NRW)
 
 # 6. Cleaning up names
-install.packages('gsubfn')
-library(gsubfn)
 Final <- as.data.frame(sapply(general, 
                               gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012| bis 2010| bis 2011|\\**",replacement=""))
 export(Final, file="Emissions_Final.csv") ## has no extra words
