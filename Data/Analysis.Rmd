@@ -6,6 +6,8 @@ output: html_document
 ---
 
 ```{r, include=FALSE}
+setwd('~/GitHub/Climate-Happiness/Data')
+source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
 data <- read.csv("All_Merged_Data.csv")
 attach(data)
 ```
@@ -13,6 +15,8 @@ attach(data)
 Basic statistics
 
 ```{r, echo=FALSE}
+SumState <- summary(State)
+SumStateTable <- kable(SumState, caption = "Number of Observations by State", col.names = "State, Number")
 aggregate(formula=satis_labels~Emissions+Year+State, data=data, FUN=mean)
 
 data[data$State=="Berlin", ]
@@ -23,14 +27,19 @@ data[data$State=="Berlin", ]
 #Boxplot of emissions levels by state
 names(data)
 data.frame(data)
-boxplot(Emissions~State,
+boxplot(Emissions~LandCode,
   data=data,
   main="Emissions by State",
   xlab="State",
-  ylab="Emissions",
+  ylab="Emissions (annual tons of CO2 per capita)",
   col="royalblue1",
   border="royalblue4"
 )
+```
+
+```{r, echo=FALSE}
+# Line graph of emissions levels by state over time
+ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_line() + scale_colour_discrete() +labs(y = "Emissions (annual tons of CO2 per capita)")
 ```
 
 ```{r, echo=FALSE}
@@ -50,8 +59,7 @@ qplot(data$State, data$Emissions, geom = "boxplot", main = "Emissions by State",
 ```
 
 ```{r, echo=FALSE}
-library(foreign)
-library(car)
+
 #panel data scatterplot of aggregate state satisfaction over years
 scatterplot(satis~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE, data=data)
 ```
