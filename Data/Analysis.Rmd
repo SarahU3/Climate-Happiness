@@ -15,8 +15,8 @@ attach(data)
 Basic statistics
 
 ```{r, echo=FALSE}
-SumState <- summary(State)
-SumStateTable <- kable(SumState, caption = "Number of Observations by State", col.names = "State, Number")
+summary(State)
+
 aggregate(formula=satis_labels~Emissions+Year+State, data=data, FUN=mean)
 
 data[data$State=="Berlin", ]
