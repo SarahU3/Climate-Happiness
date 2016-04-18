@@ -137,6 +137,9 @@ energy = read.csv("NRG.final.csv")
 alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,GSOEP,by=c("Year","State"))
 
+# add column for numerical Land code
+finaldata$LandCode[finaldata$State == 'Baden-WÃ¼rttemberg'] <- 20228
+
 #5. export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
 
