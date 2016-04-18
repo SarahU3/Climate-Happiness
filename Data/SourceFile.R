@@ -137,6 +137,10 @@ energy = read.csv("NRG.final.csv")
 alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,GSOEP,by=c("Year","State"))
 
+# convert State variable into numeric
+Stateid <- factor(finaldata$State, levels=c(levels(finaldata$State)))
+finaldata$Stateid <- c(as.numeric(Stateid))
+
 # add numeric Land code
 finaldata$LandCode[finaldata$State == 'Baden-WÃ¼rttemberg'] <- 20228
 
