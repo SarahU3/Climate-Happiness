@@ -21,7 +21,6 @@ library(plm) #panel data regression
 library(gsubfn) #replacing characters
 library(multilevel) # multilevel analysis
 library(nlme) # GLM models
-library(C) # GLS models
 
 getwd()
 setwd('~/GitHub/Climate-Happiness/Data')
