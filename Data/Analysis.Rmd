@@ -1,9 +1,31 @@
 ---
-title: "Assignment #3"
+title: 'Assignment #3'
 author: "Katie Levesque, Sarah Unbehaun, Meerim Ruslanova"
 date: "April 14, 2016"
-output: html_document
+output: pdf_document
 ---
+
+## Quick recap
+
+This project aims to investigate the relationship between happiness levels across German Federal States (Bundeslaender) and among individuals over the time horizon from 1990 to 2012. More specifically, this projects explores whether the state level emissions, as well as personal characteristics, affect life satisfaction of German citizens? The hypotheses state: 
+
+> *H1: Bundeslaender with higher emissions will have lower reported levels of health, well-being, or life satisfaction.* 
+
+> *H2: Reported levels of health, well-being or life satisfaction will reflect changes in emissions in line with hypothesis above, i.e. as emissions decline, reported levels of health, well-being, and life satisfaction will rise.*
+
+
+## Data
+
+The individual-level data is provided by the German Socio-Economic Panel Data [GSOEP]( https://paneldata.org/) conducted by the German Institute for Economic Research [DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html). Due to the confidentiality restrictions, DIW could only supply a shortened sample with prior specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The original GSOEP file is cleaned and transformed into a shorter dataset with the help of the State Do-File. The short dataset contains the information on the main variables: reported levels of life satisfaction (on a scale from 0 to 10), subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. Detailed labels and description of the variables are given in the GSOEP codebook. Likewise, all GSOEP related files are stored on the GitHub server. 
+
+The state-level data, on the other hand, is gathered from three web-based sources: State Initiative for Core Indicators [LIKI](http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi), [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm) and Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010). 
+
+A university subscription to *Statista.com* enabled access to historic state emissions from 1990 to 2012 for most of the Bundeslaender except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW was slightly involved more intensive research and data handling. Finally, the NRW annual emissions were gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted Carbon dioxide tons per capita). Hence, the yielded data frame of emissions is comprehensive and consistent, although there are missing observations on some years. 
+
+Simultaneously, the state efforts to curb their emissions and preserve local environment are reflected in their renewable energy indicators. This information is measured in percentage of renewables in the annual primary energy consumption, final energy consumption, and electricity consumption. The indicators had to be downloaded manually from *LIKI* in three separate excel files, which later on were cleaned, transformed and reshaped into suitable data frames in R. 
+
+After the names of the Bundeslaender and the time frame of the three produced data frames match, they are easily merged in R into a final data set. 
+
 
 ```{r, include=FALSE}
 setwd('~/GitHub/Climate-Happiness/Data')
@@ -12,7 +34,7 @@ data <- read.csv("All_Merged_Data.csv")
 attach(data)
 ```
 
-Basic statistics
+## Descriptive Statistics
 
 ```{r, echo=FALSE}
 summary(State)
@@ -27,7 +49,7 @@ data[data$State=="Berlin", ]
 #Boxplot of emissions levels by state
 names(data)
 data.frame(data)
-boxplot(Emissions~LandCode,
+boxplot(Emissions~State,
   data=data,
   main="Emissions by State",
   xlab="State",
@@ -48,7 +70,7 @@ boxplot(satis~State,
   data=data,
   main="Satisfaction by State",
   xlab="State",
-  ylab="Satisfaction (1-4)",
+  ylab="Satisfaction (0-10)",
   col="royalblue1",
   border="royalblue4"
 )
@@ -201,3 +223,6 @@ ggplot(central, aes(fitted_satisfaction, median_sim)) +
     geom_line() + theme_bw()
 
 ```
+
+## Multilevel analysis
+

@@ -1,13 +1,7 @@
-install.packages("multilevel")
-library(multilevel)
-install.packages('nlme')
-library(nlme)
-install.packages('C')
-library(C)
 
 setwd('~/GitHub/Climate-Happiness/Data')
 source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
-attach(finaldata)
+attach(data)
 Null.Model<-lme(satis~1,random=~1|Stateid,data=data,
                   control=list(opt="optim"))
 VarCorr(Null.Model)
