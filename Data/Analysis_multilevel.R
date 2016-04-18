@@ -1,7 +1,7 @@
 
 setwd('~/GitHub/Climate-Happiness/Data')
 source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
-attach(data)
+attach(finaldata)
 Null.Model<-lme(satis~1,random=~1|Stateid,data=data,
                   control=list(opt="optim"))
 VarCorr(Null.Model)
