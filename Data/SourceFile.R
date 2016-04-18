@@ -12,20 +12,23 @@ library(xlsx)
 library(ggplot2)
 library(tidyr) #
 library(repmis)
-library(rio)
+library(rio) # export files from R
+library(xml) # read URL links
 library(xml2)
 library(rvest)
 library(psych) #multilevel analysis
 library(plm) #panel data regression
 library(gsubfn) #replacing characters
+
 getwd()
 setwd('~/GitHub/Climate-Happiness/Data')
 # get data on renewable energy in Bundeslaender
 URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi'
+elements <- read.csv(file.path("f:", "elements.csv"))
 # but manually downloaded Excel spreadsheets
-messynrgprime <- read.xlsx("export_land_primary.xlsx", 1, startRow = 4, endRow = 21)
-messynrgelec <- read.xlsx("export_land_strom.xlsx", 1, startRow = 4, endRow = 21)
-messynrguse <- read.xlsx("export_land_energyuse.xlsx", 1, startRow = 4, endRow = 21)
+messynrgprime <- read.xlsx(file.path("Energy", "export_land_primary.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
+messynrgelec <- read.xlsx(file.path("Energy","export_land_strom.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
+messynrguse <- read.xlsx(file.path("Energy","export_land_energyuse.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
 
 # convert K.D. (keine Daten) to NA
 tidynrguse <- as.data.frame(sapply(messynrguse, 
@@ -61,7 +64,7 @@ export(NRG.final, file="NRG.final.csv")
 
 # 1. Merging files using file name pattern
 
-all_files <- list.files(pattern="statistic_id")
+all_files <- list.files(path='Emissions', pattern="statistic_id")
 all_subbed <- NULL
 
 # 2. Cleaning in a loop
@@ -102,7 +105,6 @@ export(all_subbed, file = 'Emissions_cleaned.csv')
 # data$Bundesland <- paste(test[1,1]) #create a new column with same values for all rows
 
 # 4. Extract missing info on NRW, while also modifying the excel file (see Appendix 1)
-library(XML)
 all.link <- 'http://www.ugrdl.de/tab34.htm'
 Gase.table = readHTMLTable(all.link, header=T, which=1, stringsAsFactors=F)
 names(Gase.table) <- c("State", "1990", "1995", "2000", "2005", "2010", "2011", "2011*", "2012")
@@ -121,8 +123,7 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 ### R-Script for Merging GSOEP, Emissions and Energy files
 
 #1. Tranforming GSOEP dta file to csv for merging
-
-GSOEP = read.dta("SOEP_short12.dta")
+GSOEP = read.dta(file.path("GSOEP", "SOEP_short12.dta"))
 
 #2. And then you simply write it to CSV
 
