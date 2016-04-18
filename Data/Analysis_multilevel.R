@@ -2,12 +2,15 @@ install.packages("multilevel")
 library(multilevel)
 install.packages('nlme')
 library(nlme)
+install.packages('C')
+library(C)
 
 setwd('~/GitHub/Climate-Happiness/Data')
 source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
-data <- read.csv("All_Merged_Data.csv")
-attach(data)
-Null.Model<-lme(satis~1,random=~1|State,data=data,
+attach(finaldata)
+numdata <- transform(finaldata,Stateid=as.numeric(factor(State)))
+attach(numdata)
+Null.Model<-lme(satis~1,random=~1|Stateid,data=data,
                   control=list(opt="optim"))
 VarCorr(Null.Model)
 
@@ -19,4 +22,5 @@ Null.Model.2<-gls(satis~1,data=data,
                     control=list(opt="optim"))
 logLik(Null.Model.2)*-2
 logLik(Null.Model)*-2
+sigtest <- (logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2) #variation is significant
 anova(Null.Model,Null.Model.2)
