@@ -1,11 +1,9 @@
 
 ```{r, echo=FALSE}
-library(spacetime)
-library(ISOcodes)
 
 data <- read.csv("All_Merged_Data.csv")
 attach(data)
-
+library(googleVis)
 geoChartDE <- list(region="DE", 
                    resolution="provinces",
                    legend="{numberFormat:'#,###.00'}") 
@@ -72,11 +70,6 @@ Other state indicators, such as per capita emissions from primary energy consump
 The analysis will focus on a mixture of two levels of interest: *the individual* - e.g. the socioeconomic status of the respondent, gender, age, and the *Federal State* - e.g. reported emissions and perceived of air quality. In order to account for such clustering and track differences between the German States, multilevel modelling will be applied in this project. Given approach, unlike the traditional multivariate regression, will partition the residual variance into a between-state component (the variance of the state-level residuals) and a within-state component (the variance of the individual-level residuals). Such grouping will produce more robust and reliable results, which could be potentially inferred to a larger population. Therefore, multilevel modelling is preferred over a fixed effects model, which cannot separate out effects due to observes and unobserved characteristics. In addition, the model can be extended by exploring the temporal effects and overtime change in the individual and state level attitudes. Time-varying components of the model, consequently, will be possible to track. 
 
 ## Testing running code
-```{r, echo=FALSE, quiet=TRUE}
-setwd('~/GitHub/Climate-Happiness/Data')
-data <- read.csv("All_Merged_Data.csv")
-attach(data)
-```
 
 ```{r, echo=FALSE}
 
