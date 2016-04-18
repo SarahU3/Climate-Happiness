@@ -55,9 +55,7 @@ Another alternative for the same information could the Statista Database that di
 Other state indicators, such as per capita emissions from primary energy consumption and air quality, are available from 1995 to 2012 at the [Working Group on Environmental-Economic Accounting of the Länder]( http://www.ugrdl.de/tab34.htm). Although these numbers are listed in a convenient table and would be a better match for the individual levels of happiness, the data is cross-sectional for each five years, which leaves gaps for other variables. 
 
 
-## Methodology
 
-The analysis will focus on a mixture of two levels of interest: *the individual* - e.g. the socioeconomic status of the respondent, gender, age, and the *Federal State* - e.g. reported emissions and perceived of air quality. In order to account for such clustering and track differences between the German States, multilevel modelling will be applied in this project. Given approach, unlike the traditional multivariate regression, will partition the residual variance into a between-state component (the variance of the state-level residuals) and a within-state component (the variance of the individual-level residuals). Such grouping will produce more robust and reliable results, which could be potentially inferred to a larger population. Therefore, multilevel modelling is preferred over a fixed effects model, which cannot separate out effects due to observes and unobserved characteristics. In addition, the model can be extended by exploring the temporal effects and overtime change in the individual and state level attitudes. Time-varying components of the model, consequently, will be possible to track. 
 
 ## Testing running code
 ```{r, echo=FALSE, quiet=TRUE}
@@ -69,8 +67,8 @@ attach(data)
 ```{r, echo=FALSE}
 
 #Boxplot of emissions levels by state
-
-boxplot(Emissions~State,
+library(plotly)
+emissbox <- boxplot(Emissions~State,
   data=data,
   main="Emissions by State",
   xlab="State",
@@ -78,4 +76,6 @@ boxplot(Emissions~State,
   col="royalblue1",
   border="royalblue4"
 )
+ggplotly(emissbox)
+plot_ly(data, x = Year, y = Emissions, type = 'line', group = State)
 ```
