@@ -9,10 +9,10 @@ count
 drop if plh0182==-5 | plh0182==-2 | plh0182==-1 | plh0182==.
 decode plh0182, gen(satis_labels)
 gen satis_cat=.
-replace satis=1 if plh0182<3
-replace satis=2 if plh0182>=3 & plh0182<=5
-replace satis=3 if plh0182>=6 & plh0182<9
-replace satis=4 if plh0182>=9
+replace satis_cat=1 if plh0182<3
+replace satis_cat=2 if plh0182>=3 & plh0182<=5
+replace satis_cat=3 if plh0182>=6 & plh0182<9
+replace satis_cat=4 if plh0182>=9
 /*label var satis "Life satisfaction (categorical)"
 label def satis_l 1 "Unsatisfied" 2 "Mildly satisfied" 3 "Satisfied" 4 "Very satisfied"
 label val satis satis_l
@@ -107,5 +107,5 @@ sort Year State pid
 
 xtset pid Year
 
-save "/Users/katielevesque/Desktop/SOEP_short12.dta", replace
+save "/Users/katielevesque/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/Data/SOEP_short12.dta", replace
 
