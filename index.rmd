@@ -5,7 +5,7 @@ require(datasets)
 states <- data.frame(data, State)
 GeoStates <- gvisGeoChart(data, "State", "Emissions",
                           options=list(region="DE", 
-                                       displayMode="State", 
+                                       displayMode="States", 
                                        width=600, height=400))
 plot(GeoStates)
 ```
