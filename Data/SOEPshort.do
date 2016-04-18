@@ -8,7 +8,7 @@ count
 * Current life satisfaction: plh0182
 drop if plh0182==-5 | plh0182==-2 | plh0182==-1 | plh0182==.
 decode plh0182, gen(satis_labels)
-gen satis=.
+gen satis_cat=.
 replace satis=1 if plh0182<3
 replace satis=2 if plh0182>=3 & plh0182<=5
 replace satis=3 if plh0182>=6 & plh0182<9
@@ -17,6 +17,18 @@ replace satis=4 if plh0182>=9
 label def satis_l 1 "Unsatisfied" 2 "Mildly satisfied" 3 "Satisfied" 4 "Very satisfied"
 label val satis satis_l
 numlabel satis_l, add*/
+gen satis=.
+replace satis=0 if plh0182==0
+replace satis=1 if plh0182==1
+replace satis=2 if plh0182==2
+replace satis=3 if plh0182==3
+replace satis=4 if plh0182==4
+replace satis=5 if plh0182==5
+replace satis=6 if plh0182==6
+replace satis=7 if plh0182==7
+replace satis=8 if plh0182==8
+replace satis=9 if plh0182==9
+replace satis=10 if plh0182==10
 
 * Concern with environment: plh0036
 drop if plh0036==-2 | plh0036==-1 
@@ -42,6 +54,7 @@ label define bula_EN -6 "-6. [-6] questionnaire version with modified filtering"
 #delimit cr
 drop if bula<0
 decode bula, gen (State)
+encode State, gen(Stateid)
 
 * Demographic variables
 
@@ -88,7 +101,7 @@ gen Year=syear
 * 155076 observations
 
 * Limitting to the model 
-keep pid plh0182 satis satis_labels environ plh0036 bula State gender pla0009 syear Year age ple0010 plb0022 emp pld0131 fam
+keep pid plh0182 satis satis_cat satis_labels environ plh0036 bula State Stateid gender pla0009 syear Year age ple0010 plb0022 emp pld0131 fam
 * 155076 observations
 sort Year State pid
 
