@@ -110,18 +110,29 @@ stargazer(L1, L2, L3, L4,
 ```{r, echo=FALSE}
 ##Regression using State level data
 
+## Get error in running all code after this point: "Error in pdim.default(index[[1]], index[[2]]) :"
+
+## This is because there are multiple "State" values for each year - resulting from multiple individual data points with the same home state - would need to aggregate state data before completing state-level regression
+
+#Aggregate state data to use state means for each year based on individual data
+aggstatedata <-aggregate(data, by=list(State,Year), FUN=mean, na.rm=TRUE)
+
 #Declare X and Y variables for panel data
-Y2<-cbind(satis_labels)
+Y2<-cbind(satis)
 X2<-cbind(Emissions, Use, environ, gender, age)
 
 #set data as panel data
-pdatastate<-plm.data(data, index=c("State","Year"))
+pdatastate<-plm.data(aggstatedata, index=c("Group.1","Year"))
 
 summary(X2)
 summary(Y2)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
 #pooled OLS estimator
-L5<-plm(Y2~X2, data=pdatastate, model="pooling")
+L5<-plm(Y2~X2, data=aggstatedata, model="pooling")
 summary(L5)
 
 #between estimator
