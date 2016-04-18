@@ -17,8 +17,9 @@ logLik(Null.Model)*-2
 sigtest <- (logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2) #variation is significant
 anova(Null.Model,Null.Model.2)
 
-Model.1<-lme(satis~environ+Emissions,random=~1|Stateid,data=data,
+Model.1<-lme(satis~environ+Emissions+Use+Elec+Primary,random=~1|Stateid,data=data,
              control=list(opt="optim"))
+
 summary(Model.1)
 
 
