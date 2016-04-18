@@ -40,26 +40,28 @@ attach(data)
 summary(State)
 
 ```
+The data has a wide range in terms of the number of observations for each federal state. If we look a little closer, separating them by year, we see that some states are missing observations for a few years:
+```{r, echo=FALSE}
+table(State, Year)
 
+```
+Analysis using Saarland, Nordrhein-Westfalen, and Hamburg will have to be done with the missing years in mind. 
+
+
+Because we are looking at emissions and happiness over a period of years, the values of emissions for each Bundesland also vary, which we can see over time (noting that Saarland is again missing data for some years). 
 ```{r, echo=FALSE}
 
 #Boxplot of emissions levels by state
-names(data)
-data.frame(data)
-boxplot(Emissions~State,
-  data=data,
-  main="Emissions by State",
-  xlab="State",
-  ylab="Emissions (annual tons of CO2 per capita)",
-  col="royalblue1",
-  border="royalblue4"
-)
+ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions") +geom_boxplot(fill='royalblue') + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 ```
 
 ```{r, echo=FALSE}
 # Line graph of emissions levels by state over time
 ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_line() + scale_colour_discrete() +labs(y = "Emissions (annual tons of CO2 per capita)")
 ```
+
+
+
 
 ```{r, echo=FALSE}
 #Boxplot of life satisfaction by state
