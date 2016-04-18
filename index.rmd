@@ -1,3 +1,15 @@
+```{r, echo=FALSE}
+install.packages("googleVis")
+library(googleVis)
+require(datasets)
+states <- data.frame(data, State)
+GeoStates <- gvisGeoChart(data, "State", "Emissions",
+                          options=list(region="DE", 
+                                       displayMode="State", 
+                                       width=600, height=400))
+plot(GeoStates)
+```
+
 
 ## Introduction
 Climate change is undoubtedly a global problem, but this fact means it is also, in a way, a classic tragedy of the commons. No country wants to put itself at an economic disadvantage by restricting the use of cheap fossil fuels so all continue to emit, deteriorating the "commons" of the Earth's protective atmosphere. This can make it difficult to get citizens to identify with the problem and take responsibility; people will more likely act when something affects them individually. In this paper we want to explore this aspect: how much do people feel, consciously or unconsciously, the effects of green house gas emissions? More specifically, do emissions affect their reported health, well-being, or life satisfaction?  
