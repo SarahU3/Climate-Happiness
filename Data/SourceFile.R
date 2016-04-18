@@ -23,6 +23,7 @@ library(plm) # panel data regression
 library(gsubfn) # replacing characters
 library(multilevel) # multilevel analysis
 library(nlme) # GLM models
+library(stargazer)
 
 # Setting relative path
 getwd()
