@@ -24,7 +24,6 @@ getwd()
 setwd('~/GitHub/Climate-Happiness/Data')
 # get data on renewable energy in Bundeslaender
 URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi'
-elements <- read.csv(file.path("f:", "elements.csv"))
 # but manually downloaded Excel spreadsheets
 messynrgprime <- read.xlsx(file.path("Energy", "export_land_primary.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
 messynrgelec <- read.xlsx(file.path("Energy","export_land_strom.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
