@@ -1,6 +1,12 @@
+```{r, echo=FALSE, quiet=TRUE}
+setwd('~/GitHub/Climate-Happiness/Data')
+data <- read.csv("All_Merged_Data.csv")
+attach(data)
+```
+
+
 
 ```{r, echo=FALSE}
-install.packages("googleVis")
 library(googleVis)
 require(datasets)
 states <- data.frame(data, State)
@@ -58,11 +64,6 @@ Other state indicators, such as per capita emissions from primary energy consump
 
 
 ## Testing running code
-```{r, echo=FALSE, quiet=TRUE}
-setwd('~/GitHub/Climate-Happiness/Data')
-data <- read.csv("All_Merged_Data.csv")
-attach(data)
-```
 
 ```{r, echo=FALSE}
 
@@ -76,6 +77,6 @@ emissbox <- boxplot(Emissions~State,
   col="royalblue1",
   border="royalblue4"
 )
-ggplotly(emissbox)
+
 plot_ly(data, x = Year, y = Emissions, type = 'line', group = State)
 ```
