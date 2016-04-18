@@ -97,6 +97,8 @@ summary(L4)
 #LM test for fixed effects vs OLS
 pFtest(L2,L1)
 
+
+#output table with findings - need to change code depending on output desired
 library(stargazer)
 stargazer(L1, L2, L3, L4,
     title = 'Regression Estimates of Life Satisfaction',
