@@ -119,6 +119,7 @@ pdatastate<-plm.data(data, index=c("State","Year"))
 summary(X2)
 summary(Y2)
 
+## Get error in running all code after this point: "Error in pdim.default(index[[1]], index[[2]]) :"
 #pooled OLS estimator
 L5<-plm(Y2~X2, data=pdatastate, model="pooling")
 summary(L5)
