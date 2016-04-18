@@ -15,11 +15,14 @@ attach(data)
 Basic statistics
 
 ```{r, echo=FALSE}
+names(data)
 summary(State)
 
 aggregate(formula=satis_labels~Emissions+Year+State, data=data, FUN=mean)
+satislabelmeans <- aggregate(formula=satis~Year+State, data=data, FUN=mean)
 
 data[data$State=="Berlin", ]
+
 ```
 
 ```{r, echo=FALSE}
@@ -97,8 +100,6 @@ summary(L4)
 #LM test for fixed effects vs OLS
 pFtest(L2,L1)
 
-
-#output table with findings - need to change code depending on output desired
 library(stargazer)
 stargazer(L1, L2, L3, L4,
     title = 'Regression Estimates of Life Satisfaction',
@@ -119,7 +120,6 @@ pdatastate<-plm.data(data, index=c("State","Year"))
 summary(X2)
 summary(Y2)
 
-## Get error in running all code after this point: "Error in pdim.default(index[[1]], index[[2]]) :"
 #pooled OLS estimator
 L5<-plm(Y2~X2, data=pdatastate, model="pooling")
 summary(L5)
