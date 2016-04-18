@@ -226,3 +226,20 @@ ggplot(central, aes(fitted_satisfaction, median_sim)) +
 
 ## Multilevel analysis
 
+First step of the MRC 
+
+```{r, include=FALSE}
+Null.Model<-lme(satis~1,random=~1|Stateid,data=data,
+                  control=list(opt="optim"))
+VarCorr(Null.Model)
+
+GREL.DAT<-GmeanRel(Null.Model)
+names(GREL.DAT)
+mean(GREL.DAT$MeanRel)
+
+Null.Model.2<-gls(satis~1,data=data,
+                    control=list(opt="optim"))
+logLik(Null.Model.2)*-2
+logLik(Null.Model)*-2
+sigtest <- (logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2)
+```
