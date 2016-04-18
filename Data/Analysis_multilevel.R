@@ -8,8 +8,6 @@ library(C)
 setwd('~/GitHub/Climate-Happiness/Data')
 source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
 attach(finaldata)
-numdata <- transform(finaldata,Stateid=as.numeric(factor(State)))
-attach(numdata)
 Null.Model<-lme(satis~1,random=~1|Stateid,data=data,
                   control=list(opt="optim"))
 VarCorr(Null.Model)
@@ -24,3 +22,9 @@ logLik(Null.Model.2)*-2
 logLik(Null.Model)*-2
 sigtest <- (logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2) #variation is significant
 anova(Null.Model,Null.Model.2)
+
+Model.1<-lme(satis~environ+Emissions,random=~1|Stateid,data=data,
+             control=list(opt="optim"))
+summary(Model.1)
+
+
