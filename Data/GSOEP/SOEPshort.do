@@ -1,6 +1,8 @@
 *** Clean-up for R ***
 clear
-use "/Users/katielevesque/Desktop/SOEP_Meerim_12.dta"
+use "C:\Users\meerim\Documents\GitHub\Climate-Happiness\Data\GSOEP\SOEP_Meerim_12.dta"
+*use "/Users/katielevesque/Desktop/SOEP_Meerim_12.dta"
+
 count
 * 192,841 individual-years 
 
@@ -46,7 +48,7 @@ label define bula_EN -6 "-6. [-6] questionnaire version with modified filtering"
 -1 "-1. [-1] No Answer" 1 "Schleswig-Holstein" 
 2 "Hamburg" 3 "Niedersachsen" 4 "Bremen" 
 5 "Nordrhein-Westfalen" 6 "Hessen" 
-7 "Rhineland-Palatinate, Saarland" 8 "Baden-Württemberg" 
+7 "Rheinland-Pfalz" 8 "Baden-Württemberg" 
 9 "Bayern" 10 "Saarland" 11 "Berlin" 
 12 "Brandenburg" 13 "Mecklenburg-Vorpommern" 
 14 "Sachsen" 15 "Sachsen-Anhalt" 
@@ -107,5 +109,6 @@ sort Year State pid
 
 xtset pid Year
 
-save "/Users/katielevesque/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/Data/SOEP_short12.dta", replace
+save "C:\Users\meerim\Documents\GitHub\Climate-Happiness\Data\GSOEP\SOEP_short12.dta", replace
+*save "/Users/katielevesque/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/Data/SOEP_short12.dta", replace
 
