@@ -13,7 +13,7 @@ library(ggplot2)
 library(tidyr) #
 library(repmis)
 library(rio) # export files from R
-library(xml) # read URL links
+library(XML) # read URL links
 library(xml2)
 library(rvest)
 library(psych) #multilevel analysis
