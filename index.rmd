@@ -9,12 +9,17 @@ attach(data)
 ```{r, echo=FALSE}
 library(googleVis)
 require(datasets)
-states <- data.frame(data, State)
+states <- data.frame(State, Emissions)
 GeoStates <- gvisGeoChart(data, "State", "Emissions",
                           options=list(region="DE", 
-                                       displayMode="States", 
+                                       displayMode="State", 
                                        width=600, height=400))
 plot(GeoStates)
+
+
+
+geostates2<-gvisGeoChart(data, locationvar = "State", colorvar = "Emissions",
+  hovervar = "Emissions", options = list(region="DE"), chartid)
 ```
 
 
