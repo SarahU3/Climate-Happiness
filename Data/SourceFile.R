@@ -111,7 +111,7 @@ names(Gase.table) <- c("State", "1990", "1995", "2000", "2005", "2010", "2011", 
 export(Gase.table, file = 'Gase.csv')
 
 # 5. Merging files
-NRW <- read.csv('NRW.csv', header=TRUE) #original file was amended by combining data from "Gase" and "foederal_erneuerbar-Wirtschaft_Datenblatt"
+NRW <- read.csv(file.path("Emissions", 'NRW.csv'), header=TRUE) #original file was amended by combining data from "Gase" and "foederal_erneuerbar-Wirtschaft_Datenblatt"
 general <- rbind(all_subbed, NRW)
 
 # 6. Cleaning up names
