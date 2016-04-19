@@ -31,7 +31,7 @@ Climate-Happiness
   
         ||- GSOEP (.dta file with life satisfaction & demographic factors; codebook for variables)
   
-        ||- Analysis files (needs editing)
+        |||- Analysis files (rmd, pdf, html) > Assignment 3
   
   |- Proposal
   
