@@ -181,13 +181,13 @@ ggplot(central, aes(fitted_satisfaction, median_sim)) +
 
 ```
 
+
 ## Multilevel Analysis: Basic Steps
 
 Multilevel Coefficient Models (MCM, *multilevel* and *nlme* packages) appear as one of the options to proceed with the multilevel analysis. MCM examines individual variation within and across groups, as well as permits non-independence of individual factors from the group level variables. The first step of the MCM investigates whether statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable for the given research. 
 
 An unconditional model, *Null.Model*, serves the first purpose: the model only controls for the State that specifies that the variation intercept is a function of residence.
 ```{r, echo=FALSE}
-attach(data)
 Null.Model<-lme(satis~1,random=~1|Stateid,data=data,
                   control=list(opt="optim"))
 VarCorr(Null.Model)
