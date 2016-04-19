@@ -2,12 +2,12 @@
 title: 'Assignment #3'
 author: "Katie Levesque, Sarah Unbehaun, Meerim Ruslanova"
 date: "April 14, 2016"
-output: html_document
+output: pdf_document
 ---
 
 ## Quick Recap
 
-This project aims to investigate the relationship between happiness levels across German Federal States (Bundeslaender) and among individuals over the time horizon from 1990 to 2012. More specifically, this projects explores whether the state level emissions, as well as personal characteristics, affect life satisfaction of German citizens? The hypotheses state: 
+This project aims to investigate the relationship between happiness levels across German federal states (Bundeslaender) and among individuals over the time horizon from 1990 to 2012. More specifically, this project explores whether the state level emissions, as well as some personal characteristics, affect life satisfaction of German citizens. The hypotheses state: 
 
 > *H1: Bundeslaender with higher emissions inversely affect reported levels of life satisfaction.* 
 
@@ -16,20 +16,20 @@ This project aims to investigate the relationship between happiness levels acros
 Model 1 combines these two hypotheses:
 $satis=\beta_0 - \beta_1*Emissions + \beta_2*EnvironConcerns + u_j + r_i$ 
 
-The relationship between the independent and dependent variables is explored on both individual and State level via the multilevel modelling. 
+The relationship between the independent and dependent variables will be explored on both individual and state level via the multilevel modelling. 
 
 
 ## Data
 
-The individual-level data is provided by the German Socio-Economic Panel Data [GSOEP]( https://paneldata.org/) conducted by the German Institute for Economic Research [DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html). Due to the confidentiality restrictions, DIW could only supply a shortened sample with prior specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The original GSOEP file is cleaned and transformed into a shorter dataset with the help of the State Do-File. The short dataset contains the information on the main variables: reported levels of life satisfaction (on a scale from 0 to 10), subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. Detailed labels and description of the variables are given in the GSOEP codebook. Likewise, all GSOEP related files are stored on the GitHub server. 
+The individual-level data is provided by the German Socio-Economic Panel Data [GSOEP]( https://paneldata.org/) conducted by the German Institute for Economic Research [DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html). Due to confidentiality restrictions, DIW could only supply a shortened sample with prior specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The original GSOEP file is cleaned and transformed into a shorter dataset with the help of the Stata Do-File. The short dataset contains the information on the main satisfaction and personal characteristic variables: reported levels of life satisfaction (on a scale from 0 to 10), subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. Detailed labels and descriptions of the variables are given in the GSOEP codebook. All GSOEP-related files are stored on the GitHub server. 
 
 The state-level data, on the other hand, is gathered from three web-based sources: State Initiative for Core Indicators [LIKI](http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi), [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm) and Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010). 
 
-A university subscription to *Statista.com* enabled access to historic state emissions from 1990 to 2012 for most of the Bundeslaender except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW was slightly involved more intensive research and data handling. Finally, the NRW annual emissions were gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted Carbon dioxide tons per capita). Hence, the yielded data frame of emissions is comprehensive and consistent, although there are missing observations on some years. 
+A university subscription to *Statista.com* enabled access to historic state emissions from 1990 to 2012 for most of the Bundeslaender, except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW involved more intensive research and data handling but were finally gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted Carbon dioxide tons per capita). Hence, the yielded data frame of emissions is comprehensive and consistent, although there are missing observations on some years. 
 
 Simultaneously, the state efforts to curb their emissions and preserve local environment are reflected in their renewable energy indicators. This information is measured in percentage of renewables in the annual primary energy consumption, final energy consumption, and electricity consumption. The indicators had to be downloaded manually from *LIKI* in three separate excel files, which later on were cleaned, transformed and reshaped into suitable data frames in R. 
 
-After the names of the Bundeslaender and the time frame of the three produced data frames match, they are easily merged in R into a final data set. 
+Once the names of the Bundeslaender and the time frame of the three produced data frames match, they are easily merged in R into a final data set. 
 
 
 ```{r, include=FALSE}
@@ -45,19 +45,20 @@ attach(data)
 summary(State)
 
 ```
-The data has a wide range in terms of the number of observations for each federal state. If we look a little closer, separating them by year, we see that some states are missing observations for a few years:
+The data has a wide range in terms of the number of observations for each federal state. If we look a little closer, separating them by year, we see that some states are missing observations for a few years. Using Saarland, Nordrhein-Westfalen, and Hamburg in our analysis may require some adjustment with the missing years in mind.
+
 ```{r, echo=FALSE}
 table(State, Year)
 
 ```
-Analysis using Saarland, Nordrhein-Westfalen, and Hamburg may require some adjustment with the missing years in mind. 
+ 
 
+Because we are looking at emissions and happiness over a period of years, the values of emissions for each state also vary, which we can see by state and over time. The colors are coordinated between the box plots and line graphs.
 
-Because we are looking at emissions and happiness over a period of years, the values of emissions for each Bundesland also vary, which we can see over time (noting that Saarland is again missing data for some years). 
 ```{r, echo=FALSE}
 
 #Boxplot of emissions levels by state
-ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per capita)") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 ```
 
 ```{r, echo=FALSE}
@@ -66,7 +67,7 @@ ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_
 ```
 
 
-The other primary variable of interest is life satisfaction. These plots show, again, variation within each state and the variation in life satisfaction across years, mapped as the mean of observations from each state. 
+The main explanatory variable of interest is life satisfaction. As with emissions, there is variation within each state and the variation in life satisfaction across years. The following charts use the mean of the individual observations from each state. 
 
 ```{r, echo=FALSE}
 #Boxplot of life satisfaction by state 
@@ -92,7 +93,7 @@ ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(m
 
 ## Inferential Statistics
 
-To run inferential statistics, we first create "pdataind" as panel data. For the models below, Y1 represents "satis" (life satisfaction), measured on a scale ranging from 0 to 10. X1 represents the other variables of interest: Emissions, Energy Use, Concern for the Environment, Gender, and Age. We know that the data set is unbalanced, as we noticed earlier that we don't have information for all years from all the states.
+To run inferential statistics, we first create "pdataind" as panel data. For the models below, X1 represents the explanatory  variables of interest: emissions, energy use, concern for the environment, gender, and age. Emissions has a wide range: from 4.5 up to 31.6 annual tons of CO2 per capita. Observations in the upper range may be outliers that need to be removed; half of the observations fall between 6.5 and 13.7 tons, and the median is 7.6 compared to a mean of 10.2 tons. Energy use also varies widely, from 79.3 to 337.0 annual gigajoules (GJ) per capita, with a median of 164.0 and mean of 172.3 GJ. Concern for the environment, measured on a scale from 1 (very) to 3 (not very), has an average of 1.8. Gender is almost evenly split between males and females, and the average age is about 50 years old. 
 
 ```{r, echo=FALSE, quiet}
 ##Regression using individual level data
@@ -104,13 +105,19 @@ X1<-cbind(Emissions, Use, environ, gender, age)
 #set data as panel data
 pdataind<-plm.data(data, index=c("pid","Year"))
 
-summary(X1)
-summary(Y1)
+summary(X1, digits = 2)
+```
+
+Y1 represents "satis" (life satisfaction), measured on a scale ranging from 0 (low) to 10 (high). The data is skewed toward the upper range, with the majority of responses being more than 6 and with a mean of 6.9.
+
+``` {r, echo=FALSE}
+ 
+summary(Y1, digits = 2)
 
 ```
 
 
-Below, we tested various types of panel data models on our individual-level data.  
+Below, we tested various types of panel data models on our individual-level data. The data set is unbalanced because we don't have information for all years in all the states.
 
 ```{r, echo=FALSE}
 #pooled OLS estimator
@@ -132,62 +139,17 @@ summary(L4)
 #output table with findings - will need to be xtable or texreg, stargazer not compatible with knit
 ```
 
-In terms of explanatory power, the first difference and within estimators appear to be less useful than the between or pooled OLS estimators, as their R-squared and adjusted R-squared are very low.Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models.  
+In terms of explanatory power, the first difference and within estimators might be less useful than the between or pooled OLS estimators, based on their low R-squared and adjusted R-squared Values. Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have negative coefficients, while concern about the environment and energy use have positive coefficients. 
+
+We can compare the fixed effects/within and pooled OLS models using an F-test for individual and/or time effects:
 
 ```{r, echo=FALSE}
 #LM test for fixed effects vs OLS
-pFtest(L2,L1)
+pFtest(L4,L1)
 
 ```
 
-
-
-```{r descr, echo=FALSE}
-#Find the range pf emissions values to create a 95% confidence interval for between regression
-range(satis)
-Satisfaction_range<-1:4
-
-#extract point estimates and co-variance matrix
-L2_coef <- matrix(coef(L2))
-L2_vcov <- vcov(L2)
-
-#draw 1000 simulations of the point estimates
-library(MASS) # contains the mvrnorm function
-drawn <- mvrnorm(n = 1000, mu = L2_coef, Sigma = L2_vcov) %>% 
-            data.frame
-head(drawn)[1:3, ]
-
-drawn_sim <- merge(drawn, Satisfaction_range)
-
-# Rename the fitted value variable
-drawn_sim <- dplyr::rename(drawn_sim, fitted_satisfaction = y)
-
-nrow(drawn)
-nrow(drawn_sim)
-
-#calculate the quantity of interest 
-names(drawn_sim)
-drawn_sim$sim_wc <- drawn_sim[, 1] + drawn_sim[, 2] * drawn_sim[, 5] + 
-                        drawn_sim[, 3]
-
-#plot points
-ggplot(drawn_sim, aes(fitted_satisfaction, sim_wc)) + 
-        geom_point(alpha = 0.2) + stat_smooth(se = FALSE) +
-        theme_bw()
-
-# Find 95% central interval and median at each fitted value of edu
-central <- drawn_sim %>% group_by(fitted_satisfaction) %>%
-            summarise(median_sim = median(sim_wc),
-                      lower_95 = quantile(sim_wc, probs = 0.025),
-                      upper_95 = quantile(sim_wc, probs = 0.975)
-            )
-
-#plot 95% confidence interval
-ggplot(central, aes(fitted_satisfaction, median_sim)) +
-    geom_ribbon(aes(ymin = lower_95, ymax = upper_95), alpha = 0.3) +
-    geom_line() + theme_bw()
-
-```
+The test is set up so that the null hypothesis is that OLS pooled is better than the within estimator. The small resulting p-value indicates that despite the larger R-squared values with OLS pooling, we should reject the null hypothesis that OLS pooling is better. 
 
 
 ## Multilevel Analysis: Basic Steps
