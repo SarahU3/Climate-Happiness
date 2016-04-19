@@ -2,7 +2,7 @@
 title: 'Assignment #3'
 author: "Katie Levesque, Sarah Unbehaun, Meerim Ruslanova"
 date: "April 14, 2016"
-output: pdf_document
+output: html_document
 ---
 
 ## Quick Recap
@@ -50,14 +50,14 @@ The data has a wide range in terms of the number of observations for each federa
 table(State, Year)
 
 ```
-Analysis using Saarland, Nordrhein-Westfalen, and Hamburg will have to be done with the missing years in mind. 
+Analysis using Saarland, Nordrhein-Westfalen, and Hamburg may require some adjustment with the missing years in mind. 
 
 
 Because we are looking at emissions and happiness over a period of years, the values of emissions for each Bundesland also vary, which we can see over time (noting that Saarland is again missing data for some years). 
 ```{r, echo=FALSE}
 
 #Boxplot of emissions levels by state
-ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions") +geom_boxplot(fill='royalblue') + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 ```
 
 ```{r, echo=FALSE}
@@ -66,36 +66,39 @@ ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_
 ```
 
 
-
+The other primary variable of interest is life satisfaction. These plots show, again, variation within each state and the variation in life satisfaction across years, mapped as the mean of observations from each state. 
 
 ```{r, echo=FALSE}
-#Boxplot of life satisfaction by state
-boxplot(satis~State,
-  data=data,
-  main="Satisfaction by State",
-  xlab="State",
-  ylab="Satisfaction (0-10)",
-  col="royalblue1",
-  border="royalblue4"
-)
+#Boxplot of life satisfaction by state 
+ggplot(data, aes(x=State, y=satis), main = "Average Life Satisfaction by State", xlab = "State", ylab = "Satisfaction") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 ```
 
 ```{r, echo=FALSE}
-qplot(data$State, data$Emissions, geom = "boxplot", main = "Emissions by State", xlab = "State", ylab = "Emissions", fill = factor(data$State)) + guides(fill=FALSE)
+aggremeans <- aggregate(data[, c(1, 3, 6, 18, 19, 22)], list(State, Year), mean)
+ggplot(aggremeans, aes(x = Year, y = satis, group = Group.1, color = Group.1)) + geom_line() + scale_colour_discrete() +labs(y = "Life Satisfaction")
 ```
 
-```{r, echo=FALSE}
+Again using the means of each state, we can create some scatterplots showing correlation between variables. Life satisfaction appears to be positively correlated with age, energy use, and concern about the environment, but does not show a strong correlation with emissions. 
 
-#panel data scatterplot of aggregate state satisfaction over years
-scatterplot(satis~Year|State, boxplots=FALSE, smooth=TRUE, reg.line=FALSE, data=data)
+```{r, echo=FALSE}
+# scatterplots of aggregate state satisfaction over years
+ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Age", y = "Life Satisfaction")
+ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Emissions per Capita", y = "Life Satisfaction")
+ggplot(data = aggremeans, aes(x=Use, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Energy Use per Capita", y = "Life Satisfaction")
+ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Concern about the Environment", y = "Life Satisfaction")
 ```
 
 
-```{r, echo=FALSE}
+
+## Inferential Statistics
+
+To run inferential statistics, we first create "pdataind" as panel data. For the models below, Y1 represents "satis" (life satisfaction), measured on a scale ranging from 0 to 10. X1 represents the other variables of interest: Emissions, Energy Use, Concern for the Environment, Gender, and Age. We know that the data set is unbalanced, as we noticed earlier that we don't have information for all years from all the states.
+
+```{r, echo=FALSE, quiet}
 ##Regression using individual level data
 
 #Declare X and Y variables for panel data
-Y1<-cbind(satis_labels)
+Y1<-cbind(satis)
 X1<-cbind(Emissions, Use, environ, gender, age)
 
 #set data as panel data
@@ -104,6 +107,12 @@ pdataind<-plm.data(data, index=c("pid","Year"))
 summary(X1)
 summary(Y1)
 
+```
+
+
+Below, we tested various types of panel data models on our individual-level data.  
+
+```{r, echo=FALSE}
 #pooled OLS estimator
 L1<-plm(Y1~X1, data=pdataind, model="pooling")
 summary(L1)
@@ -120,16 +129,15 @@ summary(L3)
 L4<-plm(Y1~X1, data=pdataind, model="within")
 summary(L4)
 
+#output table with findings - will need to be xtable or texreg, stargazer not compatible with knit
+```
+
+In terms of explanatory power, the first difference and within estimators appear to be less useful than the between or pooled OLS estimators, as their R-squared and adjusted R-squared are very low.Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models.  
+
+```{r, echo=FALSE}
 #LM test for fixed effects vs OLS
 pFtest(L2,L1)
 
-
-#output table with findings - need to change code depending on output desired
-library(stargazer)
-stargazer(L1, L2, L3, L4,
-    title = 'Regression Estimates of Life Satisfaction',
-    digits = 2, type = 'html'
-    )
 ```
 
 
