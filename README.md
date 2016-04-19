@@ -1,7 +1,7 @@
 ---
 output: pdf_document
 ---
-# README: Climate and Happiness: the Case of German citizens and Bundeslaender
+# README: Climate and Happiness: German Citizens and Bundeslaender
 ---
 
 #### Collaborative Data Analysis 
