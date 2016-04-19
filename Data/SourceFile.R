@@ -151,9 +151,6 @@ finaldata = merge(alldata,GSOEP,by=c("Year","State"))
 Stateid <- factor(finaldata$State, levels=c(levels(finaldata$State)))
 finaldata$Stateid <- c(as.numeric(Stateid))
 
-# Add numeric Land code
-finaldata$LandCode[finaldata$State == 'Baden-WÃ¼rttemberg'] <- 20228
-
 # Export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
 
