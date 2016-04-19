@@ -5,11 +5,12 @@ date: "April 14, 2016"
 output: pdf_document
 ---
 
-## Quick recap
+## Quick Recap
 
 This project aims to investigate the relationship between happiness levels across German Federal States (Bundeslaender) and among individuals over the time horizon from 1990 to 2012. More specifically, this projects explores whether the state level emissions, as well as personal characteristics, affect life satisfaction of German citizens? The hypotheses state: 
 
 > *H1: Bundeslaender with higher emissions inversely affect reported levels of life satisfaction.* 
+
 > *H2: Reported individual concerns with the environment are, likewise, negatively reflected in the life satisfaction.*
 
 Model 1 combines these two hypotheses:
@@ -180,12 +181,11 @@ ggplot(central, aes(fitted_satisfaction, median_sim)) +
 
 ```
 
-## Multilevel analysis: basic steps
+## Multilevel Analysis: Basic Steps
 
 Multilevel Coefficient Models (MCM, *multilevel* and *nlme* packages) appear as one of the options to proceed with the multilevel analysis. MCM examines individual variation within and across groups, as well as permits non-independence of individual factors from the group level variables. The first step of the MCM investigates whether statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable for the given research. 
 
 An unconditional model, *Null.Model*, serves the first purpose: the model only controls for the State that specifies that the variation intercept is a function of residence.
-
 ```{r, echo=FALSE}
 Null.Model<-lme(satis~1,random=~1|Stateid,data=data,
                   control=list(opt="optim"))
@@ -193,9 +193,7 @@ VarCorr(Null.Model)
 ``` 
 The model examines how much of the average individual life satisfaction is explained by the residence of a respondent through R's general purpose optimization routine (opt="optim"). According to the *Null.Model*, the Bundesland variation (intercept variance) is 0.19, while the within-State residual is 3.17. 
 
-Furthermore, the *GmeanRel* function (*multilevel* package) yields the mean reliability of 16 Bundeslaender, which, in this case, is substantially high (`r mean(GREL.DAT$MeanRel)`). As the cut-off point for acceptable reliability is 0.7, Bindeslaeander group reliability meets the threshold. The difference between the -2 log likelihood values of *Null.Model* and *Null.Model.2* tests whether the between-State effect is present compared to the random variation in life satisfaction without any control variables. According to the results, the difference is significantly large based on the Chi-Squared distribution with 2 degrees of freedom (`r sigtest`). These results suggest that there is significant State variation in happiness level, which justifies the usage of the MCM. 
-
-```{r, include=FALSE}
+```{r, echo=FALSE}
 GREL.DAT<-GmeanRel(Null.Model)
 names(GREL.DAT)
 mean(GREL.DAT$MeanRel)
@@ -205,9 +203,9 @@ logLik(Null.Model.2)*-2
 logLik(Null.Model)*-2
 sigtest <- (logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2)
 ```
+Furthermore, the *GmeanRel* function (*multilevel* package) yields the mean reliability of 16 Bundeslaender, which, in this case, is substantially high (`r mean(GREL.DAT$MeanRel)`). As the cut-off point for acceptable reliability is 0.7, Bindeslaeander group reliability meets the threshold. The difference between the -2 log likelihood values of *Null.Model* and *Null.Model.2* tests whether the between-State effect is present compared to the random variation in life satisfaction without any control variables. According to the results, the difference is significantly large based on the Chi-Squared distribution with 2 degrees of freedom (`r sigtest`). These results suggest that there is significant State variation in happiness level, which justifies the usage of the MCM. 
 
 The second step of the MCM looks into how both Bundesland emissions and subjective concerns about the environment influence reported individual life satisfaction. *Model.1* (*lme* function) for the time being does not control for individual characteristics, such as gender, age, employment and family status. Moreover, percentage of the renewables (which is anticipated to directly relate to the life satisfaction) will be also examined in the later phase of the research. *Model.1* serves as the basic tool to understand relationship between the group- and individual-level factors representing the environment. 
-
 ```{r, echo=FALSE}
 Model.1<-lme(satis~environ+Emissions,random=~1|Stateid,data=finaldata,
              control=list(opt="optim"))
