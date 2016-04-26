@@ -1,0 +1,68 @@
+---
+title: "Emissions and Life Satisfaction in Germany"
+author: "Katie Levesque, Meerim Ruslanova and Sarah Unbehaun"
+date: "May 2, 2016"
+output: 
+  ioslides_presentation:
+    logo: Data/HertieLogo.png
+    self_contained: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Overview
+
+This project aims to investigate the **relationship between happiness levels and emissions** across German federal states (Bundeslaender) and among individuals from 1990 to 2012. 
+
+More specifically, this project explores whether the state level emissions, as well as some personal characteristics, affect life satisfaction of German citizens. 
+
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Hypotheses
+The hypotheses state:
+
+- **H1**: Bundeslaender with higher emissions inversely affect reported levels of life satisfaction.
+
+- **H2**: Reported individual concerns with the environment are, likewise, negatively reflected in the
+life satisfaction.
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" />  Models
+
+**Model 1** combines these two hypotheses: 
+
+<div class="black">
+$$satis = \beta_0 − \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri$$
+</div>   
+
+<br>
+
+**Model 2** provides a multilevel analysis which examines individual variation within and across groups, as well as permits non-independence of individual factors from the group level variables:
+_need to fix model 2 equation_
+<div class="black">
+$$satis = \beta_0 − \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri$$
+</div>
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Data
+
+- The **individual-level data** is provided by:
+    + The German Socio-Economic Panel Data GSOEP conducted by the German Institute for Economic Research DIW
+
+- The **state-level data** is gathered from four web-based sources:
+    + State Initiative for Core Indicators LIKI
+    + Statista.com
+    + Environmental-Economic Accounting of the Bundeslaender UGRdL
+    + Agency for Renewable Agency of North Rhine-Westphalia AfEE
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations 
+###Between Emissions and Life Satisfaction
+
+*GGPlot with emissions and life satis to go here*
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results
+
+*Statistics tables from models 1 and 2 to go here*
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Conclusions
+
+*Conclusions to go here*
