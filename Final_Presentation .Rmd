@@ -4,7 +4,7 @@ author: "Katie Levesque, Meerim Ruslanova and Sarah Unbehaun"
 date: "May 2, 2016"
 output: 
   ioslides_presentation:
-    logo: Data/HertieLogo.png
+    logo: Data/HertieLogoBasic.png
     self_contained: FALSE
 ---
 
