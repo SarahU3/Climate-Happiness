@@ -146,6 +146,8 @@ energy = read.csv("NRG.final.csv")
 # Merge all 3 files together using State and Year as unique IDs
 alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,GSOEP,by=c("Year","State"))
+finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
+
 
 # XConvert State variable into numeric
 finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
