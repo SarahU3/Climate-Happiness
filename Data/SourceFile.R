@@ -152,15 +152,24 @@ finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue")
 
 
 # XConvert State variable into numeric
+finaldata$Stateid <- as.numeric(as.factor(finaldata$State))
+                             
+
 finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
                              labels = levels(finaldata$State))
 
 # Relabel environmental concerns
-finaldata$environ <- factor(finaldata$environ, levels=rev(levels(finaldata$environ)), labels=c("Not at all", "Somewhat", "Very"))
-finaldata$env <- as.numeric(finaldata$environ)
+#finaldata$environ <- factor(finaldata$environ, levels=rev(levels(finaldata$environ)), labels=c("Not at all", "Somewhat", "Very"))
+#finaldata$env <- as.numeric(finaldata$environ)
+# Does not work - reordering data confuses lme
 
 # Export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
+
+sapply(finaldata, class)
+sapply(finaldata, mode)
+### QUESTION: REGRESSIONS WITH FACTOR VARIABLES?
+finaldata[, c(3,18,19,22)] <- sapply(finaldata[, c(3,18,19,22)], as.numeric) # specifying columns to convert into numeric
 
 #---------------------------------------------------------#
 # Appendix 1: NRW information was missing from statista. Therefore, info on NRW (1990, 1995)
