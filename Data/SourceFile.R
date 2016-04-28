@@ -23,6 +23,8 @@ library(plm) # panel data regression
 library(gsubfn) # replacing characters
 library(multilevel) # multilevel analysis
 library(nlme) # GLM models
+library(texreg)
+library(xtable)
 
 
 # Setting relative path
