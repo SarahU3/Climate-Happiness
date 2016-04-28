@@ -153,6 +153,9 @@ finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue")
 finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
                              labels = levels(finaldata$State))
 
+# Relabel environmental concerns
+finaldata$environ <- factor(finaldata$environ, levels=rev(levels(finaldata$environ)), labels=c("Not at all", "Somewhat", "Very"))
+finaldata$env <- as.numeric(finaldata$environ)
 
 # Export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
