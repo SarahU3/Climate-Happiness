@@ -148,8 +148,9 @@ alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,GSOEP,by=c("Year","State"))
 
 # XConvert State variable into numeric
-Stateid <- factor(finaldata$State, levels=c(levels(finaldata$State)))
-finaldata$Stateid <- c(as.numeric(Stateid))
+finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
+                             labels = levels(finaldata$State))
+
 
 # Export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
