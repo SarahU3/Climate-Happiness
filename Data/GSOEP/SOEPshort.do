@@ -34,7 +34,7 @@ replace satis=10 if plh0182==10
 
 * Concern with environment: plh0036
 drop if plh0036==-2 | plh0036==-1 
-gen environ=plh0036
+gen environ=4-plh0036
 
 * Residence: bula
 /*There is a mistake in the labelling: https://paneldata.org/variables/189651
