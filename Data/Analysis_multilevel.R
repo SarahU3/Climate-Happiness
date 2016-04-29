@@ -37,3 +37,14 @@ Model.4<-lme(satis~environ+age+Emissions,random=~age|Stateid, data=finaldata,
 summary(Model.4)
 Model.4a<-update(Model.4,random=~1|Stateid)
 (anova(Model.4,Model.4a))$L.Ratio #L.Ratio is the sig test (significant)
+
+# Interaction
+Model.I<-lme(satis~environ+emp+age+fam+Emissions+fam*age,
+                   random=~1+emp+age+fam|Stateid,data=finaldata,control=list(opt="optim"))
+
+round(summary(Model.I)$tTable,dig=3)
+
+m_fam<-lme(satis~fam*age,
+             random=~1+age+fam|Stateid,data=finaldata,control=list(opt="optim"))
+library(interplot)
+interplot(m = m_fam, var1 = "fam", var2 = "age")
