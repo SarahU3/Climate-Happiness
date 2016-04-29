@@ -10,6 +10,10 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
+data <- read.csv("All_Merged_Data.csv")
+attach(data)
+
 ```
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Overview
@@ -61,7 +65,27 @@ $$satis = \beta_0 − \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri$$
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results
 
-*Statistics tables from models 1 and 2 to go here*
+``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
+#Declare X and Y variables for panel data
+Y1<-cbind(satis)
+X1<-cbind(Emissions, Use, environ, gender, age)
+
+#set data as panel data
+pdataind<-plm.data(data, index=c("pid","Year"))
+
+L1<-plm(Y1~X1, data=pdataind, model="pooling")
+L2<-plm(Y1~X1, data=pdataind, model="between")
+stargazer::stargazer(L1, L2, 
+    title = 'Logistic Regression Estimates of Life Satisfaction',
+    digits = 2, type = 'html')
+
+```
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results
+``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
+
+```
+
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Conclusions
 
