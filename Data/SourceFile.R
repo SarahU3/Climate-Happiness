@@ -25,7 +25,7 @@ library(multilevel) # multilevel analysis
 library(nlme) # GLM models
 library(texreg)
 library(xtable)
-
+library(stargazer)
 
 # Setting relative path
 getwd()
