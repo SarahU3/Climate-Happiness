@@ -110,18 +110,95 @@ stargazer::stargazer(Lpooled, Lfixeff, single.row = TRUE, dep.var.labels = "Life
 
 ```
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results: Multilevel Models {.smaller .flexbox .vcenter}
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis
+- Objectives of the multilevel analysis (Bliese, 2013): 
+    + Identify variance between the groups 
+    + Understand variance among the groups
+    + Indicate source of non-independence in the data
+
+- Steps of the Multilevel Coefficienct Models (MCM):
+    + Difference in the mean values (intercepts) of groups on DV (existence of variance)
+    + Variation of slopes between IV and DV across groups (BETWEEN variance)
+    + Variation of slopes between IV and DV within a group (WITHIN variance)
+
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 1 (DV & State) {.smaller .flexbox .vcenter}
+<div class="black">
+$$Null.Model: satis=State-Intercept$$
+</div>   
+
+
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
+Null.Model <-lme(satis~1,random=~1|Stateid, data=data,
+                  control=list(opt="optim"))
+Null.Model2 <-gls(satis~1,data=finaldata,
+                    control=list(opt="optim"))
+GREL.DAT<-GmeanRel(Null.Model)
+rel <- round(mean(GREL.DAT$MeanRel), digits=3)
+sigtest <- (logLik(Null.Model2)*-2)-(logLik(Null.Model)*-2)
+```
 
-# include any r code necessary for models then stargazer 
+*Null.Model*: how much of the average individual life satisfaction is explained by the residence of a respondent. 
 
+Result: variation (intercept variance) due to Bundesland is 11.7%. 
+
+Reliability & significance: substantially reliable (`r rel`) and significant (`r sigtest`).
+
+Conclusion: MCM needed.
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 2 (Between variance) {.smaller .flexbox .vcenter}
+<div class="black">
+$$Model.1: satis=environ+Emissions,
+            random=~1|Stateid$$
+</div> 
+
+
+
+``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
+Model.1<-lme(satis~environ+Emissions,random=~1|Stateid, data=finaldata,
+             control=list(opt="optim"))
+stargazer::stargazer(Model.1, single.row = TRUE,
+    dep.var.labels = "Life Satisfaction",
+    title = 'BETWEEN variation',
+    digits = 2, type = 'html')
 ```
 
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Conclusions
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 3 (Within variance) {.smaller .flexbox .vcenter}
+<div class="black">
+$$Model.2: satis=environ+Emissions+age+fam+emp+gender$$
+</div> 
+``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
+Model.2 <-lme(satis~environ+Emissions+age+fam+emp+gender,random=~age+fam+emp+gender|Stateid,data=finaldata,
+             control=list(opt="optim"))
+stargazer::stargazer(Model.2, single.row = TRUE,
+    dep.var.labels = "Life Satisfaction", 
+    title = '', dep.var.caption = '', 
+    digits = 2, type = 'html')
+```
 
-- Emissions do seem to have an impact on life satisfaction, but concern about the environment is a stronger predictor.
 
-- Future work:
-    + Website: maps and other graphics of relevant variables
-    + Modelling: interaction terms 
+
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Conclusions
+
+> - Happiness levels across the states differ.
+> - Emissions do not appear to have significant influence on happiness either within or among the states.
+> - Environmental concerns lower individual life satisfaction.
+> - Having a partner and being employed enhances well-being.
+> - Aging inevitably lowers happiness. 
+> - Gender does not play a significant role.
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Limitations
+
+> - Lack of individual- and state-level economic indicators.
+> - Incomplete information (ex: Saarland).
+> - Constrained categories of the environmental concerns (only 3).
+> - Simplification of the models with dummy factors (employment, family status).
+> - Subjective vs. objective information.
+
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> To-do list 
+
+> - Endogeneity test: satisfaction and environmental concerns.
+> - Add a time-level component.
+> - Map indicators according to the Bundeslaender and regions.
