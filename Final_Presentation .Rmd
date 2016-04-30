@@ -122,4 +122,8 @@ stargazer::stargazer([model],[model] , single.row = TRUE, dep.var.labels = "Life
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Conclusions
 
-*Conclusions to go here*
+Emissions do seem to have an impact on life satisfaction, but concern about the environment is a stronger predictor.
+
+Future work:
+    + Website: maps and other graphics of relevant variables
+    + [modelling - ?]
