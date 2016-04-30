@@ -113,17 +113,15 @@ stargazer::stargazer(Lpooled, Lfixeff, single.row = TRUE, dep.var.labels = "Life
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results: Multilevel Models {.smaller .flexbox .vcenter}
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
 
-# include any r code necessary for models
-stargazer::stargazer([model],[model] , single.row = TRUE, dep.var.labels = "Life Satisfaction", 
-    title = '', dep.var.caption = '', 
-    digits = 2, type = 'html')
+# include any r code necessary for models then stargazer 
+
 ```
 
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Conclusions
 
-Emissions do seem to have an impact on life satisfaction, but concern about the environment is a stronger predictor.
+- Emissions do seem to have an impact on life satisfaction, but concern about the environment is a stronger predictor.
 
-Future work:
+- Future work:
     + Website: maps and other graphics of relevant variables
-    + [modelling - ?]
+    + Modelling: interaction terms 
