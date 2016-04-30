@@ -158,19 +158,33 @@
 
 </article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations</h2></hgroup><article  id="correlations">
 
-<h3>Between Emissions and Life Satisfaction</h3>
+<h3>Between Age and Life Satisfaction</h3>
 
 <p><img src="Final_Presentation__files/figure-html/unnamed-chunk-1-1.png" title="" alt="" width="720" /></p>
 
-</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results</h2></hgroup><article  id="results">
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations</h2></hgroup><article  id="correlations-1">
+
+<h3>Between Energy Use and Life Satisfaction</h3>
+
+<p><img src="Final_Presentation__files/figure-html/unnamed-chunk-2-1.png" title="" alt="" width="720" /></p>
+
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations</h2></hgroup><article  id="correlations-2">
+
+<h3>Between Environment Concern and Life Satisfaction</h3>
+
+<p><img src="Final_Presentation__files/figure-html/unnamed-chunk-3-1.png" title="" alt="" width="720" /></p>
+
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations</h2></hgroup><article  id="correlations-3">
+
+<h3>Between Emissions and Life Satisfaction</h3>
+
+<p><img src="Final_Presentation__files/figure-html/unnamed-chunk-4-1.png" title="" alt="" width="720" /></p>
+
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results: Regressions</h2></hgroup><article  id="results-regressions" class="smaller flexbox vcenter">
+
+<p>Using Pooled (1) and Fixed Effects (2) Models</p>
 
 <table style="text-align:center">
-
-<caption>
-
-<strong>Logistic Regression Estimates of Life Satisfaction</strong>
-
-</caption>
 
 <tr>
 
@@ -188,33 +202,7 @@
 
 <td colspan="2">
 
-<em>Dependent variable:</em>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-</td>
-
-<td colspan="2" style="border-bottom: 1px solid black">
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left">
-
-</td>
-
-<td colspan="2">
-
-Y1
+Life Satisfaction
 
 </td>
 
@@ -252,41 +240,19 @@ Y1
 
 <td style="text-align:left">
 
-X1Emissions
-
-</td>
-
-<td>
-
--0.09<sup>***</sup> (0.002)
-
-</td>
-
-<td>
-
--0.09<sup>***</sup> (0.003)
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left">
-
 X1Use
 
 </td>
 
 <td>
 
-0.01<sup>***</sup> (0.0002)
+0.002<sup>***</sup> (0.0001)
 
 </td>
 
 <td>
 
-0.01<sup>***</sup> (0.0003)
+0.01<sup>***</sup> (0.001)
 
 </td>
 
@@ -302,13 +268,13 @@ X1environ
 
 <td>
 
--0.07<sup>***</sup> (0.01)
+-0.10<sup>***</sup> (0.01)
 
 </td>
 
 <td>
 
--0.12<sup>***</sup> (0.02)
+-0.06<sup>***</sup> (0.01)
 
 </td>
 
@@ -324,13 +290,13 @@ X1gender
 
 <td>
 
--0.01 (0.01)
+0.02<sup>**</sup> (0.01)
 
 </td>
 
 <td>
 
-0.02 (0.02)
+0.02<sup>*</sup> (0.01)
 
 </td>
 
@@ -346,13 +312,77 @@ X1age
 
 <td>
 
--0.01<sup>***</sup> (0.0003)
+-0.003<sup>***</sup> (0.0003)
 
 </td>
 
 <td>
 
--0.004<sup>***</sup> (0.001)
+-0.005<sup>***</sup> (0.0003)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left">
+
+X1fam
+
+</td>
+
+<td>
+
+0.16<sup>***</sup> (0.01)
+
+</td>
+
+<td>
+
+0.17<sup>***</sup> (0.01)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left">
+
+X1emp
+
+</td>
+
+<td>
+
+0.24<sup>***</sup> (0.01)
+
+</td>
+
+<td>
+
+0.22<sup>***</sup> (0.01)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left">
+
+Emissions
+
+</td>
+
+<td>
+
+</td>
+
+<td>
+
+-0.01<sup>*</sup> (0.004)
 
 </td>
 
@@ -368,13 +398,11 @@ Constant
 
 <td>
 
-6.43<sup>***</sup> (0.03)
+6.23<sup>***</sup> (0.04)
 
 </td>
 
 <td>
-
-6.59<sup>***</sup> (0.07)
 
 </td>
 
@@ -404,7 +432,7 @@ Observations
 
 <td>
 
-22,285
+140,830
 
 </td>
 
@@ -420,13 +448,13 @@ R<sup>2</sup>
 
 <td>
 
-0.03
+0.01
 
 </td>
 
 <td>
 
-0.06
+0.01
 
 </td>
 
@@ -442,13 +470,13 @@ Adjusted R<sup>2</sup>
 
 <td>
 
-0.03
+0.01
 
 </td>
 
 <td>
 
-0.06
+0.01
 
 </td>
 
@@ -464,13 +492,13 @@ F Statistic
 
 <td>
 
-821.69<sup>***</sup> (df = 5; 140824)
+300.89<sup>***</sup> (df = 6; 140823)
 
 </td>
 
 <td>
 
-263.13<sup>***</sup> (df = 5; 22279)
+171.39<sup>***</sup> (df = 7; 118538)
 
 </td>
 
@@ -502,7 +530,7 @@ F Statistic
 
 </table>
 
-</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results</h2></hgroup><article  id="results-1">
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results</h2></hgroup><article  id="results">
 
 </article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Conclusions</h2></hgroup><article  id="conclusions">
 
