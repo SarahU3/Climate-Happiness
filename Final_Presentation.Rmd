@@ -127,7 +127,7 @@ stargazer::stargazer(Lpooled, Lfixeff, single.row = TRUE, dep.var.labels = "Life
 $$Null.Model: satis=State-Intercept$$
 </div>   
 
-
+<div class="centered">
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
 Null.Model <-lme(satis~1,random=~1|Stateid, data=data,
                   control=list(opt="optim"))
@@ -145,14 +145,15 @@ Result: variation (intercept variance) due to Bundesland is 11.7%.
 Reliability & significance: substantially reliable (`r rel`) and significant (`r sigtest`).
 
 Conclusion: MCM needed.
+</div>
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 2 (Between variance) 
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 2 (Between variance) {.smaller .flexbox .vcenter}
 <div class="black">
 $$Model.1: satis=environ+Emissions,
             random=~1|Stateid$$
 </div> 
-
-
+<br>
+<br>
 
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
 Model.1<-lme(satis~environ+Emissions,random=~1|Stateid, data=finaldata,
@@ -164,10 +165,13 @@ stargazer::stargazer(Model.1, single.row = TRUE,
 ```
 
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 3 (Within variance) 
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 3 (Within variance) {.smaller .flexbox .vcenter} 
 <div class="black">
 $$Model.2: satis=environ+Emissions+age+fam+emp+gender$$
 </div> 
+<br>
+<br>
+
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
 Model.2 <-lme(satis~environ+Emissions+age+fam+emp+gender,random=~age+fam+emp+gender|Stateid,data=finaldata,
              control=list(opt="optim"))
