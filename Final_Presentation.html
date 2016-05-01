@@ -129,14 +129,14 @@
 <p><strong>Model 1</strong> combines these two hypotheses:</p>
 
 <div class="black">
-<p>\[satis = \beta_0 − \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri\]</p></div>
+\[satis = \beta_0 + \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri\]</div>
 
 <p><br></p>
 
-<strong>Model 2</strong> provides a multilevel analysis which examines individual variation within and across groups, as well as permits non-independence of individual factors from the group level variables: <em>need to fix model 2 equation</em>
+<p><strong>Model 2</strong> provides a multilevel analysis which examines individual variation within and across groups, as well as permits non-independence of individual factors from the group level variables:</p>
 
 <div class="black">
-<p>\[satis = \beta_0 − \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri\]</p></div>
+\[satis = \beta_0 + \beta_1*Emissions + \beta_2*EnvironConcerns +\beta_3*emp + \beta_4*fam + \beta_5*age + \beta_6*gender + uj + ri\]</div>
 
 </article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Data</h2></hgroup><article  id="data">
 
@@ -144,15 +144,15 @@
 <li>The <strong>individual-level data</strong> is provided by:
 
 <ul>
-<li>The German Socio-Economic Panel Data GSOEP conducted by the German Institute for Economic Research DIW</li>
+<li>The German Socio-Economic Panel Data GSOEP conducted by the German Institute for Economic Research (DIW)</li>
 </ul></li>
 <li>The <strong>state-level data</strong> is gathered from four web-based sources:
 
 <ul>
-<li>State Initiative for Core Indicators LIKI</li>
+<li>State Initiative for Core Indicators (LIKI)</li>
 <li>Statista.com</li>
-<li>Environmental-Economic Accounting of the Bundeslaender UGRdL</li>
-<li>Agency for Renewable Agency of North Rhine-Westphalia AfEE</li>
+<li>Environmental-Economic Accounting of the Bundeslaender (UGRdL)</li>
+<li>Agency for Renewable Energy of North Rhine-Westphalia (AfEE)</li>
 </ul></li>
 </ul>
 
@@ -160,25 +160,25 @@
 
 <h3>Between Age and Life Satisfaction</h3>
 
-<p><img src="Final_Presentation_files/figure-html/unnamed-chunk-1-1.png" title="" alt="" width="720" /></p>
+<p><img src='Final_Presentation_files/figure-html/unnamed-chunk-1-1.png' title=''/><!-- --></p>
 
 </article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations</h2></hgroup><article  id="correlations-1">
 
 <h3>Between Energy Use and Life Satisfaction</h3>
 
-<p><img src="Final_Presentation_files/figure-html/unnamed-chunk-2-1.png" title="" alt="" width="720" /></p>
+<p><img src='Final_Presentation_files/figure-html/unnamed-chunk-2-1.png' title=''/><!-- --></p>
 
 </article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations</h2></hgroup><article  id="correlations-2">
 
 <h3>Between Environment Concern and Life Satisfaction</h3>
 
-<p><img src="Final_Presentation_files/figure-html/unnamed-chunk-3-1.png" title="" alt="" width="720" /></p>
+<p><img src='Final_Presentation_files/figure-html/unnamed-chunk-3-1.png' title=''/><!-- --></p>
 
 </article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations</h2></hgroup><article  id="correlations-3">
 
 <h3>Between Emissions and Life Satisfaction</h3>
 
-<p><img src="Final_Presentation_files/figure-html/unnamed-chunk-4-1.png" title="" alt="" width="720" /></p>
+<p><img src='Final_Presentation_files/figure-html/unnamed-chunk-4-1.png' title=''/><!-- --></p>
 
 </article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Results: Regressions</h2></hgroup><article  id="results-regressions" class="smaller flexbox vcenter">
 
@@ -549,10 +549,10 @@ F Statistic
 </ul></li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 1 (DV &amp; State)</h2></hgroup><article  id="multilevel-analysis-step-1-dv-state" class="smaller flexbox vcenter">
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 1 (DV &amp; State)</h2></hgroup><article  id="multilevel-analysis-step-1-dv-state">
 
 <div class="black">
-<p>\[Null.Model: satis=State-Intercept\]</p></div>
+\[Null.Model: satis=State-Intercept\]</div>
 
 <p><em>Null.Model</em>: how much of the average individual life satisfaction is explained by the residence of a respondent.</p>
 
@@ -562,11 +562,11 @@ F Statistic
 
 <p>Conclusion: MCM needed.</p>
 
-</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 2 (Between variance)</h2></hgroup><article  id="multilevel-analysis-step-2-between-variance" class="smaller flexbox vcenter">
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 2 (Between variance)</h2></hgroup><article  id="multilevel-analysis-step-2-between-variance">
 
 <div class="black">
-<p>\[Model.1: satis=environ+Emissions,
-            random=~1|Stateid\]</p></div>
+\[Model.1: satis=environ+Emissions,
+            random=~1|Stateid\]</div>
 
 <table style="text-align:center">
 
@@ -778,10 +778,10 @@ Bayesian Inf. Crit.
 
 </table>
 
-</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 3 (Within variance)</h2></hgroup><article  id="multilevel-analysis-step-3-within-variance" class="smaller flexbox vcenter">
+</article></slide><slide class=''><hgroup><h2><img src="Data/HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 3 (Within variance)</h2></hgroup><article  id="multilevel-analysis-step-3-within-variance">
 
 <div class="black">
-<p>\[Model.2: satis=environ+Emissions+age+fam+emp+gender\]</p></div>
+\[Model.2: satis=environ+Emissions+age+fam+emp+gender\]</div>
 
 <table style="text-align:center">
 
@@ -1052,6 +1052,7 @@ Bayesian Inf. Crit.
 <li>Endogeneity test: satisfaction and environmental concerns.</li>
 <li>Add a time-level component.</li>
 <li>Map indicators according to the Bundeslaender and regions.</li>
+<li>Interactions.</li>
 </ul></article></slide>
 
 
