@@ -36,27 +36,27 @@ life satisfaction.
 **Model 1** combines these two hypotheses: 
 
 <div class="black">
-$$satis = \beta_0 − \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri$$
+$$satis = \beta_0 + \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri$$
 </div>   
 
 <br>
 
 **Model 2** provides a multilevel analysis which examines individual variation within and across groups, as well as permits non-independence of individual factors from the group level variables:
-_need to fix model 2 equation_
+
 <div class="black">
-$$satis = \beta_0 − \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri$$
+$$satis = \beta_0 + \beta_1*Emissions + \beta_2*EnvironConcerns +\beta_3*emp + \beta_4*fam + \beta_5*age + \beta_6*gender + uj + ri$$
 </div>
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Data
 
 - The **individual-level data** is provided by:
-    + The German Socio-Economic Panel Data GSOEP conducted by the German Institute for Economic Research DIW
+    + The German Socio-Economic Panel Data GSOEP conducted by the German Institute for Economic Research (DIW)
 
 - The **state-level data** is gathered from four web-based sources:
-    + State Initiative for Core Indicators LIKI
+    + State Initiative for Core Indicators (LIKI)
     + Statista.com
-    + Environmental-Economic Accounting of the Bundeslaender UGRdL
-    + Agency for Renewable Agency of North Rhine-Westphalia AfEE
+    + Environmental-Economic Accounting of the Bundeslaender (UGRdL)
+    + Agency for Renewable Energy of North Rhine-Westphalia (AfEE)
     
     
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations 
@@ -122,7 +122,7 @@ stargazer::stargazer(Lpooled, Lfixeff, single.row = TRUE, dep.var.labels = "Life
     + Variation of slopes between IV and DV within a group (WITHIN variance)
 
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 1 (DV & State) {.smaller .flexbox .vcenter}
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 1 (DV & State) 
 <div class="black">
 $$Null.Model: satis=State-Intercept$$
 </div>   
@@ -146,7 +146,7 @@ Reliability & significance: substantially reliable (`r rel`) and significant (`r
 
 Conclusion: MCM needed.
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 2 (Between variance) {.smaller .flexbox .vcenter}
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 2 (Between variance) 
 <div class="black">
 $$Model.1: satis=environ+Emissions,
             random=~1|Stateid$$
@@ -164,7 +164,7 @@ stargazer::stargazer(Model.1, single.row = TRUE,
 ```
 
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 3 (Within variance) {.smaller .flexbox .vcenter}
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Multilevel analysis: Step 3 (Within variance) 
 <div class="black">
 $$Model.2: satis=environ+Emissions+age+fam+emp+gender$$
 </div> 
@@ -202,3 +202,4 @@ stargazer::stargazer(Model.2, single.row = TRUE,
 > - Endogeneity test: satisfaction and environmental concerns.
 > - Add a time-level component.
 > - Map indicators according to the Bundeslaender and regions.
+> - Interactions.
