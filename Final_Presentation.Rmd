@@ -123,7 +123,7 @@ $$Null.Model: satis=State-Intercept$$
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
 Null.Model <-lme(satis~1,random=~1|Stateid, data=data,
                   control=list(opt="optim"))
-Null.Model2 <-gls(satis~1,data=finaldata,
+Null.Model2 <-gls(satis~1,data=data,
                     control=list(opt="optim"))
 GREL.DAT<-GmeanRel(Null.Model)
 rel <- round(mean(GREL.DAT$MeanRel), digits=3)
