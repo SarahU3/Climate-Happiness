@@ -31,7 +31,7 @@ The hypotheses state:
 - **H2**: Reported individual concerns with the environment are, likewise, negatively reflected in the
 life satisfaction.
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" />  Models {.smaller}
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" />  Models {.smaller.flexbox .vcenter}
 
 **Model 1** combines these two hypotheses: 
 
@@ -151,7 +151,7 @@ $$Model.1: satis=environ+Emissions,
 <br>
 
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
-Model.1<-lme(satis~environ+Emissions,random=~1|Stateid, data=finaldata,
+Model.1<-lme(satis~environ+Emissions,random=~1|Stateid, data=data,
              control=list(opt="optim"))
 stargazer::stargazer(Model.1, single.row = TRUE,
     dep.var.labels = "Life Satisfaction",
@@ -168,7 +168,7 @@ $$Model.2: satis=environ+Emissions+age+fam+emp+gender$$
 <br>
 
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
-Model.2 <-lme(satis~environ+Emissions+age+fam+emp+gender,random=~age+fam+emp+gender|Stateid,data=finaldata,
+Model.2 <-lme(satis~environ+Emissions+age+fam+emp+gender,random=~age+fam+emp+gender|Stateid,data=data,
              control=list(opt="optim"))
 stargazer::stargazer(Model.2, single.row = TRUE,
     dep.var.labels = "Life Satisfaction", 
