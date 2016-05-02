@@ -31,7 +31,7 @@ The hypotheses state:
 - **H2**: Reported individual concerns with the environment are, likewise, negatively reflected in the
 life satisfaction.
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" />  Models {.smaller.flexbox .vcenter}
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" />  Models {.smaller .flexbox .vcenter}
 
 **Model 1** combines these two hypotheses: 
 
