@@ -31,7 +31,7 @@ The hypotheses state:
 - **H2**: Reported individual concerns with the environment are, likewise, negatively reflected in the
 life satisfaction.
 
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" />  Models
+## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" />  Models {.smaller}
 
 **Model 1** combines these two hypotheses: 
 
@@ -44,8 +44,11 @@ $$satis = \beta_0 + \beta_1*Emissions + \beta_2*EnvironConcerns + uj + ri$$
 **Model 2** provides a multilevel analysis which examines individual variation within and across groups, as well as permits non-independence of individual factors from the group level variables:
 
 <div class="black">
-$$satis = \beta_0 + \beta_1*Emissions + \beta_2*EnvironConcerns +\beta_3*emp + \beta_4*fam + \beta_5*age + \beta_6*gender + uj + ri$$
+$$satis = \beta_0 + \beta_1*Emissions + \beta_2*EnvironConcerns +\beta_3*emp + $$
+<br>
+$$\beta_4*fam + \beta_5*age + \beta_6*gender + uj + ri$$
 </div>
+
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Data
 
