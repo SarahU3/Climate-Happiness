@@ -69,14 +69,6 @@ ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(metho
 
 
 ## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations
-###Between Energy Use and Life Satisfaction
-
-``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
-
-ggplot(data = aggremeans, aes(x=Use, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE, color = "#CC0000") + labs(x = "Energy Use per Capita", y = "Life Satisfaction")
-```
-
-## <img src="Data//HertieCollaborativeDataLogo_v1.png" height="40px" width="20px" /> Correlations
 ###Between Environment Concern and Life Satisfaction
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
 ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE, color = "#CC0000") + labs(x = "Concern about the Environment", y = "Life Satisfaction")
@@ -97,7 +89,7 @@ Using Pooled (1) and Fixed Effects (2) Models
 ``` {r, echo = FALSE, warnings = FALSE, messages = FALSE, error = FALSE, results = 'asis'}
 #Declare X and Y variables for panel data
 Y1<-cbind(satis)
-X1<-cbind(Use, environ, gender, age, fam, emp)
+X1<-cbind(environ, gender, age, fam, emp)
 
 #set data as panel data
 pdataind<-plm.data(data, index=c("pid","Year"))
