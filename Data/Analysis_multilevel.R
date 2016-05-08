@@ -2,6 +2,7 @@
 setwd('~/GitHub/Climate-Happiness/Data')
 source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
 data <- read.csv("All_Merged_Data.csv")
+data2 <- read.csv('All_Merged_incl_Income.csv')
 attach(data)
 
 Null.Model<-lme(satis~1,random=~1|Stateid, data=data,
@@ -25,7 +26,7 @@ Model.1<-lme(satis~environ+Emissions,random=~1|Stateid, data=data,
 summary(Model.1)
 VarCorr(Model.1)
 
-Model.2<-lme(satis~environ+Emissions+age+fam+gender+emp,random=~age+fam+gender+emp|Stateid,data=finaldata,
+Model.2<-lme(satis~environ+Emissions+age+fam+gender+emp,random=~age+fam+gender+emp|Stateid,data=data,
              control=list(opt="optim"))
 
 summary(Model.2)
@@ -39,6 +40,12 @@ Model.4<-lme(satis~environ+age+Emissions,random=~age|Stateid, data=data,
 summary(Model.4)
 Model.4a<-update(Model.4,random=~1|Stateid)
 (anova(Model.4,Model.4a))$L.Ratio #L.Ratio is the sig test (significant)
+
+### Income
+Model.Income<-lme(satis~environ+Emissions+plc0013+gender+age+fam,random=~plc0013+gender+age+fam|Stateid,data=data2,
+             control=list(opt="optim")) 
+# employment should be excluded from the income model
+
 
 # Interaction
 Model.I<-lme(satis~environ+emp+Emissions+fam*age,
@@ -55,3 +62,16 @@ m_fam<-lme(satis~fam*age,
              random=~1+age*fam|Stateid,data=data,control=list(opt="optim"))
 library(interplot)
 interplot(m = m_fam, var1 = "fam", var2 = "age")
+
+
+#### Trial for income (conclusion: variaiton is reliable and significant) ###
+Null.Model<-lme(satis~1,random=~1|Stateid, data=data2,
+                control=list(opt="optim"))
+GREL.DAT<-GmeanRel(Null.Model)
+x <- round(mean(GREL.DAT$MeanRel), digits=3)
+
+Null.Model.2<-gls(satis~1,data=data2,
+                  control=list(opt="optim"))
+sigtest <- (logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2) #variation is significant
+
+
