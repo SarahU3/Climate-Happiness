@@ -60,6 +60,14 @@ Simultaneously, the state efforts to curb their emissions and preserve local env
 
 Once the names of the Bundeslaender and the time frame of the three produced data frames match, they are easily merged in R into a final data set.
 
+
+``` {r variables, echo=FALSE, results = "asis"}
+varnames <- names(data)
+vardescrip <- c("Year", "State", "State emissions in tons of carbon dioxide per capita", "% renewable energy in state's primary energy supply", "% renewable energy in state's electricity supply", "State energy use in giga Joules per capita", "personal id", "Year", "Employment status", "Concern about the environment", "Gender", "Birth year", "Marriage status", "Level of life satisfaction", "State", "Level of life satisfaction", "Satisfaction category", "Level of life satisfaction", "Concern about the environment, scale of 1 (not concerned at all) to 3 (very concerned)", "State", "Gender - 1 for male, 2 for female", "Age", "Employment status - 1 for not employed, 2 for employed", "Family status - 1 for single, 2 for with a partner")
+varbound <- cbind(varnames, vardescrip)
+vartable <- xtable(varbound)
+print(vartable, type = "LaTex")
+```
 *Do we want to include descriptive statistics here?*
 
 
