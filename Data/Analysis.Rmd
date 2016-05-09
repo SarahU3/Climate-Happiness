@@ -33,8 +33,13 @@ Once the names of the Bundeslaender and the time frame of the three produced dat
 
 
 ```{r, include=FALSE}
-setwd('~/GitHub/Climate-Happiness/Data')
-source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
+library(repmis)
+
+possibles <- c('~/GitHub', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/')
+set_valid_wd(possibles)
+
+source('Climate-Happiness/Data/SourceFile.R')
 data <- read.csv("All_Merged_Data.csv")
 attach(data)
 ```

@@ -28,8 +28,9 @@ library(xtable)
 library(stargazer)
 
 # Setting relative path
-getwd()
-setwd('~/GitHub/Climate-Happiness/Data')
+possibles <- c('~/GitHub', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/')
+set_valid_wd(possibles)
 
 #----------------------------------------------------------#
 ### 2. Data on renewable energy in Bundeslaender (Source: LIKI) ###
