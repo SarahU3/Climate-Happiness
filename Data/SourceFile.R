@@ -132,6 +132,28 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 ## | means "and", //is used for special characteristics such as *
 
 #---------------------------------------------------------#
+### Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
+TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
+names(TotalEmissions) <- c("State", "Year", "CO2Tons")
+
+### Forming Emissions per km^2
+PopURL <- "http://www.statistikportal.de/Statistik-Portal/de_jb01_jahrtab1.asp"
+AreaTableHTML <- PopURL %>% read_html() %>%
+  html_nodes("#tblde") %>%
+  html_table( ,fill=TRUE) %>% 
+  as.data.frame
+# clean resulting table
+AreaTable <- AreaTableHTML[c(5:20), 1:2]
+names(AreaTable) <- c("State", "sqkm")
+# need to convert sqkm to numeric
+
+# merge emissions and area, calculate emissions/sq km
+landemissions <- merge(TotalEmissions,AreaTable,by="State")
+landemissions$CO2Tons <- as.numeric(landemissions$CO2Tons)
+landemissions$sqkm <- as.numeric(landemissions$sqkm)
+
+
+#---------------------------------------------------------#
 ### 4. Merging GSOEP, Emissions and Energy files
 
 # Tranforming GSOEP dta file to csv for merging (Source:DIW)
@@ -145,6 +167,7 @@ write.csv(GSOEP, file = "GSOEP.csv", row.names = FALSE)
 emissions = read.csv("Emissions_Final.csv")
 GSOEP = read.csv("GSOEP.csv")
 energy = read.csv("NRG.final.csv")
+
 
 # Merge all 3 files together using State and Year as unique IDs
 alldata <- merge(emissions,energy,by=c("Year","State"))
