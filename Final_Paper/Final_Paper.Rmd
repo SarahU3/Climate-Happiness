@@ -68,6 +68,11 @@ varbound <- cbind(varnames, vardescrip)
 vartable <- xtable(varbound)
 print(vartable, type = "LaTex")
 ```
+
+``` {r insert scatterplots, echo=FALSE}
+source('~/GitHub/Climate-Happiness/Final_Paper/Graphsourcefile.R')
+
+```
 *Do we want to include descriptive statistics here?*
 
 
