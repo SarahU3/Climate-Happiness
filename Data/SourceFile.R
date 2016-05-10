@@ -72,7 +72,7 @@ NRG.final <- as.data.frame(sapply(NRG2, gsub, pattern="X",replacement=""))
 export(NRG.final, file="NRG.final.csv") 
 
 #----------------------------------------------------------#
-### 3. Data for Bundeslaender CO2 emissions (Source: Statista, UGRdL, & AfEE) ###
+### 3. Data for Bundeslaender CO2 per capita emissions (Source: Statista, UGRdL, & AfEE) ###
 
 # Merging files using file name pattern (all States are covered except NRW)
 
@@ -132,7 +132,7 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 ## | means "and", //is used for special characteristics such as *
 
 #---------------------------------------------------------#
-### Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
+### 4. Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
 TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
 sapply(TotalEmissions, function(f){is.na(f)<-which(f == '...');f}) 
 names(TotalEmissions) <- c("State", "Year", "CO2Tons")
@@ -158,28 +158,30 @@ landemissions$CO2perSqKm <- landemissions$CO2Tons/landemissions$sqkm*1000
 
 
 #---------------------------------------------------------#
-### 4. Merging GSOEP, Emissions and Energy files
+### 5. Merging GSOEP, Emissions and Energy files
 
 # Tranforming GSOEP dta file to csv for merging (Source:DIW)
 GSOEP = read.dta(file.path("GSOEP", "SOEP_short12.dta"))
+GSOEP_income =  read.dta(file.path("GSOEP", "SOEP_income12.dta"))
 
-# And then you simply write it to CSV
-
+# Write it to CSV
 write.csv(GSOEP, file = "GSOEP.csv", row.names = FALSE)
+write.csv(GSOEP_income, file = "GSOEP_income.csv", row.names = FALSE)
+
 
 # Read all files to be merged together
 emissions = read.csv("Emissions_Final.csv")
 GSOEP = read.csv("GSOEP.csv")
+GSOEP_income = read.csv("GSOEP_income.csv")
 energy = read.csv("NRG.final.csv")
 
 
-# Merging GSEOP & persq/km emissions
-currentdata <- merge(GSOEP, landemissions, by=c("Year","State"))
-# Merge all 3 files together using State and Year as unique IDs
-alldata <- merge(emissions,energy,by=c("Year","State"))
-finaldata = merge(alldata,GSOEP,by=c("Year","State"))
+# Merging GSOEP & persq/km emissions & overall emissions
+data <- merge(GSOEP, landemissions, by=c("Year","State"))
+incomedata <- merge(GSOEP_income, landemissions, by=c('Year', 'State'))
+finaldata <- merge(incomedata, emissions, by=c('Year', 'State'))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
-
+finaldata[, c(5,22,23,26,32,33)] <- sapply(finaldata[, c(5,22,23,26,32,33)], as.numeric) # specifying columns to convert into numeric
 
 # XConvert State variable into numeric
 finaldata$Stateid <- as.numeric(as.factor(finaldata$State))
@@ -196,11 +198,9 @@ finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
 # Export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
 
+# Check the status of the data
 sapply(finaldata, class)
 sapply(finaldata, mode)
-### QUESTION: REGRESSIONS WITH FACTOR VARIABLES?
-finaldata[, c(3,18,19,22)] <- sapply(finaldata[, c(3,18,19,22)], as.numeric) # specifying columns to convert into numeric
-
 #---------------------------------------------------------#
 # Appendix 1: NRW information was missing from statista. Therefore, info on NRW (1990, 1995)
 # was taken from UGRdL Gase table (manually inserted into the excel file), 
