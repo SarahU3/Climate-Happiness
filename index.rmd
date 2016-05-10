@@ -19,13 +19,13 @@ data <- read.csv("All_Merged_Data.csv")
 attach(data)
 
 ## Round Emissions
-data <- transform(data,  Emissions=round(Emissions,1))
-
-#Transform yearly data to numeric
-transform(data, Year = as.numeric((Year)))
+data <- transform(data,  Emissions=round (Emissions,1))
 
 #aggregate yearly emissions data by state
 agg <- aggregate(cbind(Emissions) ~ State + Year, FUN=mean, data=data)
+
+#Transform yearly data to numeric
+transform(data, Year = is.numeric(Year))
 
 
 #create new vector with state codes
@@ -37,8 +37,8 @@ New <- FindReplace(data=agg, Var = "State", replaceData = Replaces, from = "from
 
 
 #set mins and max, start/end dates
-startYear <- min(New$Year)
-endYear <- max((New)$Year)
+startYear <- min(na.omit(New)$Year)
+endYear <- max(na.omit(New)$Year)
 minEmissions <- floor(min(New$Emissions, na.rm=TRUE))
 maxEmissions <- ceiling(max(New$Emissions, na.rm=TRUE))
 
@@ -49,10 +49,10 @@ myColourAxis <- paste("{values: [0, 5, 10, 15, 20, 30, 35], ",
 ## Create Geo Charts for each year
 geoChartDE <- list(displayMode="regions",
                    region="DE", 
-                   resolution="provinces",
+                   resolution="provinces"
                    legend="{numberFormat:'#,###.00'}") 
 
-plot(
+
 gvisData <- by(New, list(year=New$Year), function(x){
   
 	year <- x$year[1]	
@@ -64,7 +64,7 @@ gvisData <- by(New, list(year=New$Year), function(x){
 	.data <- sub("\\] ()", "\\] = function ", .data)
 	return(.data)	
 }
-))
+)
 
 
 animation <- sprintf("
@@ -79,7 +79,7 @@ Animation.playAnimation = function() {
    	return;
   }
   document.getElementById('chart-header').innerHTML =
-  'Emissions per Person in <b>'
+  'Emissions per person in <b>'
  + Animation.currentYear + '</b> (States with no data shown in white)';
   if (Animation.currentYear > Animation.startYear) {
   	Animation.divCharts[Animation.currentYear-1].style.display = 'none';
@@ -149,7 +149,8 @@ htmlHead <- '
      }
   </style>
 <title>Emissions per person by State</title>
-
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
 '
 htmlFoot <-'
 </script>
