@@ -173,6 +173,8 @@ GSOEP = read.csv("GSOEP.csv")
 energy = read.csv("NRG.final.csv")
 
 
+# Merging GSEOP & persq/km emissions
+currentdata <- merge(GSOEP, landemissions, by=c("Year","State"))
 # Merge all 3 files together using State and Year as unique IDs
 alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,GSOEP,by=c("Year","State"))
