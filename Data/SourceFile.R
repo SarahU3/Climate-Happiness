@@ -28,7 +28,7 @@ library(xtable)
 library(stargazer)
 
 # Setting relative path
-possibles <- c('~/GitHub', 
+possibles <- c('~/GitHub/Climate-Happiness/Data', 
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/')
 set_valid_wd(possibles)
 
@@ -135,22 +135,25 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 ### Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
 TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
 names(TotalEmissions) <- c("State", "Year", "CO2Tons")
+TotalEmissions$CO2Tons <- as.numeric(TotalEmissions$CO2Tons)
 
 ### Forming Emissions per km^2
-PopURL <- "http://www.statistikportal.de/Statistik-Portal/de_jb01_jahrtab1.asp"
+PopURL <- "http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp"
 AreaTableHTML <- PopURL %>% read_html() %>%
-  html_nodes("#tblde") %>%
+  html_nodes("#tblen") %>%
   html_table( ,fill=TRUE) %>% 
   as.data.frame
-# clean resulting table
+# clean resulting data frame
 AreaTable <- AreaTableHTML[c(5:20), 1:2]
 names(AreaTable) <- c("State", "sqkm")
 # need to convert sqkm to numeric
+AreaTable$sqkm <- gsub(",","",AreaTable$sqkm)
+AreaTable$sqkm <- as.numeric(as.character(AreaTable$sqkm, dec="."))
+
 
 # merge emissions and area, calculate emissions/sq km
 landemissions <- merge(TotalEmissions,AreaTable,by="State")
-landemissions$CO2Tons <- as.numeric(landemissions$CO2Tons)
-landemissions$sqkm <- as.numeric(landemissions$sqkm)
+landemissions$CO2perSqKm <- landemissions$CO2Tons/landemissions$sqkm*1000
 
 
 #---------------------------------------------------------#
