@@ -52,6 +52,7 @@ geoChartDE <- list(displayMode="regions",
                    resolution="provinces",
                    legend="{numberFormat:'#,###.00'}") 
 
+plot(
 gvisData <- by(New, list(year=New$Year), function(x){
   
 	year <- x$year[1]	
@@ -63,21 +64,8 @@ gvisData <- by(New, list(year=New$Year), function(x){
 	.data <- sub("\\] ()", "\\] = function ", .data)
 	return(.data)	
 }
-)
-
-plot(
-  gvisData <- by(New, list(year=New$Year), function(x){
-	year <- x$year[1]	
-	g <- gvisGeoChart(x, locationvar = "State", 
-               colorvar = "Emissions",
-               options=geoChartDE,
-               chartid=paste("[", year - startYear +1, "]", sep=""))
-	.data <- g$html$chart["jsData"]
-	.data <-gsub("function ", "", .data)
-	.data <- sub("\\] ()", "\\] = function ", .data)
-	return(.data)	
-}
 ))
+
 
 animation <- sprintf("
 var gvisData = {};
@@ -92,7 +80,7 @@ Animation.playAnimation = function() {
   }
   document.getElementById('chart-header').innerHTML =
   'Emissions per Person in <b>'
- + Animation.currentYear + '</b> (Provinces with no data shown in white)';
+ + Animation.currentYear + '</b> (States with no data shown in white)';
   if (Animation.currentYear > Animation.startYear) {
   	Animation.divCharts[Animation.currentYear-1].style.display = 'none';
   }
@@ -191,83 +179,6 @@ plot(Animated.Geo.Chart)
 
 ```
 
-```{r, echo=FALSE}
-## Analyse change over time
-
-## Filter out the first and last year
-fl.cntryData <- subset(cntryData, year %in% c(startYear, endYear))
-## Reshape the data into a wide format to calculate the differences
-wfl.cntryData <- reshape(fl.cntryData, v.names=c("life.expectancy", "population"),
-                   idvar=c("country","iso2c"), timevar="year", direction="wide")
-wfl.cntryData$life.expectancy.change <- with(wfl.cntryData,
-                                             life.expectancy.2009 -
-                                             life.expectancy.1960)
-
-myColourAxis2 <- paste("{values: [-5, 0, 5, 10, 15, 25, 30], ",
-                       "colors: [\'red\', \'#D0D1E6\', \'#A6BDDB\', \'#74A9CF\', \'#3690C0\',",
-                       "\'#0570B0\', \'green\']}") 
-
-Chart.Diff <- gvisGeoChart(wfl.cntryData,
-                                "iso2c", "life.expectancy.change",
-                                options=list(
-                                  width=556, height=347,
-                                  colorAxis=myColourAxis2),
-                                chartid="Life_Expectancy_Change")
-plot(Chart.Diff)
-
-
-### Summarise and plot data in a table
-
-tblData <- wfl.cntryData[,c("iso2c","name",
-                            "life.expectancy.2009",
-                            "life.expectancy.change",
-                            "population.2009")]
-
-## Show population in millions
-tblData$population.2009 <- round(tblData$population.2009/1e6, 1)
-
-names(tblData) <- c("Code", "Country", "Life expt. at birth in  2009",
-                    "Difference in life exp. since 1960",
-                    "Population in 2009 (millions)")
-
-tblChart <- gvisTable(tblData, options=list(width=540, height=380),
-                      chartid="Summary_table") 
-plot(tblChart)
-
-
-## Analyse change in distribution over time
-
-probs <- seq(0,1,0.2)
-
-## Calculate the quantiles of life expectancy weighted by population
-wtdDistr <- do.call("rbind",
-                    as.list(
-                            by(cntryData,
-                               list(year=cntryData$year), 
-                               function(x){
-                                 if(nrow(na.omit(x))>10){
-                                   data.frame(year=x$year[1],
-                                              t(wtd.quantile(x$life.expectancy, x$population,
-                                                              probs=probs, na.rm=TRUE)))
-                                 }
-                               }
-                               )))
-
-names(wtdDistr) <- c("year", paste("wtd.", 100*probs, "%", sep=""))
-
-## Reverse columns 7 to 2, so that the legend will be in the same
-## order as the lines in the plot
-wtdDistr <- wtdDistr[,c(1,7:2)]
-
-Chart.wtdDistr <- gvisLineChart(wtdDistr, options=list(
-           title="Distribution of life expectancy weighted by population",
-           width=556, height=347,
-           hAxis="{title: 'Year'}",
-           vAxis="{title: 'Life expectancy at birth in years'}"),                   
-           chartid="life_expectancy_distribution"
-           )
-
-plot(Chart.wtdDistr)
 
 ```
 
