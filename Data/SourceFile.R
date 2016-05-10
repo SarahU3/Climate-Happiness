@@ -179,6 +179,7 @@ currentdata <- merge(GSOEP, landemissions, by=c("Year","State"))
 alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,GSOEP,by=c("Year","State"))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 # add column for numerical Land code
@@ -186,6 +187,9 @@ finaldata$LandCode[finaldata$State == 'Baden-WÃ¼rttemberg'] <- 20228
 
 #5. export merged data to single CSV file
 =======
+=======
+
+>>>>>>> master
 
 # XConvert State variable into numeric
 finaldata$Stateid <- as.numeric(as.factor(finaldata$State))
@@ -200,6 +204,9 @@ finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
 # Does not work - reordering data confuses lme
 
 # Export merged data to single CSV file
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 export(finaldata, file="All_Merged_Data.csv")
 
