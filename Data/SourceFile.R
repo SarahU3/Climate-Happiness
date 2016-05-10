@@ -136,6 +136,7 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
 sapply(TotalEmissions, function(f){is.na(f)<-which(f == '...');f}) 
 names(TotalEmissions) <- c("State", "Year", "CO2Tons")
+TotalEmissions$CO2Tons[TotalEmissions$CO2Tons=='...'] <- NA
 # transform(TotalEmissions, CO2Tons = as.numeric(CO2Tons))
 TotalEmissions[, c(2,3)] <- sapply(TotalEmissions[, c(2,3)], as.numeric)
 
@@ -183,21 +184,10 @@ data <- merge(GSOEP, landemissions, by=c("Year","State"))
 incomedata <- merge(GSOEP_income, landemissions, by=c('Year', 'State'))
 finaldata <- merge(incomedata, emissions, by=c('Year', 'State'))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-# add column for numerical Land code
-finaldata$LandCode[finaldata$State == 'Baden-WÃ¼rttemberg'] <- 20228
 
 #5. export merged data to single CSV file
-=======
-=======
-
->>>>>>> master
-=======
-finaldata[, c(5,22,23,26)] <- sapply(finaldata[, c(5,22,23,26,32,33)], as.numeric) # specifying columns to convert into numeric
->>>>>>> master
+finaldata[, c(5,22,23,26,32,33)] <- sapply(finaldata[, c(5,22,23,26,32,33)], as.numeric) # specifying columns to convert into numeric
 
 # XConvert State variable into numeric
 finaldata$Stateid <- as.numeric(as.factor(finaldata$State))
@@ -212,10 +202,6 @@ finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
 # Does not work - reordering data confuses lme
 
 # Export merged data to single CSV file
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 export(finaldata, file="All_Merged_Data.csv")
 
 # Check the status of the data
