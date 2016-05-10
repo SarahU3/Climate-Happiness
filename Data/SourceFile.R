@@ -135,6 +135,7 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 ### Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
 TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
 names(TotalEmissions) <- c("State", "Year", "CO2Tons")
+TotalEmissions$CO2Tons[TotalEmissions$CO2Tons=='...'] <- NA
 TotalEmissions$CO2Tons <- as.numeric(TotalEmissions$CO2Tons)
 
 ### Forming Emissions per km^2
