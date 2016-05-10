@@ -1,33 +1,47 @@
-# Source file for assignment 3 and final projects
+# DATA GATHERING AND MANIPULATION (see "Section 2. Data" in the Assignment 3)
+# Source file for assignment 3 (Final Research Project)
 # Authors: Katie, Meerim, and Sarah
 
-# load packages
+### 1. Preparation ###
+#  Necessary packages
 library(dplyr)
 library(car) #scatterplots with panel data
 library(httr)
 library(foreign) #to read .dta files
-library(rJava)
-library(xlsxjars)
-library(xlsx)
+library(rJava) # necessary for xlsxjar package
+library(xlsxjars) # necessary for xlsx package
+library(xlsx) # to read xls files
 library(ggplot2)
-library(tidyr) #
+library(tidyr) # tidy tables
 library(repmis)
-library(rio)
+library(rio) # export files from R
+library(XML) # read URL links
 library(xml2)
-library(rvest)
-library(psych) #multilevel analysis
-library(plm) #panel data regression
-library(gsubfn) #replacing characters
-getwd()
-setwd('~/GitHub/Climate-Happiness/Data')
-# get data on renewable energy in Bundeslaender
-URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi'
-# but manually downloaded Excel spreadsheets
-messynrgprime <- read.xlsx("export_land_primary.xlsx", 1, startRow = 4, endRow = 21)
-messynrgelec <- read.xlsx("export_land_strom.xlsx", 1, startRow = 4, endRow = 21)
-messynrguse <- read.xlsx("export_land_energyuse.xlsx", 1, startRow = 4, endRow = 21)
+library(rvest) # exporting tables
+library(psych) # multilevel analysis
+library(plm) # panel data regression
+library(gsubfn) # replacing characters
+library(multilevel) # multilevel analysis
+library(nlme) # GLM models
+library(texreg)
+library(xtable)
+library(stargazer)
 
-# convert K.D. (keine Daten) to NA
+# Setting relative path
+possibles <- c('~/GitHub/Climate-Happiness/Data', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/Data')
+set_valid_wd(possibles)
+
+#----------------------------------------------------------#
+### 2. Data on renewable energy in Bundeslaender (Source: LIKI) ###
+
+URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi'
+# BUT manually downloaded Excel spreadsheets
+messynrgprime <- read.xlsx(file.path("Energy", "export_land_primary.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
+messynrgelec <- read.xlsx(file.path("Energy","export_land_strom.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
+messynrguse <- read.xlsx(file.path("Energy","export_land_energyuse.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
+
+# Convert K.D. (keine Daten) to NA
 tidynrguse <- as.data.frame(sapply(messynrguse, 
                               gsub, pattern="K.D.", replacement="."))
 
@@ -37,10 +51,10 @@ tidynrgelec <- as.data.frame(sapply(messynrgelec,
 tidynrgprime <- as.data.frame(sapply(messynrgprime, 
                                    gsub, pattern="K.D.", replacement="."))
 
-# transform to numeric values, need to correct decimal places and loop but major issue: , instead of .
+# Transform to numeric values, need to correct decimal places and loop but major issue: , instead of .
 transform(tidynrgelec, X1990 = as.numeric(X1990))
 
-# convert data to tidy format (one variable per column) currently doesn't work bc they're not numerical
+# Convert data to tidy format (one variable per column) currently doesn't work bc they're not numerical
 NRGprime <- gather(tidynrgprime, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
 NRGelec <- gather(tidynrgelec, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
 NRGuse <- gather(tidynrguse, year, percentrenewable, 2:26, na.rm = FALSE, convert = TRUE)
@@ -53,18 +67,19 @@ NRG <- merge(NRGprime, NRGelec, by=c("Year","State"))
 NRG2 <- merge(NRG, NRGuse, by=c("Year","State"))
 
 
+# Merge and export data files into cvs
 NRG.final <- as.data.frame(sapply(NRG2, gsub, pattern="X",replacement=""))
 export(NRG.final, file="NRG.final.csv") 
 
+#----------------------------------------------------------#
+### 3. Data for Bundeslaender CO2 emissions (Source: Statista, UGRdL, & AfEE) ###
 
-### R-script for cleaning and merging excel files for CO2 emissions ###
+# Merging files using file name pattern (all States are covered except NRW)
 
-# 1. Merging files using file name pattern
-
-all_files <- list.files(pattern="statistic_id")
+all_files <- list.files(path='Emissions', pattern="statistic_id")
 all_subbed <- NULL
 
-# 2. Cleaning in a loop
+# Cleaning in a loop
 for (i in all_files) {
   message(i)
   
@@ -91,8 +106,7 @@ for (i in all_files) {
   }
 }
 
-# 3. Save as .csv
-# Add file directory as needed
+# Save as .csv
 export(all_subbed, file = 'Emissions_cleaned.csv')
 
 # # EXTRA: Cleaning individual file
@@ -101,45 +115,102 @@ export(all_subbed, file = 'Emissions_cleaned.csv')
 # test <- read.xlsx(all_files[3], sheetIndex=2, startRow=3, colIndex=2:2, endRow=3, header=FALSE)
 # data$Bundesland <- paste(test[1,1]) #create a new column with same values for all rows
 
-# 4. Extract missing info on NRW, while also modifying the excel file (see Appendix 1)
-library(XML)
+# Extract missing info on NRW, while also modifying the excel file (see Appendix 1)
 all.link <- 'http://www.ugrdl.de/tab34.htm'
 Gase.table = readHTMLTable(all.link, header=T, which=1, stringsAsFactors=F)
 names(Gase.table) <- c("State", "1990", "1995", "2000", "2005", "2010", "2011", "2011*", "2012")
 export(Gase.table, file = 'Gase.csv')
 
-# 5. Merging files
-NRW <- read.csv('NRW.csv', header=TRUE) #original file was amended by combining data from "Gase" and "foederal_erneuerbar-Wirtschaft_Datenblatt"
+# Merging CO2 files
+NRW <- read.csv(file.path("Emissions", 'NRW.csv'), header=TRUE) #original file was amended by combining data from "Gase" and "foederal_erneuerbar-Wirtschaft_Datenblatt"
 general <- rbind(all_subbed, NRW)
 
-# 6. Cleaning up names
+# Cleaning up names
 Final <- as.data.frame(sapply(general, 
                               gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012| bis 2010| bis 2011|\\**",replacement=""))
 export(Final, file="Emissions_Final.csv") ## has no extra words
 ## | means "and", //is used for special characteristics such as *
 
-### R-Script for Merging GSOEP, Emissions and Energy files
+#---------------------------------------------------------#
+### Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
+TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
+sapply(TotalEmissions, function(f){is.na(f)<-which(f == '...');f}) 
+names(TotalEmissions) <- c("State", "Year", "CO2Tons")
+transform(TotalEmissions, CO2Tons = as.numeric(CO2Tons))
 
-#1. Tranforming GSOEP dta file to csv for merging
+### Forming Emissions per km^2
+PopURL <- "http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp"
+AreaTableHTML <- PopURL %>% read_html() %>%
+  html_nodes("#tblen") %>%
+  html_table( ,fill=TRUE) %>% 
+  as.data.frame
+# clean resulting data frame
+AreaTable <- AreaTableHTML[c(5:20), 1:2]
+names(AreaTable) <- c("State", "sqkm")
+# need to convert sqkm to numeric
+AreaTable$sqkm <- gsub(",","",AreaTable$sqkm)
+AreaTable$sqkm <- as.numeric(as.character(AreaTable$sqkm, dec="."))
 
-GSOEP = read.dta("SOEP_short12.dta")
 
-#2. And then you simply write it to CSV
+# merge emissions and area, calculate emissions/sq km
+landemissions <- merge(TotalEmissions,AreaTable,by="State")
+landemissions$CO2perSqKm <- landemissions$CO2Tons/landemissions$sqkm*1000
+
+
+#---------------------------------------------------------#
+### 4. Merging GSOEP, Emissions and Energy files
+
+# Tranforming GSOEP dta file to csv for merging (Source:DIW)
+GSOEP = read.dta(file.path("GSOEP", "SOEP_short12.dta"))
+
+# And then you simply write it to CSV
 
 write.csv(GSOEP, file = "GSOEP.csv", row.names = FALSE)
 
-#3. Read all files to be merged together
+# Read all files to be merged together
 emissions = read.csv("Emissions_Final.csv")
 GSOEP = read.csv("GSOEP.csv")
 energy = read.csv("NRG.final.csv")
 
-#4. Merge all 3 files together using State and Year as unique IDs
+
+# Merging GSEOP & persq/km emissions
+currentdata <- merge(GSOEP, landemissions, by=c("Year","State"))
+# Merge all 3 files together using State and Year as unique IDs
 alldata <- merge(emissions,energy,by=c("Year","State"))
 finaldata = merge(alldata,GSOEP,by=c("Year","State"))
+finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
 
+<<<<<<< HEAD
 # add column for numerical Land code
 finaldata$LandCode[finaldata$State == 'Baden-WÃ¼rttemberg'] <- 20228
 
 #5. export merged data to single CSV file
+=======
+
+# XConvert State variable into numeric
+finaldata$Stateid <- as.numeric(as.factor(finaldata$State))
+                             
+
+finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
+                             labels = levels(finaldata$State))
+
+# Relabel environmental concerns
+#finaldata$environ <- factor(finaldata$environ, levels=rev(levels(finaldata$environ)), labels=c("Not at all", "Somewhat", "Very"))
+#finaldata$env <- as.numeric(finaldata$environ)
+# Does not work - reordering data confuses lme
+
+# Export merged data to single CSV file
+>>>>>>> master
 export(finaldata, file="All_Merged_Data.csv")
+
+sapply(finaldata, class)
+sapply(finaldata, mode)
+### QUESTION: REGRESSIONS WITH FACTOR VARIABLES?
+finaldata[, c(3,18,19,22)] <- sapply(finaldata[, c(3,18,19,22)], as.numeric) # specifying columns to convert into numeric
+
+#---------------------------------------------------------#
+# Appendix 1: NRW information was missing from statista. Therefore, info on NRW (1990, 1995)
+# was taken from UGRdL Gase table (manually inserted into the excel file), 
+# while the data on other years was extracted (with R) from the AfEE website (from 2000 and on).
+# The CO2 emissions for all States are measured in annual per capita indicators, so all Bundeslaender match.
 
