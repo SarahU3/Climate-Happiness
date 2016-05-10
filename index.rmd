@@ -3,11 +3,16 @@
 ```{r, echo=FALSE}
 ## Here we animate the emissions by country from 1990
 
+possibles <- c('~/GitHub/Climate-Happiness/Data', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/Data')
+set_valid_wd(possibles)
+
 library (lattice)
 library(survival)
 library(ggplot2)
 library(Formula)
 library(Hmisc)
+suppressPackageStartupMessages(library(googleVis))
 
 #load dataset
 data <- read.csv("All_Merged_Data.csv")
@@ -16,30 +21,42 @@ attach(data)
 ## Round Emissions
 data <- transform(data,  Emissions=round(Emissions,1))
 
+#Transform yearly data to numeric
 transform(data, Year = as.numeric((Year)))
 
+#aggregate yearly emissions data by state
 agg <- aggregate(cbind(Emissions) ~ State + Year, FUN=mean, data=data)
 
-startYear <- min(agg$Year)
-endYear <- max((agg)$Year)
-minEmissions <- floor(min(agg$Emissions, na.rm=TRUE))
-maxEmissions <- ceiling(max(agg$Emissions, na.rm=TRUE))
+
+#create new vector with state codes
+
+Replaces <- data.frame(from = c("Baden-Wuerttemberg", "Bayern", "Bremen", "Berlin", "Brandenburg", "Hamburg" , "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz", "Sachsen", "Sachsen-Anhalt", "Schleswig-Holstein", "Saarland", "Thueringen"), to = c("DE-BW", "DE-BY", "DE-HB", "DE-BE", "DE-BB", "DE-HH", "DE-HE", "DE-MV", "DE-NI", "DE-NW", "DE-RP", "DE-SN", "DE-ST", "DE-SH", "DE-SL", "DE-TH"))
+
+New <- FindReplace(data=agg, Var = "State", replaceData = Replaces, from = "from", to = "to",
+  exact = TRUE, vector = FALSE)
+
+
+#set mins and max, start/end dates
+startYear <- min(New$Year)
+endYear <- max((New)$Year)
+minEmissions <- floor(min(New$Emissions, na.rm=TRUE))
+maxEmissions <- ceiling(max(New$Emissions, na.rm=TRUE))
 
 myColourAxis <- paste("{values: [0, 5, 10, 15, 20, 30, 35], ",
                       "colors: [\'red\', \'#D0D1E6\', \'#A6BDDB\', \'#74A9CF\',",
                       " \'#3690C0\', \'#0570B0\', \'green\']}")
 
 ## Create Geo Charts for each year
-geoChartDE <- list(region="DE", 
+geoChartDE <- list(displayMode="regions",
+                   region="DE", 
                    resolution="provinces",
                    legend="{numberFormat:'#,###.00'}") 
 
-gvisData <- by(agg, list(year=agg$Year), function(x){
+gvisData <- by(New, list(year=New$Year), function(x){
   
 	year <- x$year[1]	
 	g <- gvisGeoChart(x,  "State", "Emissions",
-		options=list(displayMode="regions"), 
-		resolution="provinces",
+		options=geoChartDE,
 		 chartid=paste("[", year - startYear +1, "]", sep=""))
 	.data <- g$html$chart["jsData"]
 	.data <-gsub("function ", "", .data)
@@ -48,6 +65,19 @@ gvisData <- by(agg, list(year=agg$Year), function(x){
 }
 )
 
+plot(
+  gvisData <- by(New, list(year=New$Year), function(x){
+	year <- x$year[1]	
+	g <- gvisGeoChart(x, locationvar = "State", 
+               colorvar = "Emissions",
+               options=geoChartDE,
+               chartid=paste("[", year - startYear +1, "]", sep=""))
+	.data <- g$html$chart["jsData"]
+	.data <-gsub("function ", "", .data)
+	.data <- sub("\\] ()", "\\] = function ", .data)
+	return(.data)	
+}
+))
 
 animation <- sprintf("
 var gvisData = {};
