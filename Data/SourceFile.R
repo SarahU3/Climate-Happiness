@@ -68,6 +68,9 @@ for (i in all_files) {
   }
 }
 
+
+## Cleanup for no extra words, | means "and", //is used for special characteristics such as *
+all_subbed <- as.data.frame(sapply(all_subbed, gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012| bis 2010| bis 2011|\\**", replacement=""))
 # Save as .csv
 export(all_subbed, file = 'Emissions_cleaned.csv')
 
@@ -85,13 +88,13 @@ export(Gase.table, file = 'Gase.csv')
 
 # Merging CO2 files
 NRW <- read.csv(file.path("Emissions", 'NRW.csv'), header=TRUE) #original file was amended by combining data from "Gase" and "foederal_erneuerbar-Wirtschaft_Datenblatt"
+NRW <- as.data.frame(sapply(NRW, gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012| bis 2010| bis 2011|\\**", replacement=""))
+NRW <- NRW[c(1:15), 1:3]
 general <- rbind(all_subbed, NRW)
 
 # Cleaning up names
-Final <- as.data.frame(sapply(general, 
-                              gsub, pattern="Kohlendioxid-Emissionen je Einwohner im |Kohlendioxid-Emissionen je Einwohner in | bis 2012| bis 2010| bis 2011|\\**",replacement=""))
-export(Final, file="Emissions_Final.csv") ## has no extra words
-## | means "and", //is used for special characteristics such as *
+
+export(general, file="Emissions_Final.csv") 
 
 #---------------------------------------------------------#
 ### 3. Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
@@ -146,10 +149,14 @@ incomedata <- merge(GSOEP_income, landemissions, by=c('Year', 'State'))
 finaldata <- merge(incomedata, emissions, by=c('Year', 'State'))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 #5. export merged data to single CSV file
 =======
+>>>>>>> master
+=======
+finaldata$satis <- as.numeric(as.character(finaldata$satis))
 >>>>>>> master
 finaldata[, c(5,22,23,26,32,33)] <- sapply(finaldata[, c(5,22,23,26,32,33)], as.numeric) # specifying columns to convert into numeric
 
