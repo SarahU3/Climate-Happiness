@@ -12,7 +12,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ``` {r datasource, include=FALSE, cache.extra=list(file.info("~/Climate-Happiness/Data/All_Merged_Data.csv")$mtime)}
-setwd('~/GitHub/Climate-Happiness')
+
+possibles <- c('~/GitHub/Climate-Happiness/', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/')
+set_valid_wd(possibles)
+
+
 source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
 data <- read.csv("All_Merged_Data.csv")
 attach(data)
@@ -75,7 +80,16 @@ source('~/GitHub/Climate-Happiness/Final_Paper/Graphsourcefile.R')
 ```
 *Do we want to include descriptive statistics here?*
 
+``` {r insert scatterplots, echo=FALSE}
+names(data.final.s) <- c("Year", "State", "Personal ID", "Top 10% average income('000)", "Bottom 90% average income('000)", "Inequality", "Cars per 100 people", "Bus usage per 100 people", "MRT usage per 100 people", "LRT usage per 100 people")
 
+stargazer::stargazer(data, type = "latex",
+        title = "General data summary",
+        digits = 1, header = FALSE)
+```
+stargazer::stargazer(data.final.s, type = "latex",
+        title = "General data summary",
+        digits = 1, header = FALSE)
 
 
 ## Methodology

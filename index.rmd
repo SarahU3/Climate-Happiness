@@ -1,0 +1,252 @@
+
+
+```{r, echo=FALSE}
+## Here we animate the emissions by country from 1990
+
+possibles <- c('~/GitHub/Climate-Happiness/Data', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/Data')
+set_valid_wd(possibles)
+
+library (lattice)
+library(survival)
+library(ggplot2)
+library(Formula)
+library(Hmisc)
+suppressPackageStartupMessages(library(googleVis))
+
+#load dataset
+data <- read.csv("All_Merged_Data.csv")
+attach(data)
+
+## Round Emissions
+transform(data, Emissions = is.numeric(Emissions))
+data <- transform(data,  Emissions=round (Emissions,1))
+
+#aggregate yearly emissions data by state
+agg <- aggregate(cbind(CO2perSqKm) ~ State + Year, FUN=mean, data=data)
+agg <- agg[-c(1, 2), ]
+
+#Transform yearly data to numeric
+transform(agg, Year = as.numeric(Year))
+
+
+#create new vector with state codes
+
+Replaces <- data.frame(from = c("Baden-Wuerttemberg", "Bayern", "Bremen", "Berlin", "Brandenburg", "Hamburg" , "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz", "Sachsen", "Sachsen-Anhalt", "Schleswig-Holstein", "Saarland", "Thueringen"), to = c("DE-BW", "DE-BY", "DE-HB", "DE-BE", "DE-BB", "DE-HH", "DE-HE", "DE-MV", "DE-NI", "DE-NW", "DE-RP", "DE-SN", "DE-ST", "DE-SH", "DE-SL", "DE-TH"))
+
+New <- FindReplace(data=agg, Var = "State", replaceData = Replaces, from = "from", to = "to",
+  exact = TRUE, vector = FALSE)
+
+New[, c(2,3)] <- sapply(New[, c(2,3)], as.numeric)
+
+
+#set mins and max, start/end dates
+startYear <- min((agg)$Year)
+endYear <- max((agg)$Year)
+minEmissions <- floor(min(agg$CO2perSqKm, na.rm=TRUE))
+maxEmissions <- ceiling(max(agg$CO2perSqKm, na.rm=TRUE))
+
+myColourAxis <- paste("{values: [0, 5, 10, 15, 20, 30, 35], ",
+                      "colors: [\'red\', \'#D0D1E6\', \'#A6BDDB\', \'#74A9CF\',",
+                      " \'#3690C0\', \'#0570B0\', \'green\']}")
+
+## Create Geo Charts for each year
+
+geoChartDE <- list(displayMode="regions",
+                   region="DE", 
+                   resolution="provinces",
+                   legend="{numberFormat:'#,###.00'}") 
+
+
+gvisData <- by(New, list(year=New$Year), function(x){
+  
+	year <- x$year[1]	
+	g <- gvisGeoChart(x,  "State", "Emissions",
+		options=geoChartDE,
+		 chartid=paste("[", year - startYear +1, "]", sep=""))
+	.data <- g$html$chart["jsData"]
+	.data <-gsub("function ", "", .data)
+	.data <- sub("\\] ()", "\\] = function ", .data)
+	return(.data)	
+}
+)
+
+
+animation <- sprintf("
+var gvisData = {};
+var Animation = {};
+Animation.startYear = %s;
+Animation.endYear = %s;
+Animation.currentYear = Animation.startYear;
+Animation.divCharts = {};
+Animation.playAnimation = function() {
+  if (Animation.currentYear > Animation.endYear) {
+   	return;
+  }
+  document.getElementById('chart-header').innerHTML =
+  'Emissions per person in <b>'
+ + Animation.currentYear + '</b> (States with no data shown in white)';
+  if (Animation.currentYear > Animation.startYear) {
+  	Animation.divCharts[Animation.currentYear-1].style.display = 'none';
+  }
+  Animation.divCharts[Animation.currentYear++].style.visibility = 'visible';
+  setTimeout(Animation.playAnimation, 500);
+};
+", startYear, endYear)
+
+
+gvisChart <- sprintf('
+// jsDrawChart
+function drawChart() {
+	var chart = {};
+	var options ={};
+	options["displayMode"] = "regions";
+ 	options["width"] =   556;
+	options["height"] =  347;
+        options["datalessRegionColor"]="white";
+	options["colorAxis"] = %s;
+	
+	for (var i = Animation.startYear; i<=Animation.endYear; i++) {
+	   Animation.divCharts[i] = document.createElement("div");
+	   Animation.divCharts[i].className = "pop-chart";
+	   document.body.appendChild(Animation.divCharts[i]);
+	   chart[i] = new google.visualization.GeoChart(Animation.divCharts[i]);
+	   
+	   var data = gvisData[(i+1-%s)]();
+	   options["title"] = i;
+	   chart[i].draw(data,options);
+	}
+		
+	// Animation.playAnimation();
+	setTimeout(Animation.playAnimation, 5000);
+}
+ 
+// jsDisplayChart 
+function displayChart() {
+  google.load("visualization", "1", { packages:["geochart"] }); 
+  google.setOnLoadCallback(drawChart);
+}
+// jsChart 
+displayChart()
+', myColourAxis, startYear)
+
+
+htmlHead <- '
+<html>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <head>
+ <style type="text/css">
+    body {
+          color: #444444;
+          font-family: Arial,Helvetica,sans-serif;
+          font-size: 75%;
+    }
+    a {
+          color: #4D87C7;
+          text-decoration: none;
+    }
+     .pop-chart {
+		position: absolute;
+		top: 50;
+		left: 10;
+		display: block;
+		visibility: hidden;
+     }
+  </style>
+<title>Emissions per person by State</title>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+'
+htmlFoot <-'
+</script>
+</head>
+<body>
+<div id="chart-header"></div>
+<FORM>
+<INPUT TYPE="button" onClick="history.go(0)" VALUE="Replay">
+</FORM>
+</body>
+</html>
+'
+
+Animated.Geo.Chart <- structure(
+                  list(type="AnimatedGeoChart",
+                       chartid="Emissions",
+                       html=list(
+                         header=htmlHead,
+                         chart=c(animation, gvisData, gvisChart),
+                         caption="",
+                         footer=htmlFoot)
+                       ),
+                  class = c("gvis", "list")
+                  )
+
+plot(Animated.Geo.Chart)
+
+```
+
+
+```
+
+## Introduction
+Climate change is undoubtedly a global problem, but this fact means it is also, in a way, a classic tragedy of the commons. No country wants to put itself at an economic disadvantage by restricting the use of cheap fossil fuels so all continue to emit, deteriorating the "commons" of the Earth's protective atmosphere. This can make it difficult to get citizens to identify with the problem and take responsibility; people will more likely act when something affects them individually. In this paper we want to explore this aspect: how much do people feel, consciously or unconsciously, the effects of green house gas emissions? More specifically, do emissions affect their reported health, well-being, or life satisfaction?  
+
+To examine this question, we will look at data from Germany. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices---not to mention coal's continued role as a cheap and reliable fuel---and how to transform the transportation sector. Germany therefore still does emit large amounts of green house gases. We will look at green house gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
+
+> *H1: Bundeslaender with higher emissions will have lower reported levels of health, well-being, or life satisfaction.* 
+
+We will also investigate whether there is a time component to perceptions of life satisfaction and well-being. This is important because, as explained in more depth in the literature review, there is a possibe endogeneity problem. Individuals may be unhappy with more pollution, but unhappy individuals may be bothered more by pollution. Germany's emissions have been reduced since 1990, though reductions have stagnated recently. By tracking responses over time, we hope to tell if there is a time component: do changes in emissions precede changes in life satisfaction? There are some studies that have used a time series approach, but not many have done so a a country level. Using German emissions and happiness data going back to 1990, our second hypothesis is:
+
+> *H2: Reported levels of health, well-being or life satisfaction will reflect changes in emissions in line with hypothesis above, i.e. as emissions decline, reported levels of health, well-being, and life satisfaction will rise.* 
+
+
+
+## Literature Review
+
+In recent years, there has been a large body of empirical literature on the happiness of individuals and the effects of climate and pollution variables. In general, the findings highlight the importance of environmental conditions on individual's happiness. A significant share of the studies find a negative correlation between pollution or negative environmental conditions and overall life satisfaction, or happiness.
+
+@welsch2002 published an initial happiness-related study on how self-reported well-being fluctuates with different levels of prosperity and environmental quality. The study used cross-sectional data on 54 countries to illustrate how individuals are willing to calculate the trade-off between wealth and environmental conditions [@welsch2002]. The study found a negative effect of poor air quality on overall happiness of individuals, however was unable to control for heterogeneity across countries as the analysis was conducted on an aggregate level [@welsch2002; @goetzke2015]. @welsch2006 used a combined cross-section time-series framework to address this problem with annual data for 10 European countries from 1990-1997. By using this panel method, he was able to use country-fixed effects to eliminate problems of unobserved heterogeneity across countries. In this more robust study, @welsch2006 finds that air pollution has a statistically significant function in predicting inter-temporal and inter-country differences in levels of happiness.    
+
+@rehdanz2008 used the SOEP (German Socio-Economic Panel) surveys to analyze the relationship between perceived noise and air pollution, and self-reported well-being in Germany. The evidence suggests that even when controlling for a range of variables such as demographic differences, economic status and neighborhood individualities, higher levels of noise and air pollution reduce overall levels of happiness [@rehdanz2008]. Similarly,  @brereton2008 conducted a similar study in Ireland using data at the individual level and found that overall climate conditions had a statistically significant influence on individual happiness. The study found that proximity to waste facilities and transport routes was highly relevant in explaining the variation in happiness levels.
+
+@mackerron2009 conducted a case study on London focusing on Nitrous Oxide pollutants, and the willingness of inhabitants to pay for various levels of air quality. The study collected pollutant concentrations in the immediate proximity to residents' homes, and found that both subjective perception of air quality and scientific measurements of air quality both had negative statistically significant impacts on self-reported happiness levels [@mackerron2009]. @luechinger2009 and @ferrer2007 find similar results in their individual-data country-level analyses. @luechinger2009 estimates the effect of SO2 concentration on life satisfaction in residents in Germany using pollution data and the SOEP data. In order to control for simultaneity between air quality, economic downturns, and declining industrial production, @luechinger2009 uses the estimated improvement in air quality caused by mandated power plant scrubbers as an instrumental variable (IV). The study finds that IV-estimates produce larger negative statistically significant impacts of pollution on happiness. @ferrer2007 study the relationship between well-being and individual environmental attitudes. The authors use a probit model to study the relationships with specific focus on ozone pollution and species extinction using the British Household Panel Survey and find a negative correlation of ozone pollution on individual's well being [@ferrer2007]. The study finds that the correlations are constant even when controlling for pollution conditions, engagement in outdoor activities and regional conditions. 
+
+In another study, @menz2010 further estimate the effect of air pollution on life satisfaction using 25 OECD countries and the World Database of Happiness between 1990 and 2004. The study finds that, using particulate matter concentration as a proxy for overall pollution levels, the correlation between overall happiness and pollution levels is negative. Further, @menz2010 find that the effects are greater in older and younger individuals, and less significant for middle-aged individuals. 
+
+@cunado2013 use Spanish regions to further explore the relationship between pollution, climate and subjective happiness. The authors use the European Social Survey to provide information on individual well-being, and data on pollution and climate data from the regional ministries and agencies. By controlling for socio-economic variables that potentially affect happiness levels, @cunado2013 find that there are significant regional differences in happiness levels which can be explained by the role of climate and pollution variables. The results illustrate that environmental variables better explain regional differences in happiness than socio-economic regional variables.
+
+Most recently, @goetzke2015 expand on the ideas of @vanpraag2005, @mackerron2009 and @ferreira2010 to account for the endogeneity problem between perceived air pollution and happiness. The endogeneity inherent in this analysis is that individuals bothered by air pollution are less happy, but simultaneously that unhappy people are more disturbed by air pollution [@goetzke2015]. Using the German socio-economic panel data along with annual sulfur dioxide readings, @goetzke2015 analyze the impact of air pollution on happiness in Germany based on both the subjective perceptions of pollution and the objectively measured environmental conditions. Using the IV-ordered probit model developed by @rivers1988, they find in controlling for simultaneity that perceived environmental conditions do not have a statistically significant effect on happiness [@goetzke2015]. 
+
+
+## Data
+
+The data for the project will be supplied by a mixture of sources. The first layer of the analysis builds on the individual-level data taken from the longitudinal GSOEP from 1984 to 2013. The German Institute for Economic Research (DIW Berlin) supplied the main GSOEP dataset, [Original Individual Data pl v30](https://paneldata.org/datasets/998), though reduced in size due to the data restrictions and confidentiality. The number of the observations in the original dta file is 192,841. The variables included in the dataset cover life satisfaction, gender, age, family status, education, employment, income, health, and environmental perception of the respondents across the German federal states. All the names of the variables are available in the GSOEP codebook. 
+
+The dependent variables is the self-reported level of life satisfaction, which is measured on a scale from 0 to 10 (lowest to highest levels). There are several measurements of the happiness level, including the present state of the respondent, the past, and the anticipated levels of life satisfaction. Moreover, the dataset provides information on individual perception about the environment and recent developments in the issue. Likewise, the health status is also based on individual self-reports. Since the analysis will rely on these self-reported variables, the model is prone to a subjective bias created by the individual perceptions. 
+
+The second layer of the analysis requires data on GHG emissions by the Federal State. While the data on country-level is widely available, the information per state is limited, especially in a user-friendly format. The report conducted by the German Environmental Agency has the necessary indicators on overall state GHG emissions from 1990 to 2012 in a PDF format, which could be transformed for the project [@umweltamt2014]. The emissions are measured in Gg carbon dioxide per year as reported by the Federal States and are available in *Table 16: Comparison of the results of CO2 calculations of individual Länder with corresponding figures from the federal inventories*. The Table 16 also provides the deviations between the self-reported values and the federal estimations. 
+
+Another alternative for the same information could the Statista Database that distinguishes information on state carob dioxide emissions for the same time period, but in a table format. An example of the Statista webpage can be found [here](http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/).
+
+Other state indicators, such as per capita emissions from primary energy consumption and air quality, are available from 1995 to 2012 at the [Working Group on Environmental-Economic Accounting of the Länder]( http://www.ugrdl.de/tab34.htm). Although these numbers are listed in a convenient table and would be a better match for the individual levels of happiness, the data is cross-sectional for each five years, which leaves gaps for other variables. 
+
+
+## Methodology
+
+The analysis will focus on a mixture of two levels of interest: *the individual* - e.g. the socioeconomic status of the respondent, gender, age, and the *Federal State* - e.g. reported emissions and perceived of air quality. In order to account for such clustering and track differences between the German States, multilevel modelling will be applied in this project. Given approach, unlike the traditional multivariate regression, will partition the residual variance into a between-state component (the variance of the state-level residuals) and a within-state component (the variance of the individual-level residuals). Such grouping will produce more robust and reliable results, which could be potentially inferred to a larger population. Therefore, multilevel modelling is preferred over a fixed effects model, which cannot separate out effects due to observes and unobserved characteristics. In addition, the model can be extended by exploring the temporal effects and overtime change in the individual and state level attitudes. Time-varying components of the model, consequently, will be possible to track. 
+
+## Testing running code
+
+```{r, echo=FALSE}
+
+#Boxplot of emissions levels by state
+
+boxplot(Emissions~State,
+  data=data,
+  main="Emissions by State",
+  xlab="State",
+  ylab="Emissions (annual tons of CO2 per capita)",
+  col="royalblue1",
+  border="royalblue4"
+)
+```

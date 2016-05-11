@@ -47,8 +47,26 @@ attach(data)
 ## Descriptive Statistics
 
 ```{r, echo=FALSE}
+names(data)
 summary(State)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+aggregate(formula=satis_labels~Emissions+Year+State, data=data, FUN=mean)
+satislabelmeans <- aggregate(formula=satis~Year+State, data=data, FUN=mean)
+
+data[data$State=="Berlin", ]
+
+=======
+```
+The data has a wide range in terms of the number of observations for each federal state. If we look a little closer, separating them by year, we see that some states are missing observations for a few years. Using Saarland, Nordrhein-Westfalen, and Hamburg in our analysis may require some adjustment with the missing years in mind.
+
+```{r, echo=FALSE}
+table(State, Year)
+
+>>>>>>> master
+```
+=======
 ```
 The data has a wide range in terms of the number of observations for each federal state. If we look a little closer, separating them by year, we see that some states are missing observations for a few years. Using Saarland, Nordrhein-Westfalen, and Hamburg in our analysis may require some adjustment with the missing years in mind.
 
@@ -56,6 +74,7 @@ The data has a wide range in terms of the number of observations for each federa
 table(State, Year)
 
 ```
+>>>>>>> master
  
 
 Because we are looking at emissions and happiness over a period of years, the values of emissions for each state also vary, which we can see by state and over time. The colors are coordinated between the box plots and line graphs.
@@ -118,9 +137,15 @@ Y1 represents "satis" (life satisfaction), measured on a scale ranging from 0 (l
 ``` {r, echo=FALSE}
  
 summary(Y1, digits = 2)
+<<<<<<< HEAD
 
 ```
 
+=======
+
+```
+
+>>>>>>> master
 
 Below, we tested various types of panel data models on our individual-level data. The data set is unbalanced because we don't have information for all years in all the states.
 
@@ -141,9 +166,27 @@ summary(L3)
 L4<-plm(Y1~X1, data=pdataind, model="within")
 summary(L4)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#LM test for fixed effects vs OLS
+pFtest(L2,L1)
+
+library(stargazer)
+stargazer(L1, L2, L3, L4,
+    title = 'Regression Estimates of Life Satisfaction',
+    digits = 2, type = 'html'
+    )
+```
+
+=======
 #output table with findings - will need to be xtable or texreg, stargazer not compatible with knit
 ```
 
+=======
+#output table with findings - will need to be xtable or texreg, stargazer not compatible with knit
+```
+
+>>>>>>> master
 In terms of explanatory power, the first difference and within estimators might be less useful than the between or pooled OLS estimators, based on their low R-squared and adjusted R-squared Values. Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have negative coefficients, while concern about the environment and energy use have positive coefficients. 
 
 We can compare the fixed effects/within and pooled OLS models using an F-test for individual and/or time effects:
@@ -153,6 +196,7 @@ We can compare the fixed effects/within and pooled OLS models using an F-test fo
 pFtest(L4,L1)
 
 ```
+>>>>>>> master
 
 The test is set up so that the null hypothesis is that OLS pooled is better than the within estimator. The small resulting p-value indicates that despite the larger R-squared values with OLS pooling, we should reject the null hypothesis that OLS pooling is better. 
 
