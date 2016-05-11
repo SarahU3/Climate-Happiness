@@ -94,7 +94,7 @@ general <- rbind(all_subbed, NRW)
 
 # Cleaning up names
 
-export(Final, file="Emissions_Final.csv") 
+export(general, file="Emissions_Final.csv") 
 
 #---------------------------------------------------------#
 ### 3. Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
