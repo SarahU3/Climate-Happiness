@@ -192,6 +192,13 @@ finaldata$Stateid <- as.numeric(as.factor(finaldata$State))
 finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
                              labels = levels(finaldata$State))
 
+# Drop unnecessary columns
+finaldata <- finaldata[,c(1:7,9:11,22:28,30:33)]
+names(finaldata) <- c("Year", "State", "pid", "WorkHours","GrossIncome","NetIncome",
+                      "JobSecurity","GermanBorn","Edu01", "Edu02","satis",
+                      "environ","Stateid","gender","age","emp","fam","CO2Tons","sqkm",
+                      "CO2perSqKm","Emissions")
+
 # Relabel environmental concerns
 #finaldata$environ <- factor(finaldata$environ, levels=rev(levels(finaldata$environ)), labels=c("Not at all", "Somewhat", "Very"))
 #finaldata$env <- as.numeric(finaldata$environ)
