@@ -1,6 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Test by Katie-Levesque</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Test</h1>
+      <h2 class="project-tagline">A test to try to fix website</h2>
+      <a href="https://github.com/Katie-Levesque/Test" class="btn">View on GitHub</a>
+      <a href="https://github.com/Katie-Levesque/Test/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Katie-Levesque/Test/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
 
 
-```{r echo=FALSE, results='hide',message=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE}
 library(DataCombine)
 library(shiny)
 
