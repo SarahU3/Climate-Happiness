@@ -79,6 +79,42 @@ img {
 <pre class="r"><code>plot(
   gvisMotionChart(allvar, idvar=&quot;State&quot;, timevar=&quot;Year&quot;)
 )</code></pre>
+<pre class="r"><code># Markus Gesmann, February 2013
+require(googleVis)
+require(shiny)
+## Prepare data to be displayed
+## Load presidential election data by state from 1932 - 2012
+library(RCurl)</code></pre>
+<pre><code>## Warning: package 'RCurl' was built under R version 3.2.4</code></pre>
+<pre><code>## Loading required package: bitops</code></pre>
+<pre class="r"><code>url &lt;- &quot;https://raw.githubusercontent.com/mages/diesunddas/master/Data/US%20Presidential%20Elections.csv&quot;
+dat &lt;- getURL(url, ssl.verifypeer=0L, followlocation=1L)
+dat &lt;- read.csv(text=dat)
+## Add min and max values to the data
+datminmax = data.frame(state=rep(c(&quot;Min&quot;, &quot;Max&quot;),21), 
+                       demVote=rep(c(0, 100),21),
+                       year=sort(rep(seq(1932,2012,4),2)))
+dat &lt;- rbind(dat[,1:3], datminmax)
+
+shinyServer(function(input, output) {
+  myYear &lt;- reactive({
+    input$Year
+  })
+  output$year &lt;- renderText({
+    paste(&quot;Democratic share of the presidential vote in&quot;, myYear())
+  })
+  output$gvis &lt;- renderGvis({
+    myData &lt;- subset(dat, 
+                     (year &gt; (myYear()-1)) &amp; (year &lt; (myYear()+1)))
+    gvisGeoChart(myData,
+                 locationvar=&quot;state&quot;, colorvar=&quot;demVote&quot;,
+                 options=list(region=&quot;US&quot;, displayMode=&quot;regions&quot;, 
+                              resolution=&quot;provinces&quot;,
+                              width=500, height=400,
+                              colorAxis=&quot;{colors:['#FFFFFF', '#0000FF']}&quot;
+                       ))     
+  })
+})</code></pre>
 </div>
 <div id="literature-review" class="section level2">
 <h2>Literature Review</h2>
