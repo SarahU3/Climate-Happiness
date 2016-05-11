@@ -51,8 +51,10 @@ ggplot(aggremeans, aes(x = Group.2, y = satis, group = Group.1, colour = Group.1
 
 
 # scatterplots of aggregate state satisfaction over years
-plot1 <- ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth() + labs(x = "Age", y = "Life Satisfaction")
-plot2 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Capita", y = "Life Satisfaction")
-plot3 <- ggplot(data = aggremeans, aes(x=Use, y=satis)) + geom_point() +geom_smooth() + labs(x = "Energy Use per Capita", y = "Life Satisfaction")
-plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth() + labs(x = "Concern about the Environment", y = "Life Satisfaction")
-multiplot(plot1, plot2, plot3, plot4, cols=2)
+plot1 <- ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth() + labs(x = "Age", y = "")
+plot2 <- ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth() + labs(x = "Work Hours per Week", y = "")
+plot3 <- ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth() + labs(x = "Monthly Gross Income", y = "")
+plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth() + labs(x = "Concern about the Environment", y = "")
+plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Capita", y = "")
+plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Sq KM", y = "")
+multiplot(plot1, plot2, plot3, plot4, plot5, plot6, cols=2)
