@@ -23,10 +23,11 @@ transform(data, Emissions = is.numeric(Emissions))
 data <- transform(data,  Emissions=round (Emissions,1))
 
 #aggregate yearly emissions data by state
-agg <- aggregate(cbind(Emissions) ~ State + Year, FUN=mean, data=data)
+agg <- aggregate(cbind(CO2perSqKm) ~ State + Year, FUN=mean, data=data)
+agg <- agg[-c(1, 2), ]
 
 #Transform yearly data to numeric
-transform(data, Year = is.numeric(Year))
+transform(agg, Year = as.numeric(Year))
 
 
 #create new vector with state codes
@@ -40,10 +41,10 @@ New[, c(2,3)] <- sapply(New[, c(2,3)], as.numeric)
 
 
 #set mins and max, start/end dates
-startYear <- min(na.omit(New)$Year)
-endYear <- max(na.omit(New)$Year)
-minEmissions <- floor(min(New$Emissions, na.rm=TRUE))
-maxEmissions <- ceiling(max(New$Emissions, na.rm=TRUE))
+startYear <- min((agg)$Year)
+endYear <- max((agg)$Year)
+minEmissions <- floor(min(agg$CO2perSqKm, na.rm=TRUE))
+maxEmissions <- ceiling(max(agg$CO2perSqKm, na.rm=TRUE))
 
 myColourAxis <- paste("{values: [0, 5, 10, 15, 20, 30, 35], ",
                       "colors: [\'red\', \'#D0D1E6\', \'#A6BDDB\', \'#74A9CF\',",
