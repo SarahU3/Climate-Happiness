@@ -147,6 +147,7 @@ data <- merge(GSOEP, landemissions, by=c("Year","State"))
 incomedata <- merge(GSOEP_income, landemissions, by=c('Year', 'State'))
 finaldata <- merge(incomedata, emissions, by=c('Year', 'State'))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
+finaldata$satis <- as.numeric(as.character(finaldata$satis))
 finaldata[, c(5,22,23,26,32,33)] <- sapply(finaldata[, c(5,22,23,26,32,33)], as.numeric) # specifying columns to convert into numeric
 
 # XConvert State variable into numeric
