@@ -19,6 +19,7 @@ data <- read.csv("All_Merged_Data.csv")
 attach(data)
 
 ## Round Emissions
+transform(data, Emissions = is.numeric(Emissions))
 data <- transform(data,  Emissions=round (Emissions,1))
 
 #aggregate yearly emissions data by state

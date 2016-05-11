@@ -23,6 +23,7 @@ suppressPackageStartupMessages(library(googleVis))
 wbData <- WDI(country="all", indicator=c("SP.DYN.LE00.IN",
                                "SP.POP.TOTL"), start=1960, end=2011,
               extra=FALSE)
+
 names(wbData) <- c("country", "iso2c", "year", "life.expectancy",
                    "population")
 
@@ -70,6 +71,7 @@ myColourAxis <- paste("{values: [25, 35, 45, 55, 65, 75, 85], ",
 
 
 ## Create Geo Charts for each year
+
 gvisData <- by(cntryData, list(year=cntryData$year), function(x){
   
 	year <- x$year[1]	
@@ -79,7 +81,7 @@ gvisData <- by(cntryData, list(year=cntryData$year), function(x){
 	.data <- g$html$chart["jsData"]
 	.data <-gsub("function ", "", .data)
 	.data <- sub("\\] ()", "\\] = function ", .data)
-	return(.data)	
+	return(.data)
 }
 )
 
@@ -193,6 +195,12 @@ Animated.Geo.Chart <- structure(
                   )
 
 plot(Animated.Geo.Chart)
+
+plot(
+  gvisGeoChart(agg, locationvar = "State", 
+               colorvar = "Emissions",
+               options=geoChartDE)
+  )
 
 
 ## Analyse change over time
