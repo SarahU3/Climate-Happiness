@@ -2,59 +2,18 @@
 title: "Green Growth and Theoretical Framework"
 output: pdf_document
 ---
-Jakob, M., O. Edenhofer (2014): Green growth, degrowth and the commons. Oxford Review of Economic Policy 30: 447–468.
-(i) Green growth
-Throughout the 1990s and 2000s, the debate on how to reconcile socio-economic
-development with natural limits has largely been dominated by the notion of ‘sustainable
-development’, most prominently captured in the Brundtland definition as
-‘development that meets the needs of the present without compromising the ability
-of future generations to meet their own needs’ (World Commission on Environment
-and Development, 1987). The recent discourse, however, has increasingly shifted to the
-notion of green growth with reports by influential international organizations, such as
-the OECD (2011), UNEP (2011a), and the World Bank (2012a), dedicated to this issue.
-One hypothesis to explain this shift relates to policy-makers’ unwillingness to sacrifice
-short-term economic gains for the sake of long-term sustainability; green growth may
-have been adopted as a new narrative that reconciles this apparent trade-off (Bowen
-and Fankhauser, 2011; Jacobs, 2013).
-While there is no unanimously accepted definition of green growth, the term is currently
-used in two ways. One usage, which can be labelled ‘strong’ green growth (Jacobs,
-2013), claims that environmental policies would have positive effects on economic output
-even in the short term. This view is, for instance, supported by UNEP (2011a, p. 24):
-‘[G]reening the economy can generate consistent and positive outcomes for increased
-wealth, growth in economic output, decent employment and reduced poverty.’
-The second, more standard, line of argument, stresses that sound environmental
-policies might be implemented at relatively modest costs, as they not only pay off for
-future generations, but also entail benefits for the present. In the OECD’s (2011, p. 91)
-definition,
+## Introduction and Motivation 
+Climate change is undoubtedly a global problem, but this fact means it is also, in a way, a classic tragedy of the commons. No country wants to put itself at an economic disadvantage by restricting the use of cheap fossil fuels so all continue to emit, deteriorating the "commons" of the Earth's protective atmosphere. This can make it difficult to get citizens to identify with the problem and take responsibility; people will more likely act when something affects them individually. In this paper we want to explore this aspect: how much do people feel, consciously or unconsciously, the effects of green house gas emissions? More specifically, do emissions affect their reported health, well-being, or life satisfaction?  
 
+### Theoretical framework
 
-OECD.  (2011), Towards Green Growth, OECD Green Growth Studies, OECD Publishing, Paris.
-DOI: http://dx.doi.org/10.1787/9789264111318-en
-OECD 2011
-Need for green growth: to overcome twin challenges of expanding economic and development opportunities for the growing population and at the same time, addressing environmental constraints. 
-Climate change and environmental degradation resulted due to the systemic exploitation of the planet carries adverse effects on the human well-being.
-"The central feature of a green growth framework is recognition of natural factor as a factor of production and its role in enhancing well-being."20
+Since the conventional theory on life satisfaction has largely been focusing on economic (income, unemployment, inflation) and social (health, demographics, education) determinants, an environmental component is missing from the standard theoretical framework [@Sekulova2013 p.18]. Therefore, the theoretical basis of the main hypothesis builds on both climate and subjective well-being literature. 
 
+In light with the rising pressure of climate change, the mankind has been facing twin challenges of expanding economic and development opportunities for the fast growing population, while also staying within the boundaries of the environmental constraints. During the onset of the climate discourse in the 1990s and 2000s, the global community labeled the twin challenges as the notion of "sustainable development" [@Jakob2014]. Recently, the issue of reconciling development with natural resources adopted a fresh theoretical notion of "green growth", advocated by the major international organizations (World Bank, United National Environmental Protection, Organization for Economic Cooperation and Development) (Ibid). The strong green growth proponents argue that stringent environmental policies would have positive impact on economic growth even in the short-term, while their more moderate counterparts emphasize that the sound climate actions are necessary to undetake in order to preserve the world for the future generations, but also avoid devastating changes in the present world (Ibid). 
 
-OECD 2014 scorecard:
-OECD.  (2014), Green Growth Indicators 2014, OECD Green Growth Studies, OECD Publishing, Paris.
-DOI: http://dx.doi.org/10.1787/9789264202030-en
+Although the green growth theory does not explicitly juxtapose climate economics with the theory of life satisfaction, it recognizes "natural factor as a factor of production and its role in enhancing well-being" and points at the adverse effects of climate change and environmental degradation on the human progress [@OECD2011, p. 20]. The OECD has lately added a group of socio-economic indicators to its scorecard of the green growth strategy in order to link it to the social goals, such as poverty reduction, social inequity and inclusion [@OECD2014, p. 21]. Moreover, the OECD have initiated guidelines for measuring subjective well-being as a proxy of quality of life alongside other social and economic dimensions to have a potential framework for measuring the progress of green growth policies on individual happiness (Ibid). These developments give ground for the main hypothesis of the given research: "greener" performance reflected in lower GHG emissions and weaker environmental concerns will likely increase individual well-being due to the benefits of the green growth approach in the current climate situation. 
 
-The OECD Green Growth Strategy supports countries in fostering economic growth and development while ensuring that natural assets continue to provide the resources and environmental services on which well-being relies. Policies that promote green growth need to be founded on a good understanding of the determinants of green growth and need to be supported with appropriate indicators to monitor progress and gauge results.
-
-Page 21
-Socio-economic indicators were added in the 2014 scorecard.
-Indicators describing the socio-economic context and the characteristics of growth (but well-being is not included, only guidelines are developed):
-These indicators provide important background information and can be used to track the effects of green growth policies and measures on growth. They also enable the green growth indicators to be linked to social goals, such as poverty reduction, social inequity and inclusion. 
-
-Being able to measure people's quality of life is fundamental when assessing the progress of societies. There is now widespread acknowledgement that measuring subjective well-being is an essential part of measuring quality of life alongside other social and economic dimensions. ... [OECD attempts] to measure society's progress across eleven domains of well-being, ranging from jobs, health and housing, through to civic engagement and the environment.
-
-
-Measuring Subjective Wellbeing: A Summary Review of the
-Literature
-By Pedro Conceição and Romina Bandura*
-Office of Development Studies, United Nations Development Programme (UNDP)
-http://web.undp.org/developmentstudies/docs/subjective_wellbeing_conceicao_bandura.pdf
+Simultaneously, the traditional social outlook on life satisfaction justifies the inclusion of other variables (age, gender, employment, and family status) into the empirical model, as these individual-level characteristics play an inextricable part in one's quality of life and thus should be included as controls in regression analysis to avoid generating biases in the estimations [@Bandura p.13]. Furthermore, these socio-demographic factors may pose as life-changing events, which either potentially can permanently impact life satisfaction (ex.: divorce, unemployment due to acquiry of disability, etc.) (Ibid).
 
 
 Does higher income lead to more happiness? In 1974 Easterlin showed that, for the
@@ -72,22 +31,29 @@ irresponsive to sustained increases in GDP per capita. This finding is often kno
 “Easterlin Paradox,” in that growth in per capita income is not reflected in increasing
 happiness.  p. 7
 
-Although socio-demographic variables might not be as relevant from an economic
-standpoint (they cannot be easily controlled, such as age, gender, and marriage) they have
-an effect on happiness and thus should be included as controls in regression analysis to
-avoid generating biases in the estimations (Frey and Stutzer 2002). 11
-More fundamentally, these socio-demographic factors take us back to the discussion of
-set point theory and adaptation. Many studies have found that people completely adapt to
-changes in income yet they have an incomplete adaptation to other life events; that is
-their level of happiness is permanently affected by things such as a severe injury,
-widowhood and divorce, amongst others (Easterlin 2004). p. 13
 
+
+
+Jakob, M., O. Edenhofer (2014): Green growth, degrowth and the commons. Oxford Review of Economic Policy 30: 447–468.
+Page 449
+
+OECD.  (2011), Towards Green Growth, OECD Green Growth Studies, OECD Publishing, Paris.
+DOI: http://dx.doi.org/10.1787/9789264111318-en
+
+OECD.  (2014), Green Growth Indicators 2014, OECD Green Growth Studies, OECD Publishing, Paris.
+DOI: http://dx.doi.org/10.1787/9789264202030-en
+
+
+Measuring Subjective Wellbeing: A Summary Review of the
+Literature
+By Pedro Conceição and Romina Bandura*
+Office of Development Studies, United Nations Development Programme (UNDP)
+http://web.undp.org/developmentstudies/docs/subjective_wellbeing_conceicao_bandura.pdf
 
 Filka Sekulova, May 2013
 On the Economics of Happiness and Climate Change
 Universitat Autonoma de Barcelona & Institut de Ciencia i Tecnologia Ambientals
 
-In spite of these studes, the standard literature on life satisfaction does not give much attention to environmentak factors. This might imply an incomplete treatment of the components of life satisfaction. The relevance of an environmental component is illustrated by extreme climate evnts that can have a permanent or even irreversible impact on happiness. 18-19
 
 
 
