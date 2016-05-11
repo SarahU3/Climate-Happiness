@@ -2,6 +2,8 @@
 
 ```{r echo=FALSE, results='hide',message=FALSE}
 library(DataCombine)
+library(shiny)
+
 suppressPackageStartupMessages(library(googleVis))
 
 #load dataset
