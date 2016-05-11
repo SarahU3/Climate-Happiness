@@ -67,6 +67,9 @@ Map <- gvisGeoChart(New, locationvar = 'State',
                       options = geoChartDE)
 
 plot(Map, tag = 'chart')
+
+
+
 ```
 
 
