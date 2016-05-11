@@ -56,7 +56,7 @@ We will also investigate whether there is a time component to perceptions of lif
 
 > *H2: Reported levels of health, well-being or life satisfaction will reflect changes in emissions in line with hypothesis above, i.e. as emissions decline, reported levels of health, well-being, and life satisfaction will rise.* 
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 plot(
   gvisGeoChart(New, locationvar = "State", 
                colorvar = "CO2perSqKm",
