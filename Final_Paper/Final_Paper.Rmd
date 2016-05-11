@@ -84,6 +84,9 @@ The analysis will focus on a mixture of two levels of interest: *Federal State*,
 
 ## Analysis
 
+## Discussion
+
+This paper presents a multilevel analysis that adds to the increasing number of studies that evaluate the effects of air pollution and emissions on people’s life satisfaction. In fact, in our data the potential negative impacts on happiness associated with emissions levels was non-existent when we controlled for state-level and individual characteristics. We approached the problem of estimating the reduction in satisfaction by examining a number of regressions based on life-satisfaction that include a variety of socio-economic data to justify a person’s stated level of life satisfaction on a subjective 1-10 scale. 
 
 
 ## Bibliography
