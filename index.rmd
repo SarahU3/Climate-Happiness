@@ -65,6 +65,7 @@ We will also investigate whether there is a time component to perceptions of lif
 
 > *H2: Reported levels of health, well-being or life satisfaction will reflect changes in emissions in line with hypothesis above, i.e. as emissions decline, reported levels of health, well-being, and life satisfaction will rise.* 
 
+
 ## Average Emissions per Square KM by State
 
 The map below illustrates the amount CO2e emissions (tons) per square kilometer in Germany. The information is based on averaged data between 1990-2012 from Statista. The values represent the average over time in the German states.
@@ -112,23 +113,29 @@ wbCountries <- getWorldBankCountries()
 total <- merge(wbCountries, worlddata, 
                 by.x="name", by.y="Country")
 
+names(total) <- c("country", "id", "iso2Code", "RegionID", "RegionValue", "ID2", "Region", "Income.Level.ID", "IncomeLevel", "LendingType", "LendingValue", "Capital", "Longitude", "Latitude", "CO2EmissionsMt", "NotA", "ChangeSince1990", "NotB", "CO2perCapita", "NotC", "CO2perSquareKM", "NotD")
+
 geoChartworld <- list(region="world", 
                    resolution="countries",
                    legend="{numberFormat:'#,###.00'}")
 
 WorldMap <- gvisGeoChart(total, locationvar = 'iso2Code',
-                      colorvar = 'CO2_emissions_per_km2_tonnes',
+                      colorvar = 'CO2perSquareKM',
                       options = geoChartworld)
 ```
 
+<br><br>
+
 ## Global Emissions per Square Kilometer
-The map below illustrates the amount CO2e emissions (tons) per square kilometer globally. The information is based on 2007 Data from the United Nations Department of Economic and Social Affairs. Compared to the values of countries, both in the same geographic area, and globally, Germany has relatively low levels of emissions per square kilometer. 
+The map below illustrates the amount CO2e emissions (tons) per square kilometer globally. The information is based on 2007 Data from the United Nations Department of Economic and Social Affairs. Compared to the values of countries, both in the same geographic area, and globally, Germany has extremely high levels of emissions per square kilometer. 
 
 
 ```{r, echo=FALSE, results='asis'}
 plot(WorldMap, tag = 'chart')
 
 ```
+
+<br><br>
 
 ## Comparing Effects of Variables on Life Satisfaction by State
 The dynamic chart below allows an examination of the correlation between the variables of interest and overall life satisfaction. The highlights the changes for each of the German states between the years 1990-2012. Scroll through the years at the bottom to see the changes in values over time for each state.
@@ -139,6 +146,7 @@ plot(M1, tag = 'chart')
 
 ```
 
+<br><br>
 
 ## Testing running code
 
