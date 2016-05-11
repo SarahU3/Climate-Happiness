@@ -18,23 +18,23 @@ Simultaneously, the traditional social outlook on life satisfaction justifies th
 
 Does higher income lead to more happiness? In 1974 Easterlin showed that, for the
 United States, individually self-reported happiness increased with individual income,
-although there were rapidly ìdecreasing happiness returnsî to increases in income. The
+although there were rapidly ‚Äúdecreasing happiness returns‚Äù to increases in income. The
 cross-individual relationship between income and happiness was found to be far from
 linear, and essentially flat for high levels of income. Although this is consistent with the
 diminishing returns to increases in consumption that are typically assumed for theoretical
 utility functions, there is debate on this topic. Thus, Easterlin found clear evidence of a
 positive effect of income on happiness at the individual level, in-line with the
-assumptions of standard economic theory???but in contrast with the findings of objective
+assumptions of standard economic theory‚Äïbut in contrast with the findings of objective
 measures of quality of life (Easterlin 1974). However, Easterlin also found in the same
 study that aggregate national happiness over time was essentially flat, seemingly
 irresponsive to sustained increases in GDP per capita. This finding is often known as the
-ìEasterlin Paradox,î in that growth in per capita income is not reflected in increasing
+‚ÄúEasterlin Paradox,‚Äù in that growth in per capita income is not reflected in increasing
 happiness.  p. 7
 
 
 
 
-Jakob, M., O. Edenhofer (2014): Green growth, degrowth and the commons. Oxford Review of Economic Policy 30: 447ñ468.
+Jakob, M., O. Edenhofer (2014): Green growth, degrowth and the commons. Oxford Review of Economic Policy 30: 447‚Äì468.
 Page 449
 
 OECD.  (2011), Towards Green Growth, OECD Green Growth Studies, OECD Publishing, Paris.
@@ -46,7 +46,7 @@ DOI: http://dx.doi.org/10.1787/9789264202030-en
 
 Measuring Subjective Wellbeing: A Summary Review of the
 Literature
-By Pedro ConceiÁ„o and Romina Bandura*
+By Pedro Concei√ß√£o and Romina Bandura*
 Office of Development Studies, United Nations Development Programme (UNDP)
 http://web.undp.org/developmentstudies/docs/subjective_wellbeing_conceicao_bandura.pdf
 
