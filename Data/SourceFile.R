@@ -193,9 +193,9 @@ finaldata$Stateid <- factor( as.numeric(as.factor(finaldata$State)),
                              labels = levels(finaldata$State))
 
 # Drop unnecessary columns
-finaldata <- finaldata[,c(1:7,9:11,22:28,30:33)]
+finaldata <- finaldata[,c(1:7,9:11,20, 22:28,30:33)]
 names(finaldata) <- c("Year", "State", "pid", "WorkHours","GrossIncome","NetIncome",
-                      "JobSecurity","GermanBorn","Edu01", "Edu02","satis",
+                      "JobSecurity","GermanBorn","Edu01", "Edu02","satis_labels", "satis",
                       "environ","Stateid","gender","age","emp","fam","CO2Tons","sqkm",
                       "CO2perSqKm","Emissions")
 

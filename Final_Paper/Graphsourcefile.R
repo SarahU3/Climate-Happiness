@@ -1,6 +1,6 @@
 # "Graphs"
 
-setwd('~/GitHub/Climate-Happiness')
+setwd('~/GitHub/Climate-Happiness/Final_Paper')
 source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
 data <- read.csv("All_Merged_Data.csv")
 attach(data)
@@ -13,7 +13,7 @@ ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "Sta
 # Line graph of emissions levels by state over time
 ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_line() + scale_colour_discrete() +labs(y = "Emissions (annual tons of CO2 per capita)")
 
-
+# Create multiplot function to combine multiple ggplots
 multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   require(grid)
   
@@ -43,9 +43,10 @@ multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
 }
 
 
-
-aggremeans <- aggregate(data[, c(1, 3, 6, 18, 19, 22)], list(State, Year), mean)
-ggplot(aggremeans, aes(x = Year, y = satis, group = Group.1, color = Group.1)) + geom_line() + scale_colour_discrete() +labs(y = "Life Satisfaction")
+# Find aggregate means of variables by state and year
+aggremeans <- aggregate(data[, c("WorkHours","GrossIncome","satis","environ","age",
+                                 "emp","fam","CO2perSqKm","Emissions")], list(State, Year), mean)
+ggplot(aggremeans, aes(x = Group.2, y = satis, group = Group.1, colour = Group.1)) + geom_line() + scale_colour_discrete() +labs(x = "Year", y = "Life Satisfaction")
 
 
 
