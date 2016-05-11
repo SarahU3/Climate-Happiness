@@ -73,10 +73,10 @@ Map <- gvisGeoChart(New, locationvar = 'State',
 plot(Map, tag = 'chart')
 ```
 
-```{r, echo=TRUE}
-plot(
-  gvisMotionChart(allvar, idvar="State", timevar="Year")
-)
+```{r, echo=FALSE}
+M1 <- gvisMotionChart(allvar, idvar="State", timevar="Year")
+plot(M1)
+
 ```
 
 
