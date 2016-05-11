@@ -86,6 +86,7 @@ plot(Map, tag = 'chart')
 wbData <- WDI(country="all", indicator=c("SP.DYN.LE00.IN",
                                "SP.POP.TOTL"), start=1960, end=2011,
               extra=FALSE)
+
 names(wbData) <- c("country", "iso2c", "year", "life.expectancy",
                    "population")
 
@@ -110,7 +111,6 @@ wbCountries <- getWorldBankCountries()
 
 total <- merge(wbCountries, worlddata, 
                 by.x="name", by.y="Country")
-
 
 geoChartworld <- list(region="world", 
                    resolution="countries",
