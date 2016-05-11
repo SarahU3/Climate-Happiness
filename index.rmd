@@ -1,9 +1,15 @@
 ## Emissions Levels and Life Satisfaction
 ### A Study on the German States
 
-```{r echo=FALSE, results='hide', message=FALSE}
+```{r, include = FALSE}
 library(DataCombine)
-library(shiny)
+library(WDI)
+library(survival)
+library(ggplot2)
+library(Hmisc)
+```
+
+```{r echo=FALSE, results='hide', message=FALSE}
 
 suppressPackageStartupMessages(library(googleVis))
 
@@ -68,10 +74,58 @@ Map <- gvisGeoChart(New, locationvar = 'State',
 
 plot(Map, tag = 'chart')
 
-
-
 ```
 
+```{r echo=FALSE, results='hide', message=FALSE}
+# Plot
+
+## Get life expectancy and population figures from the World Bank
+wbData <- WDI(country="all", indicator=c("SP.DYN.LE00.IN",
+                               "SP.POP.TOTL"), start=1960, end=2011,
+              extra=FALSE)
+names(wbData) <- c("country", "iso2c", "year", "life.expectancy",
+                   "population")
+
+worlddata <- read.csv("CO2_Data.csv")
+attach(data)
+
+## Get country mappings from World Bank
+getWorldBankCountries <- function(){
+  wbCountries <-
+    fromJSON("http://api.worldbank.org/countries?per_page=12000&format=json") 
+
+  wbCountries <- data.frame(t(sapply(wbCountries[[2]], unlist)))
+  wbCountries$longitude <- as.numeric(wbCountries$longitude)
+  wbCountries$latitude <- as.numeric(wbCountries$latitude)
+  levels(wbCountries$region.value) <- gsub(" \\(all income levels\\)",
+                                           "", levels(wbCountries$region.value))
+  return(wbCountries)
+}
+
+## Get country mappings
+wbCountries <- getWorldBankCountries()
+
+total <- merge(wbCountries, worlddata, 
+                by.x="name", by.y="Country")
+
+
+geoChartworld <- list(region="world", 
+                   resolution="countries",
+                   legend="{numberFormat:'#,###.00'}")
+
+WorldMap <- gvisGeoChart(total, locationvar = 'iso2Code',
+                      colorvar = 'CO2_emissions_per_km2_tonnes',
+                      options = geoChartworld)
+```
+
+## Global Emissions per Square Kilometer
+The map below illustrates the amount CO2e emissions (tons) per square kilometer globally. The information is based on 2007 Data from the United Nations Department of Economic and Social Affairs. Compared to the values of countries, both in the same geographic area, and globally, Germany has relatively low levels of emissions per square kilometer. 
+
+Department of Economic and Social Affairs
+```{r, echo=FALSE, results='asis'}
+plot(WorldMap, tag = 'chart')
+
+```
 
 ## Comparing Effects of Variables on Life Satisfaction by State
 The dynamic chart below allows an examination of the correlation between the variables of interest and overall life satisfaction. The highlights the changes for each of the German states between the years 1990-2012. Scroll through the years at the bottom to see the changes in values over time for each state.
