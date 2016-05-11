@@ -35,6 +35,8 @@ Replaces <- data.frame(from = c("Baden-Wuerttemberg", "Bayern", "Bremen", "Berli
 New <- FindReplace(data=agg, Var = "State", replaceData = Replaces, from = "from", to = "to",
   exact = TRUE, vector = FALSE)
 
+New[, c(2,3)] <- sapply(New[, c(2,3)], as.numeric)
+
 
 #set mins and max, start/end dates
 startYear <- min(na.omit(New)$Year)
@@ -47,9 +49,10 @@ myColourAxis <- paste("{values: [0, 5, 10, 15, 20, 30, 35], ",
                       " \'#3690C0\', \'#0570B0\', \'green\']}")
 
 ## Create Geo Charts for each year
+
 geoChartDE <- list(displayMode="regions",
                    region="DE", 
-                   resolution="provinces"
+                   resolution="provinces",
                    legend="{numberFormat:'#,###.00'}") 
 
 
