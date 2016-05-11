@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
@@ -13,9 +14,9 @@
     <section class="page-header">
       <h1 class="project-name">Test</h1>
       <h2 class="project-tagline">A test to try to fix website</h2>
-      <a href="https://github.com/Katie-Levesque/Test" class="btn">View on GitHub</a>
-      <a href="https://github.com/Katie-Levesque/Test/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/Katie-Levesque/Test/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="https://github.com/SarahU3/Climate-Happiness" class="btn">View on GitHub</a>
+      <a href="https://github.com/SarahU3/Climate-Happiness/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/SarahU3/Climate-Happiness/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
