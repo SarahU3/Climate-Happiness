@@ -122,7 +122,7 @@ landemissions$CO2perSqKm <- landemissions$CO2Tons/landemissions$sqkm*1000
 
 
 #---------------------------------------------------------#
-### 4. Merging GSOEP, Emissions and Energy files
+### 4. Merging GSOEP and Emissions files
 
 # Tranforming GSOEP dta file to csv for merging (Source:DIW)
 GSOEP = read.dta(file.path("GSOEP", "SOEP_short12.dta"))
@@ -137,7 +137,6 @@ write.csv(GSOEP_income, file = "GSOEP_income.csv", row.names = FALSE)
 emissions = read.csv("Emissions_Final.csv")
 GSOEP = read.csv("GSOEP.csv")
 GSOEP_income = read.csv("GSOEP_income.csv")
-energy = read.csv("NRG.final.csv")
 
 
 # Merging GSOEP & persq/km emissions & overall emissions
