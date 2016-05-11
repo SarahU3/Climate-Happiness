@@ -32,47 +32,9 @@ possibles <- c('~/GitHub/Climate-Happiness/Data',
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/Data')
 set_valid_wd(possibles)
 
-#----------------------------------------------------------#
-### 2. Data on renewable energy in Bundeslaender (Source: LIKI) ###
-
-URLnrg <- 'http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi'
-# BUT manually downloaded Excel spreadsheets
-messynrgprime <- read.xlsx(file.path("Energy", "export_land_primary.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
-messynrgelec <- read.xlsx(file.path("Energy","export_land_strom.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
-messynrguse <- read.xlsx(file.path("Energy","export_land_energyuse.xlsx"), sheetIndex=1, startRow = 4, endRow = 21)
-
-# Convert K.D. (keine Daten) to NA
-tidynrguse <- as.data.frame(sapply(messynrguse, 
-                              gsub, pattern="K.D.", replacement="."))
-
-tidynrgelec <- as.data.frame(sapply(messynrgelec, 
-                                   gsub, pattern="K.D.", replacement="."))
-
-tidynrgprime <- as.data.frame(sapply(messynrgprime, 
-                                   gsub, pattern="K.D.", replacement="."))
-
-# Transform to numeric values, need to correct decimal places and loop but major issue: , instead of .
-transform(tidynrgelec, X1990 = as.numeric(X1990))
-
-# Convert data to tidy format (one variable per column) currently doesn't work bc they're not numerical
-NRGprime <- gather(tidynrgprime, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
-NRGelec <- gather(tidynrgelec, year, percentrenewable, 2:25, na.rm = FALSE, convert = TRUE)
-NRGuse <- gather(tidynrguse, year, percentrenewable, 2:26, na.rm = FALSE, convert = TRUE)
-
-# Matching labels
-colnames(NRGelec) <- c("State", "Year", "Elec")
-colnames(NRGprime) <- c("State", "Year", "Primary")
-colnames(NRGuse) <- c("State", "Year", "Use")
-NRG <- merge(NRGprime, NRGelec, by=c("Year","State"))
-NRG2 <- merge(NRG, NRGuse, by=c("Year","State"))
-
-
-# Merge and export data files into cvs
-NRG.final <- as.data.frame(sapply(NRG2, gsub, pattern="X",replacement=""))
-export(NRG.final, file="NRG.final.csv") 
 
 #----------------------------------------------------------#
-### 3. Data for Bundeslaender CO2 per capita emissions (Source: Statista, UGRdL, & AfEE) ###
+### 2. Data for Bundeslaender CO2 per capita emissions (Source: Statista, UGRdL, & AfEE) ###
 
 # Merging files using file name pattern (all States are covered except NRW)
 
@@ -132,7 +94,7 @@ export(Final, file="Emissions_Final.csv") ## has no extra words
 ## | means "and", //is used for special characteristics such as *
 
 #---------------------------------------------------------#
-### 4. Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
+### 3. Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
 TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
 sapply(TotalEmissions, function(f){is.na(f)<-which(f == '...');f}) 
 names(TotalEmissions) <- c("State", "Year", "CO2Tons")
@@ -160,7 +122,7 @@ landemissions$CO2perSqKm <- landemissions$CO2Tons/landemissions$sqkm*1000
 
 
 #---------------------------------------------------------#
-### 5. Merging GSOEP, Emissions and Energy files
+### 4. Merging GSOEP, Emissions and Energy files
 
 # Tranforming GSOEP dta file to csv for merging (Source:DIW)
 GSOEP = read.dta(file.path("GSOEP", "SOEP_short12.dta"))
