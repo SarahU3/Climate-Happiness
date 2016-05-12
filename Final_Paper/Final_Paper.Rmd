@@ -59,7 +59,7 @@ On the other hand, it may not be the emissions themselves that affect people's l
 ## Data
 The individual-level data is provided by the German Socio-Economic Panel Data [GSOEP]( https://paneldata.org/) conducted by the German Institute for Economic Research [DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html). Due to confidentiality restrictions, DIW could only supply a shortened sample with prior specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The original GSOEP file is cleaned and transformed into a shorter dataset with the help of the Stata Do-File. The short dataset contains the information on the main satisfaction and personal characteristic variables: reported levels of life satisfaction (on a scale from 0 to 10), subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. Detailed labels and descriptions of the variables are given in the GSOEP codebook. All GSOEP-related files are stored on the GitHub server. 
 
-The state-level data, on the other hand, is gathered from three web-based sources: State Initiative for Core Indicators [LIKI](http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi), [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm) and Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010). 
+The state-level data, on the other hand, is gathered from web-based sources: [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm)  Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010), and [Laenderarbeitskreis](http://www.lak-energiebilanzen.de/dseiten/co2BilanzenAktuelleErgebnisse.cfm). 
 
 A university subscription to *Statista.com* enabled access to historic state emissions per capita from 1990 to 2012 for most of the Bundeslaender, except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW involved more intensive research and data handling but were finally gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted carbon dioxide tons per capita). Hence, the yielded data frame of emissions per capita is comprehensive and consistent, although there are missing observations on some years. 
 
@@ -144,7 +144,16 @@ plot3 <- ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +
 plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Concern about the Environment", y = "")  + theme_bw()
 plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction")  + theme_bw()
 plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "")  + theme_bw()
-multiplot(plot1, plot2, plot5, plot3, plot4, plot6, cols=2)
+
+# Manually
+pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(1, 4, 4), "null"))))
+grid.text("Averages of Sample Variables Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
+print(plot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
+print(plot2, vp = viewport(layout.pos.row = 3, layout.pos.col = 2))
+print(plot3, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
+print(plot4, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
+print(plot5, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
+print(plot6, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 ```
 
 
