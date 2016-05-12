@@ -199,6 +199,8 @@ data <- data[,c(1:3,12,14:24)]
 names(data) <- c("Year", "State", "pid", "satis_labels", "satis",
                       "environ","Stateid","gender","age","emp","fam","CO2Tons","sqkm",
                       "CO2perSqKm","Emissions")
+export(data, file="Broad_Data.csv")
+
 
 #---------------------------------------------------------#
 # Appendix 1: NRW information was missing from statista. Therefore, info on NRW (1990, 1995)

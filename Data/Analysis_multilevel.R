@@ -60,6 +60,10 @@ sigtest_i <- (logLik(Null.Model.2_i)*-2)-(logLik(Null.Model_i)*-2) #variation is
 Model.3<-lme(satis~environ+CO2perSqKm+GrossIncome+gender+age+fam,random=~environ+CO2perSqKm+GrossIncome+gender|Stateid,data=finaldata,
              control=list(opt="optim")) 
 summary(Model.3)
+plot(ranef(Model.3))
+plot(ranef(Model.3), aug=TRUE)
+
+
 Model.3a<-update(Model.3,random=~1|Stateid)
 (anova(Model.3,Model.3a))$L.Ratio #L.Ratio is the sig test (significant)
 
@@ -89,30 +93,57 @@ round(summary(Model.environ)$tTable,dig=5)
 #                      dep.var.labels = "Life Satisfaction",
 #                      title = 'BETWEEN variation',
 #                      digits = 2, type = 'html')
-model.01 <-lme(fixed=satis~CO2perSqKm+environ,random=~CO2perSqKm|Stateid, data=data)
-visualize.lme <- function (model, coefficient, group, ...)
-{
-  r <- ranef(model)
-  f <- fixef(model)
-  
-  effects <- data.frame(r[,1]+f[1], r[,2]+f[2])
-  
-  number.lines <- nrow(effects)
-  
-  predictor.min <- tapply(model$data[[coefficient]], model$data[[group]], min)
-  predictor.max <- tapply(model$data[[coefficient]], model$data[[group]], max)
-  
-  outcome.min <- min(predict(model))
-  outcome.max <- max(predict(model))
-  
-  plot (c(min(predictor.min),max(predictor.max)),c(outcome.min,outcome.max), type="n", ...)
-  
-  for (i in 1:number.lines)
-  {
-    expression <- function(x) {effects[i,1] + (effects[i,2] * x) }
-    curve(expression, from=predictor.min[i], to=predictor.max[i], add=TRUE)
-  }
-}
+model.01 <-lme(satis~CO2perSqKm,random=~CO2perSqKm|Stateid, data=data, control=list(opt="optim"))
 
-visualize.lme(model.01, "CO2perSqKm", "Stateid", xlab="Environmental concerns", ylab="Satisfaction", main="Satis for all")
+pframe_carbon <- with(data,
+               expand.grid(Stateid=levels(Stateid),
+                           CO2perSqKm=seq(min(CO2perSqKm),max(CO2perSqKm),length=51)))
+pframe_carbon$satis <- predict(model.01,newdata=pframe_carbon,level=1)
+install.packages("lattice")
+library(lattice)
+xyplot(satis~CO2perSqKm,group=Stateid,data=pframe,type="l")
 
+library("ggplot2")
+ggplot(data,aes(CO2perSqKm,satis,colour=Stateid))+
+  geom_point()+
+  geom_line(data=pframe_carbon)
+
+data$environ <- as.numeric(as.character(data$environ))
+
+model.02 <-lme(satis~environ,random=~environ|Stateid, data=data, control=list(opt="optim"))
+
+pframe <- with(data,
+               expand.grid(Stateid=levels(Stateid),
+                           environ=seq(min(environ),max(environ),length=3)))
+                           
+pframe$satis <- predict(model.02,newdata=pframe,level=1)
+xyplot(satis~environ,group=Stateid,data=pframe,type="l")
+
+ggplot(data,aes(environ,satis,colour=Stateid))+
+  geom_point()+
+  geom_line(data=pframe)
+
+### Interaction effects plot ###
+library(effects)
+Model.2<-lme(satis~environ+CO2perSqKm+age+fam+gender+emp,random=~gender+age+CO2perSqKm+environ|Stateid,data=data,
+             control=list(opt="optim"))
+ef <- effect("CO2perSqKm", Model.2)
+x <- as.data.frame(ef)
+ggplot(x, aes(CO2perSqKm, fit, color=CO2perSqKm)) + geom_point() + geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.4) + theme_bw(base_size=12)
+
+Model.environ<-lme(satis~fam+gender+environ*GrossIncome+CO2perSqKm+age,
+                   random=~1+fam+gender+environ*GrossIncome+CO2perSqKm+age|Stateid,data=finaldata,control=list(opt="optim"))
+efenv <- effect("environ*GrossIncome", Model.environ)
+xenv <- as.data.frame(efenv)
+ggplot(xenv, aes(environ, fit, color=GrossIncome)) + geom_point() + geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.4) + theme_bw(base_size=12)
+
+
+Model.age<-lme(satis~fam+gender+environ*age+CO2perSqKm+emp,
+                   random=~1+environ*age|Stateid,data=data,control=list(opt="optim"))
+efage <- effect("environ*age", Model.age)
+xage <- as.data.frame(efage)
+Modelage <- ggplot(xage, aes(environ, fit, color=age)) + geom_point() + geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.4) + theme_bw(base_size = 12)+
+  ylab("Predicted satisfaction values") +
+  xlab("Environmental concerns [1-3]")
+Modelage + ggtitle("Predicted values for Model 4") +
+theme(plot.title = element_text(lineheight=.8, face="bold"))
