@@ -211,6 +211,7 @@ ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smoo
 ```
 
 <br><br>
+
 #### Effects of Emissions per Square Kilometer on Life Satisfaction
 
 Below shows the correlation between the level of emissions per square kilometers and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
@@ -234,7 +235,7 @@ ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth
 
 <br><br>
 
-### Effects of Concern for the Environment on Life Satisfaction
+#### Effects of Concern for the Environment on Life Satisfaction
 
 Below shows the correlation between the level of concern about the environment by respondents and overall happiness levels. Life satisfaction appears to have a negative correlation with environmental concern, indicating that the more concerned a respondent is about environmental conditions, the lower the overall happiness of respondents.
 
@@ -245,7 +246,7 @@ ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(c
 
 <br><br>
 
-### Overview of Emissions by State
+#### Overview of Emissions by State
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 boxplot(Emissions~State,
