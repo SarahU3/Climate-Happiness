@@ -66,12 +66,12 @@ geoChartDE <- list(region="DE",
                    legend="{numberFormat:'#,###.00'}") 
 ```
 
-<img src="Emissions.jpg"/> 
 
-
-## Introduction 
+### Introduction 
 
 Climate change is undoubtedly a global problem, but this fact means it is also, in a way, a classic tragedy of the commons. No country wants to put itself at an economic disadvantage by restricting the use of cheap fossil fuels so all continue to emit, deteriorating the "commons" of the Earth's protective atmosphere. This can make it difficult to get citizens to identify with the problem and take responsibility; people will more likely act when something affects them individually. In this paper we want to explore this aspect: how much do people feel, consciously or unconsciously, the effects of green house gas emissions? More specifically, do emissions affect their reported health, well-being, or life satisfaction?  
+
+<img src="Emissions.jpg"/> 
 
 To examine this question, we will look at data from Germany. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices---not to mention coal's continued role as a cheap and reliable fuel---and how to transform the transportation sector. Germany therefore still does emit large amounts of green house gases. We will look at green house gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
 
@@ -82,7 +82,7 @@ We will also investigate whether there is a time component to perceptions of lif
 > *H2: Reported levels of health, well-being or life satisfaction will reflect changes in emissions in line with hypothesis above, i.e. as emissions decline, reported levels of health, well-being, and life satisfaction will rise.* 
 
 
-## Average Emissions per Square KM by State
+### Average Emissions per Square KM by State
 
 The map below illustrates the amount CO2e emissions (tons) per square kilometer in Germany. The information is based on averaged data between 1990-2012 from Statista. The values represent the average over time in the German states.
 
@@ -142,7 +142,7 @@ WorldMap <- gvisGeoChart(total, locationvar = 'iso2Code',
 
 <br><br>
 
-## Global Emissions per Square Kilometer
+### Global Emissions per Square Kilometer
 The map below illustrates the amount CO2e emissions (tons) per square kilometer globally. The information is based on 2007 Data from the United Nations Department of Economic and Social Affairs. Compared to the values of countries, both in the same geographic area, and globally, Germany has extremely high levels of emissions per square kilometer. 
 
 
@@ -153,7 +153,7 @@ plot(WorldMap, tag = 'chart')
 
 <br><br>
 
-## Comparing Effects of Variables on Life Satisfaction by State
+### Comparing Effects of Variables on Life Satisfaction by State
 
 The dynamic chart below allows an examination of the correlation between the variables of interest and overall life satisfaction. The highlights the changes for each of the German states between the years 1990-2012. Scroll through the years at the bottom to see the changes in values over time for each state.
 
@@ -165,44 +165,85 @@ plot(M1, tag = 'chart')
 
 <br><br>
 
-#Explected Values
 
+### What Determines Overall Satisfaction?
 
-
-## What Determines Overall Satisfaction?
-
-### Effects of Age on Life Satisfaction
+#### Effects of Age on Life Satisfaction
 
 Using the means of each state, the scatterplot below shows the correlation between the age of respondents and their overall happiness levels. Life satisfaction appears to be positively correlated with age, in that as respondents age, their overall satisfaction levels decrease.
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+
+# Find some helpful averages
+individMeans <- aggregate(data3[, c("GrossIncome", "age", "fam", "emp")], by = list(Year), FUN = mean)
+names(individMeans) <- c("Year", "MeanIncome", "MeanAge", "AveFam","AveEmp")
+
+# Set as percentage
+individMeans$AveFam <- (individMeans$AveFam-1)*100
+aggremeans <- aggregate(data3[, c("WorkHours","GrossIncome","satis","environ","age",
+                                 "emp","fam","CO2perSqKm","Emissions")], list(State, Year), mean)
+
 #Boxplot of emissions levels by state
-ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, color="#2ca25f") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
+
+ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Age", y = "") + theme_bw()
 ```
 
-### Effects of Emissions per Square Kilometer on Life Satisfaction
+<br><br>
+
+#### Effects of Work Hours on Life Satisfaction
+
+Below shows the correlation between number of work hours per week and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
+
+```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+
+ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Work Hours per Week", y = "") + theme_bw()
+```
+
+<br><br>
+
+#### Effects of Gross Monthly Income on Life Satisfaction
+
+Below shows the correlation between monthly income and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
+
+```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+
+ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Monthly Gross Income", y = "") + theme_bw()
+```
+
+<br><br>
+#### Effects of Emissions per Square Kilometer on Life Satisfaction
 
 Below shows the correlation between the level of emissions per square kilometers and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
-ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour = "#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
+
+ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "") + theme_bw()
 ```
 
-### Effects of Emissions per Capita on Life Satisfaction
+<br><br>
+
+#### Effects of Emissions per Capita on Life Satisfaction
 
 Below shows the correlation between the level of emissions per capita (per person) and overall happiness levels. Life satisfaction appears to have a small, negative correlation with emissions, indicating that the higher emissions per capita, the lower the overall happiness of respondents.
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
-ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction") + theme_bw()
+
+ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Capita", y = "") + theme_bw()
+
 ```
+
+<br><br>
 
 ### Effects of Concern for the Environment on Life Satisfaction
 
 Below shows the correlation between the level of concern about the environment by respondents and overall happiness levels. Life satisfaction appears to have a negative correlation with environmental concern, indicating that the more concerned a respondent is about environmental conditions, the lower the overall happiness of respondents.
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
-ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
+
+ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Concern about the Environment", y = "") + theme_bw()
 ```
+
+<br><br>
 
 ### Overview of Emissions by State
 
@@ -217,7 +258,7 @@ boxplot(Emissions~State,
 )
 ```
 
-##Conclusions
+### Conclusions
 
 Interestingly, emissions, in total amount, per capita and per land size, does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have negative coefficients, while concern about the environment and energy use have positive coefficients.
 
