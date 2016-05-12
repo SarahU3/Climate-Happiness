@@ -7,6 +7,9 @@ library(WDI)
 library(survival)
 library(ggplot2)
 library(Hmisc)
+
+library(knitr)
+library(googleVis)
 ```
 
 ```{r echo=FALSE, results='hide', message=FALSE}
@@ -16,10 +19,6 @@ suppressPackageStartupMessages(library(googleVis))
 #load dataset
 data <- read.csv("All_Merged_Data.csv")
 attach(data)
-
-## Round Emissions
-transform(data, Emissions = is.numeric(Emissions))
-data <- transform(data,  Emissions=round (Emissions,1))
 
 #aggregate yearly emissions data by state
 agg <- aggregate(cbind(CO2perSqKm) ~ State + Year + Stateid, FUN=mean, data=data)
@@ -54,7 +53,7 @@ geoChartDE <- list(region="DE",
                    legend="{numberFormat:'#,###.00'}") 
 ```
 
-<img src="kids-running-outside.jpg" height="4000px" width="2000px" /> 
+<img src="Emissions.jpg"/> 
 
 ## Introduction
 Climate change is undoubtedly a global problem, but this fact means it is also, in a way, a classic tragedy of the commons. No country wants to put itself at an economic disadvantage by restricting the use of cheap fossil fuels so all continue to emit, deteriorating the "commons" of the Earth's protective atmosphere. This can make it difficult to get citizens to identify with the problem and take responsibility; people will more likely act when something affects them individually. In this paper we want to explore this aspect: how much do people feel, consciously or unconsciously, the effects of green house gas emissions? More specifically, do emissions affect their reported health, well-being, or life satisfaction?  
@@ -72,7 +71,7 @@ We will also investigate whether there is a time component to perceptions of lif
 
 The map below illustrates the amount CO2e emissions (tons) per square kilometer in Germany. The information is based on averaged data between 1990-2012 from Statista. The values represent the average over time in the German states.
 
-```{r, echo=FALSE, results='asis'}
+```{r, echo=FALSE, fig.align = 'center', fig.cap = "State Emissions per Sq KM", results='asis'}
 # Plot
 Map <- gvisGeoChart(New, locationvar = 'State',
                       colorvar = 'CO2perSqKm',
@@ -132,7 +131,7 @@ WorldMap <- gvisGeoChart(total, locationvar = 'iso2Code',
 The map below illustrates the amount CO2e emissions (tons) per square kilometer globally. The information is based on 2007 Data from the United Nations Department of Economic and Social Affairs. Compared to the values of countries, both in the same geographic area, and globally, Germany has extremely high levels of emissions per square kilometer. 
 
 
-```{r, echo=FALSE, results='asis'}
+```{r, echo=FALSE, fig.align = 'center', results='asis'}
 plot(WorldMap, tag = 'chart')
 
 ```
@@ -142,7 +141,7 @@ plot(WorldMap, tag = 'chart')
 ## Comparing Effects of Variables on Life Satisfaction by State
 The dynamic chart below allows an examination of the correlation between the variables of interest and overall life satisfaction. The highlights the changes for each of the German states between the years 1990-2012. Scroll through the years at the bottom to see the changes in values over time for each state.
 
-```{r, echo=FALSE, results='asis'}
+```{r, echo=FALSE, fig.align = 'center', fig.cap="Effects of Variables on Satisfation Across States and Time", results='asis'}
 M1 <- gvisMotionChart(allvar, idvar="State", timevar="Year")
 plot(M1, tag = 'chart')
 
