@@ -284,6 +284,9 @@ boxplot(Emissions~State,
 
 ### Results
 
+In our data, the potential negative impacts on happiness associated with various configurations of emission levels was nearly non-existent when we controlled for state-level and individual characteristics. We approached the problem of estimating the reduction in satisfaction by examining a number of regressions based on life-satisfaction that include a variety of socio-economic data to justify a person’s stated level of life satisfaction on a subjective 1-10 scale.
+
+
 Variable       | Coefficient direction and strength   | Expected direction          
 ---------------|--------------------------------------|---------------
 Total Emissions  | -       | -
@@ -300,3 +303,44 @@ Age | -- | -
 Interestingly, emissions, in total amount, per capita and per land size, does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have negative coefficients, while concern about the environment and energy use have positive coefficients.
 
 The output of our multi-level modeling demonstrates that the State emissions are indeed negatively related to the individual happiness. However, after controlling for the individual environmental concerns, the coefficient (-0.005) is not statistically significant. Consequently, the group-level effect does not significantly differ from the individual-level. On the other hand, the coefficient of environmental concerns statistically differs from 0, but the direction is oddly positive counter the expectations. These results point at the omitted variables (absence of the demographic characteristics) that should be included in the further model. Similarly, the surprising direction of the environmental coefficient demands investigation of endogeneity between reported happiness and environmental concerns. 
+
+### Sources
+
+Brereton, Finbarr, J Peter Clinch, and Susana Ferreira. 2008. “Happiness, Geography and the Environment.”
+*Ecological Economics* 65 (2). Elsevier: 386–96.
+
+Cuñado, Juncal, and Fernando Pérez de Gracia. 2013. “Environment and Happiness: New Evidence for
+Spain.” *Social Indicators Research* 112 (3). Springer: 549–67.
+
+Ferreira, Susana, and Mirko Moro. 2010. “On the Use of Subjective Well-Being Data for Environmental
+Valuation.” *Environmental and Resource Economics* 46 (3). Springer: 249–73.
+
+Ferrer-i-Carbonell, Ada, and John M Gowdy. 2007. “Environmental Degradation and Happiness.” *Ecological
+Economics* 60 (3). Elsevier: 509–16.
+
+Goetzke, Frank, and Tilmann Rave. 2015. “Regional Air Quality and Happiness in Germany.” *International
+Regional Science Review* 38 (4). SAGE Publications: 437–51.
+
+Luechinger, Simon. 2009. “Valuing Air Quality Using the Life Satisfaction Approach*.” *The Economic
+Journal* 119 (536). Wiley Online Library: 482–515.
+
+MacKerron, George, and Susana Mourato. 2009. “Life Satisfaction and Air Quality in London.” *Ecological
+Economics* 68 (5). Elsevier: 1441–53.
+
+Menz, Tobias, and Heinz Welsch. 2010. “Population Aging and Environmental Preferences in OECD
+Countries: The Case of Air Pollution.” *Ecological Economics* 69 (12). Elsevier: 2582–9.
+
+Rehdanz, Katrin, and David Maddison. 2008. “Local Environmental Quality and Life-Satisfaction in
+Germany.” *Ecological Economics* 64 (4). Elsevier: 787–97.
+
+Rivers, Douglas, and Quang H Vuong. 1988. “Limited Information Estimators and Exogeneity Tests for
+Simultaneous Probit Models.” *Journal of Econometrics* 39 (3). Elsevier: 347–66.
+
+Van Praag, Bernard, and Barbara E Baarsma. 2005. “Using Happiness Surveys to Value Intangibles: The
+Case of Airport Noise*.” *The Economic Journal* 115 (500). Wiley Online Library: 224–46.
+
+Welsch, Heinz. 2002. “Preferences over Prosperity and Pollution: Environmental Valuation Based on
+Happiness Surveys.” *Kyklos* 55 (4). Wiley Online Library: 473–94.
+
+———. 2006. “Environment and Happiness: Valuation of Air Pollution Using Life Satisfaction Data.”
+*Ecological Economics* 58 (4). Elsevier: 801–13.
