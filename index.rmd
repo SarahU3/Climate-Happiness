@@ -73,16 +73,15 @@ Climate change is undoubtedly a global problem, but this fact means it is also, 
 
 <img src="Emissions.jpg"/> 
 
-To examine this question, we will look at data from Germany. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices---not to mention coal's continued role as a cheap and reliable fuel---and how to transform the transportation sector. Germany therefore still does emit large amounts of green house gases. We will look at green house gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
+### Our Research
+
+To examine this question, we will look at data from Germany. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices---not to mention coal's continued role as a cheap and reliable fuel---and how to transform the transportation sector. Germany therefore still does emit large amounts of green house gases. We will look at greenhouse gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
 
 > *H1: Bundeslaender with higher emissions will have lower reported levels of health, well-being, or life satisfaction.* 
 
 We will also investigate whether there is a time component to perceptions of life satisfaction and well-being. This is important because, as explained in more depth in the literature review, there is a possibe endogeneity problem. Individuals may be unhappy with more pollution, but unhappy individuals may be bothered more by pollution. Germany's emissions have been reduced since 1990, though reductions have stagnated recently. By tracking responses over time, we hope to tell if there is a time component: do changes in emissions precede changes in life satisfaction? There are some studies that have used a time series approach, but not many have done so a a country level. Using German emissions and happiness data going back to 1990, our second hypothesis is:
 
 > *H2: Reported levels of health, well-being or life satisfaction will reflect changes in emissions in line with hypothesis above, i.e. as emissions decline, reported levels of health, well-being, and life satisfaction will rise.* 
-
-
-### Average Emissions per Square KM by State
 
 The map below illustrates the amount CO2e emissions (tons) per square kilometer in Germany. The information is based on averaged data between 1990-2012 from Statista. The values represent the average over time in the German states.
 
@@ -95,6 +94,30 @@ Map <- gvisGeoChart(New, locationvar = 'State',
 plot(Map, tag = 'chart')
 
 ```
+
+Controlling for state- and time-fixed effects, we anticipate the following effects as a result of our model:
+
+Emissions (-)
+CO2 Per Capita (-)
+CO2 Per Square KM (-)
+Age (-)
+Monthly Income (+)
+Work Hours per Week (-)
+
+
+### Data
+
+For the purpose of our research, the following data has been collected:
+
+- The **individual-level data** on individual characteristics and survey data is provided by:
+    + The German Socio-Economic Panel Data GSOEP conducted by the German Institute for Economic Research DIW
+
+- The **state-level data** on emissions levels, state size, and population is gathered from four web-based sources:
+    + State Initiative for Core Indicators LIKI
+    + Statista.com
+    + Environmental-Economic Accounting of the Bundeslaender UGRdL
+    + Agency for Renewable Agency of North Rhine-Westphalia AfEE
+
 
 ```{r echo=FALSE, results='hide', message=FALSE}
 # Plot
@@ -172,7 +195,7 @@ plot(M1, tag = 'chart')
 
 Using the means of each state, the scatterplot below shows the correlation between the age of respondents and their overall happiness levels. Life satisfaction appears to be positively correlated with age, in that as respondents age, their overall satisfaction levels decrease.
 
-```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
 # Find some helpful averages
 individMeans <- aggregate(data3[, c("GrossIncome", "age", "fam", "emp")], by = list(Year), FUN = mean)
@@ -194,7 +217,7 @@ ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(colou
 
 Below shows the correlation between number of work hours per week and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
 
-```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
 ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Work Hours per Week", y = "") + theme_bw()
 ```
@@ -205,7 +228,7 @@ ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth
 
 Below shows the correlation between monthly income and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
 
-```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
 ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Monthly Gross Income", y = "") + theme_bw()
 ```
@@ -216,7 +239,7 @@ ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smoo
 
 Below shows the correlation between the level of emissions per square kilometers and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
 
-```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
 ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "") + theme_bw()
 ```
@@ -227,7 +250,7 @@ ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smoot
 
 Below shows the correlation between the level of emissions per capita (per person) and overall happiness levels. Life satisfaction appears to have a small, negative correlation with emissions, indicating that the higher emissions per capita, the lower the overall happiness of respondents.
 
-```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
 ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Capita", y = "") + theme_bw()
 
@@ -239,7 +262,7 @@ ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth
 
 Below shows the correlation between the level of concern about the environment by respondents and overall happiness levels. Life satisfaction appears to have a negative correlation with environmental concern, indicating that the more concerned a respondent is about environmental conditions, the lower the overall happiness of respondents.
 
-```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
 ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Concern about the Environment", y = "") + theme_bw()
 ```
@@ -248,7 +271,7 @@ ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(c
 
 #### Overview of Emissions by State
 
-```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
+```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 boxplot(Emissions~State,
   data=data3,
   main="Emissions by State",
