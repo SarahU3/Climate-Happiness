@@ -9,6 +9,7 @@ urlcolor: blue
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options(xtable.comment = FALSE)
 ```
 
 ``` {r datasource, include=FALSE, cache.extra=list(file.info("~/Climate-Happiness/Data/All_Merged_Data.csv")$mtime)}
@@ -60,24 +61,27 @@ The individual-level data is provided by the German Socio-Economic Panel Data [G
 
 The state-level data, on the other hand, is gathered from three web-based sources: State Initiative for Core Indicators [LIKI](http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi), [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm) and Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010). 
 
-A university subscription to *Statista.com* enabled access to historic state emissions from 1990 to 2012 for most of the Bundeslaender, except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW involved more intensive research and data handling but were finally gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted Carbon dioxide tons per capita). Hence, the yielded data frame of emissions is comprehensive and consistent, although there are missing observations on some years. 
+A university subscription to *Statista.com* enabled access to historic state emissions per capita from 1990 to 2012 for most of the Bundeslaender, except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW involved more intensive research and data handling but were finally gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted carbon dioxide tons per capita). Hence, the yielded data frame of emissions per capita is comprehensive and consistent, although there are missing observations on some years. 
 
-Simultaneously, the state efforts to curb their emissions and preserve local environment are reflected in their renewable energy indicators. This information is measured in percentage of renewables in the annual primary energy consumption, final energy consumption, and electricity consumption. The indicators had to be downloaded manually from *LIKI* in three separate excel files, which later on were cleaned, transformed and reshaped into suitable data frames in R. 
-
-Once the names of the Bundeslaender and the time frame of the three produced data frames match, they are easily merged in R into a final data set.
+Because the Bundeslaender vary so much in geographic size as awell as population, we also added emissions data by square kilometer for each state, since that might better represent the concentration of emissions. The [Laenderarbeitskreis] (http://www.lak-energiebilanzen.de/dseiten/co2BilanzenAktuelleErgebnisse.cfm) maintains a publicly available database of CO2 emissions in total tons per state and per year, which can be downloaded as CSV or Excel files. The states' areas in square kilometers were then pulled from an table on the website of the [Federal Statistical Office and Statistical Offices of the Bundeslaender] (http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp) and merged to create a dataset, in which CO2 emissions per square kilometer could be calculated. 
 
 
-``` {r variables, echo=FALSE, messages = FALSE results = "asis"}
+Once the names of the Bundeslaender and the time frame of the resulting data frames were matched, they were merged in R into a final data set. The variables in our data set are listed below. 
+
+
+``` {r variables, echo=FALSE, messages=FALSE, warnings=FALSE, results = "asis"}
 Variables <- names(data[, c(1:2, 4:6, 8, 11:13, 15:22)])
 Descriptions <- c("Year", "State", "Hours worked per week", "Gross monthly income (before taxes)", "Net monthly income (after taxes)", "Born in Germany (1 if yes, 2 if no)", "Life satisfaction, labeled on a scale of 1 (low) to 10 (high)", "Life satisfaction, numeric values (1-10) only", "Concern about the environment on a scale from 1 (not concerned at all) to 3 (very concerned)", "Gender", "Age", "Employment status (1 if not employed, 2 if employed)", "Family status (1 if single, 2 if with a partner)", "Total tons of CO2 emitted in each state, in 1000 tons", "State area in square kilometers", "Tons of CO2 emitted per square kilometer for each state", "Tons of CO2 emitted per capita in each state")
 varbound <- cbind(Variables, Descriptions)
 vartable <- xtable(varbound)
-print(vartable, type = "LaTex")
+print.xtable(vartable, type = "LaTex", hline.after = c(-1,0,17), include.rownames=FALSE)
 ```
 
 ### Individual descriptive statistics
 
-``` {r individual graphs, echo = FALSE, messages = FALSE, warnings = FALSE}
+Examining our individual-level variables, there are some trends to be aware of, as shown in the graphs below. 
+
+``` {r individual line graphs, echo = FALSE, messages = FALSE, warnings = FALSE}
 # Create multiplot function to combine multiple ggplots
 multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   require(grid)
@@ -116,7 +120,6 @@ individMeans$AveFam <- (individMeans$AveFam-1)*100
 aggremeans <- aggregate(data[, c("WorkHours","GrossIncome","satis","environ","age",
                                  "emp","fam","CO2perSqKm","Emissions")], list(State, Year), mean)
 
-
 indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line(colour="#2ca25f") +labs(y = "Average age") + theme_bw()
 indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line(colour="#2ca25f") +labs(y = "Average income") + theme_bw()
 indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line(colour="#2ca25f") +labs(y = "Percentage with a partner") + theme_bw()
@@ -127,7 +130,11 @@ grid.text("Sample Averages Over Time", vp = viewport(layout.pos.row = 1, layout.
 print(indiplot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(indiplot2, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(indiplot3, vp = viewport(layout.pos.row = 3, layout.pos.col = 1:2))
+```
 
+
+
+``` {r individual scatter plots, echo = FALSE, messages = FALSE, warnings = FALSE}
 # scatterplots of aggregate state satisfaction over years
 plot1 <- ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
 plot2 <- ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Work Hours per Week", y = "Life Satisfaction")  + theme_bw()
@@ -136,7 +143,6 @@ plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom
 plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction")  + theme_bw()
 plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "")  + theme_bw()
 multiplot(plot1, plot2, plot5, plot3, plot4, plot6, cols=2)
-
 ```
 
 ### State level descriptive statistics
