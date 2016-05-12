@@ -30,6 +30,8 @@ attach(data3)
 ```
 
 ```{r echo=FALSE, results='hide', message=FALSE}
+#create aggregate dataframe to create plots for GoogleVis
+#changing state names to correspond to GoogleVis provinces codes (Germany)
 
 suppressPackageStartupMessages(library(googleVis))
 
@@ -41,6 +43,7 @@ allvar <- aggregate(cbind(CO2perSqKm, satis, environ, GrossIncome) ~ State + Yea
 #Transform yearly data to numeric
 transform(agg, Year = as.numeric(Year))
 
+#Replace problematic state names
 Replace1 <- data.frame(from = c("Baden-W\xcc_rttemberg", "Th\xcc_ringen"), to = c("Baden-Wuerttemberg", "Thueringen"))
                        
 allvar <- FindReplace(data=allvar, Var = "Stateid", replaceData = Replace1, from = "from", to = "to",
@@ -59,7 +62,7 @@ New <- FindReplace(data=allvar, Var = "Stateid", replaceData = Replaces, from = 
 New[, c(2,4)] <- sapply(New[, c(2,4)], as.numeric)
 
 
-## Create Geo Charts for each year
+## Create Geo Charts option code for geovis plot
 
 geoChartDE <- list(region="DE", 
                    resolution="provinces",
