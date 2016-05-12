@@ -1,7 +1,7 @@
 ---
 title: "Green Growth and Theoretical Framework"
 output: pdf_document
-bibliography: Growth.bib
+bibliography: Green_Growth.bib
 urlcolor: blue
 ---
 
