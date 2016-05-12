@@ -1,25 +1,28 @@
 
 library(repmis)
 
-possibles <- c('~/GitHub', 
-               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/')
+possibles <- c('~/GitHub/Climate-Happiness', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness')
 set_valid_wd(possibles)
 
-source('Climate-Happiness/Data/SourceFile.R')
-data <- read.csv("All_Merged_Data.csv")
-attach(data)
+source('Data/SourceFile.R')
+
+set_valid_wd(possibles)
+
+data2 <- read.csv("All_Merged_Data.csv")
+attach(data2)
 
 
 ## Descriptive Statistics
 
 
-names(data)
+names(data2)
 summary(State)
 
-aggregate(formula=satis_labels~Emissions+Year+State, data=data, FUN=mean)
-satislabelmeans <- aggregate(formula=satis~Year+State, data=data, FUN=mean)
+aggregate(formula=satis_labels~Emissions+Year+State, data=data2, FUN=mean)
+satislabelmeans <- aggregate(formula=satis~Year+State, data=data2, FUN=mean)
 
-data[data$State=="Berlin", ]
+data2[data2$State=="Berlin", ]
 
 
 #The data has a wide range in terms of the number of observations for each federal state. If we look a little closer, separating them by year, we see that some states are missing observations for a few years. Using Saarland, Nordrhein-Westfalen, and Hamburg in our analysis may require some adjustment with the missing years in mind.
@@ -37,12 +40,12 @@ table(State, Year)
 
 
 #Boxplot of emissions levels by state
-ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per capita)") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+ggplot(data2, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per capita)") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 
 
 
 # Line graph of emissions levels by state over time
-ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_line() + scale_colour_discrete() +labs(y = "Emissions (annual tons of CO2 per capita)")
+ggplot(data2, aes(x = Year, y = Emissions, group = State, color = State)) + geom_line() + scale_colour_discrete() +labs(y = "Emissions (annual tons of CO2 per capita)")
 
 
 
@@ -50,11 +53,11 @@ ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_
 
 
 #Boxplot of life satisfaction by state 
-ggplot(data, aes(x=State, y=satis), main = "Average Life Satisfaction by State", xlab = "State", ylab = "Satisfaction") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+ggplot(data2, aes(x=State, y=satis), main = "Average Life Satisfaction by State", xlab = "State", ylab = "Satisfaction") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 
 
 
-aggremeans <- aggregate(data[, c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)], list(State, Year), mean)
+aggremeans <- aggregate(data2[, c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)], list(State, Year), mean)
 ggplot(aggremeans, aes(x=Group.2, y=satis, group = Group.1, color = Group.1)) + geom_line() + scale_colour_discrete() +labs(y = "Life Satisfaction")
 
 #Again using the means of each state, we can create some scatterplots showing correlation between variables. Life satisfaction appears to be positively correlated with age, energy use, and concern about the environment, but does not show a strong correlation with emissions. 
@@ -79,7 +82,7 @@ Y1<-cbind(satis)
 X1<-cbind(Emissions, environ, gender, age)
 
 #set data as panel data
-pdataind<-plm.data(data, index=c("pid","Year"))
+pdataind<-plm.data(data2, index=c("pid","Year"))
 
 summary(X1, digits = 2)
 
@@ -159,7 +162,7 @@ VarCorr(Null.Model)
 GREL.DAT<-GmeanRel(Null.Model)
 names(GREL.DAT)
 mean(GREL.DAT$MeanRel)
-Null.Model.2<-gls(satis~1,data=data,
+Null.Model.2<-gls(satis~1,data=data2,
                     control=list(opt="optim"))
 logLik(Null.Model.2)*-2
 logLik(Null.Model)*-2
