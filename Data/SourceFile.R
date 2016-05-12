@@ -99,11 +99,10 @@ export(general, file="Emissions_Final.csv")
 #---------------------------------------------------------#
 ### 3. Total Emissions data (instead of per capita) from Länderarbeitskreis Energiebilanzen
 TotalEmissions <-read.xlsx(file.path("Emissions", "allbundeslaender_c100.xlsx"), sheetIndex=1, startRow = 3, endRow = 371)
-sapply(TotalEmissions, function(f){is.na(f)<-which(f == '...');f}) 
+# Coerce to numeric
+TotalEmissions$CO2.EmissionenInsgesamt <- as.numeric(as.character(TotalEmissions$CO2.EmissionenInsgesamt))
+TotalEmissions$Jahr <- sapply(TotalEmissions$Jahr, as.numeric)
 names(TotalEmissions) <- c("State", "Year", "CO2Tons")
-TotalEmissions$CO2Tons[TotalEmissions$CO2Tons=='...'] <- NA
-# transform(TotalEmissions, CO2Tons = as.numeric(CO2Tons))
-TotalEmissions[, c(2,3)] <- sapply(TotalEmissions[, c(2,3)], as.numeric)
 
 
 ### Forming Emissions per km^2
