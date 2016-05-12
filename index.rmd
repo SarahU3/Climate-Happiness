@@ -166,12 +166,12 @@ plot(M1, tag = 'chart')
 Effects of Age on Life Satisfaction
 ```{r, echo=FALSE}
 #Boxplot of emissions levels by state
-ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="27AE60") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
+ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, color="#2ca25f") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
 ```
 
 Effects of Emissions per Square Kilometer on Life Satisfaction
-```{r, echo=FALSE}
-ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
+```{r, echo=FALSE, fig.align='center', fig.cap="Effect of CO2/SqKM", fig.width=8, fig.height=3}
+ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour = "#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
 ```
 
 Effects of Emissions per Capita on Life Satisfaction
