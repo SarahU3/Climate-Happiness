@@ -79,16 +79,14 @@ print.xtable(vartable, type = "LaTex", hline.after = c(-1,0,17), include.rowname
 
 ### Individual descriptive statistics
 
-Examining our individual-level variables, there are some trends to be aware of, as shown in the graphs below. 
+Examining our individual-level variables, there are some trends to be aware of, as shown in the graphs below. They represent the means of our sample, either of the whole sample for the line graphs, or of the individuals in each state for each year for the scatterplots. 
 
 ``` {r individual line graphs, echo = FALSE, messages = FALSE, warnings = FALSE}
 # Create multiplot function to combine multiple ggplots
 multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   require(grid)
-  
-  plots <- c(list(...), plotlist)
-  
-  numPlots = length(plots)
+    plots <- c(list(...), plotlist)
+    numPlots = length(plots)
   
   if (is.null(layout)) {
     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
@@ -111,10 +109,11 @@ multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   }
 }
 
+observations <- as.data.frame(data %>% distinct(pid,Year) %>% count(Year))
 
 # Find some helpful averages
-individMeans <- aggregate(data[, c("GrossIncome", "age", "fam", "emp")], by = list(Year), FUN = mean)
-names(individMeans) <- c("Year", "MeanIncome", "MeanAge", "AveFam","AveEmp")
+individMeans <- aggregate(data[, c("GrossIncome", "age", "fam")], by = list(Year), FUN = mean)
+names(individMeans) <- c("Year", "MeanIncome", "MeanAge", "AveFam")
 # Set as percentage
 individMeans$AveFam <- (individMeans$AveFam-1)*100
 aggremeans <- aggregate(data[, c("WorkHours","GrossIncome","satis","environ","age",
@@ -122,16 +121,19 @@ aggremeans <- aggregate(data[, c("WorkHours","GrossIncome","satis","environ","ag
 
 indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line(colour="#2ca25f") +labs(y = "Average age") + theme_bw()
 indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line(colour="#2ca25f") +labs(y = "Average income") + theme_bw()
-indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line(colour="#2ca25f") +labs(y = "Percentage with a partner") + theme_bw()
+indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line(colour="#2ca25f") +labs(y = "% with a partner") + theme_bw()
+indiplot4 <- ggplot(observations, aes(x = Year, y = n)) + geom_line(colour="#2ca25f") +labs(y = "Observations in sample") + theme_bw()
 
 # Manual multiplot to add title 
 pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(1, 4, 4), "null"))))
-grid.text("Sample Averages Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
-print(indiplot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
-print(indiplot2, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
-print(indiplot3, vp = viewport(layout.pos.row = 3, layout.pos.col = 1:2))
+grid.text("Averages of Sample Variables Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
+print(indiplot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
+print(indiplot2, vp = viewport(layout.pos.row = 3, layout.pos.col = 2))
+print(indiplot3, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
+print(indiplot4, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 ```
 
+First, we see that a large number of individuals were added to the  sample in 2000; though the number declined again in the following years, there are significantly more observations after 2000 then prior to 2000. Also, the overall average age of our sample increased over the time under observation; the range for all obversations was 17 to 89. It makes sense that it would increase over time for a longitudinal study, but the unevenness of the increase confirms that there are dropouts and additions. The drop in average age at the year 2000 would be accounted for by the large number of additional observations, but the steeper rise after the 2000 might confirm that younger people are less availabe and willing to respond to surveys, a well-known problem for traditional data collection. The same patterns could also account for the sharp drop in the percentage of the sample whose family status indicates that they have a partner around 2000 (assuming younger individuals in the survey were less likely to have a partner), though it does not explain the decline after 2007. Similarly, an older sample would also explain the higher monthly income after 2000, though the steepness of the increase is puzzling. 
 
 
 ``` {r individual scatter plots, echo = FALSE, messages = FALSE, warnings = FALSE}
@@ -144,6 +146,8 @@ plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +ge
 plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "")  + theme_bw()
 multiplot(plot1, plot2, plot5, plot3, plot4, plot6, cols=2)
 ```
+
+
 
 ### State level descriptive statistics
 ``` {r state graphs, echo = FALSE, messagses = FALSE, warnings = FALSE}
