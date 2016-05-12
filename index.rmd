@@ -1,7 +1,7 @@
 ## Emissions Levels and Life Satisfaction
 ### A Study on the German States
 
-```{r, include = FALSE, cache.extra=list(file.info("~/Climate-Happiness/Data/All_Merged_Data.csv")$mtime)}
+```{r, include = FALSE}
 
 setwd("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness")
 
@@ -18,16 +18,14 @@ source("Data/AnalysisSource.R")
 
 
 library(repmis)
+
 possibles <- c('~/GitHub/Climate-Happiness/', 
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/')
 set_valid_wd(possibles)
 
 
-source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
 data3 <- read.csv("All_Merged_Data.csv")
 attach(data3)
-
-setwd("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness")
 
 ```
 
@@ -156,6 +154,7 @@ plot(WorldMap, tag = 'chart')
 <br><br>
 
 ## Comparing Effects of Variables on Life Satisfaction by State
+
 The dynamic chart below allows an examination of the correlation between the variables of interest and overall life satisfaction. The highlights the changes for each of the German states between the years 1990-2012. Scroll through the years at the bottom to see the changes in values over time for each state.
 
 ```{r, echo=FALSE, fig.align = 'center', fig.cap="Effects of Variables on Satisfation Across States and Time", results='asis'}
@@ -174,6 +173,8 @@ plot(M1, tag = 'chart')
 
 ### Effects of Age on Life Satisfaction
 
+Using the means of each state, the scatterplot below shows the correlation between the age of respondents and their overall happiness levels. Life satisfaction appears to be positively correlated with age, in that as respondents age, their overall satisfaction levels decrease.
+
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 #Boxplot of emissions levels by state
 ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, color="#2ca25f") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
@@ -181,17 +182,23 @@ ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() + geom_smooth(meth
 
 ### Effects of Emissions per Square Kilometer on Life Satisfaction
 
+Below shows the correlation between the level of emissions per square kilometers and overall happiness levels. Life satisfaction appears to have little to no correlation with emissions, as the line is almost flat.
+
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour = "#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
 ```
 
 ### Effects of Emissions per Capita on Life Satisfaction
 
+Below shows the correlation between the level of emissions per capita (per person) and overall happiness levels. Life satisfaction appears to have a small, negative correlation with emissions, indicating that the higher emissions per capita, the lower the overall happiness of respondents.
+
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction") + theme_bw()
 ```
 
 ### Effects of Concern for the Environment on Life Satisfaction
+
+Below shows the correlation between the level of concern about the environment by respondents and overall happiness levels. Life satisfaction appears to have a negative correlation with environmental concern, indicating that the more concerned a respondent is about environmental conditions, the lower the overall happiness of respondents.
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
