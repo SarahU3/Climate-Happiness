@@ -1,8 +1,10 @@
 ## Emissions Levels and Life Satisfaction
 ### A Study on the German States
 
-```{r, include = FALSE}
+```{r, include = FALSE, cache.extra=list(file.info("~/Climate-Happiness/Data/All_Merged_Data.csv")$mtime)}
+
 setwd("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness")
+
 library(DataCombine)
 library(WDI)
 library(survival)
@@ -13,6 +15,18 @@ library(knitr)
 library(googleVis)
 library(Zelig)
 source("Data/AnalysisSource.R")
+
+
+library(repmis)
+possibles <- c('~/GitHub/Climate-Happiness/', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/')
+set_valid_wd(possibles)
+
+
+source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
+data3 <- read.csv("All_Merged_Data.csv")
+attach(data3)
+
 setwd("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness")
 
 ```
@@ -20,10 +34,6 @@ setwd("~/Documents/Hertie 2016/Collaborative Social Science Data/Research Projec
 ```{r echo=FALSE, results='hide', message=FALSE}
 
 suppressPackageStartupMessages(library(googleVis))
-
-#load dataset
-data3 <- read.csv("All_Merged_Data.csv")
-attach(data3)
 
 #aggregate yearly emissions data by state
 agg <- aggregate(cbind(CO2perSqKm) ~ State + Year + Stateid, FUN=mean, data=data3)
@@ -162,32 +172,32 @@ plot(M1, tag = 'chart')
 
 ## What Determines Overall Satisfaction?
 
-Effects of Age on Life Satisfaction
+### Effects of Age on Life Satisfaction
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 #Boxplot of emissions levels by state
 ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, color="#2ca25f") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
 ```
 
-Effects of Emissions per Square Kilometer on Life Satisfaction
+### Effects of Emissions per Square Kilometer on Life Satisfaction
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour = "#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
 ```
 
-Effects of Emissions per Capita on Life Satisfaction
+### Effects of Emissions per Capita on Life Satisfaction
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction") + theme_bw()
 ```
 
-Effects of Concern for the Environment on Life Satisfaction
+### Effects of Concern for the Environment on Life Satisfaction
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
 ```
 
-Overview of Emissions by State
+### Overview of Emissions by State
 
 ```{r, echo=FALSE, fig.align='center', fig.width=10, fig.height=4}
 boxplot(Emissions~State,
