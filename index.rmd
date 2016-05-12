@@ -207,7 +207,8 @@ aggremeans <- aggregate(data3[, c("WorkHours","GrossIncome","satis","environ","a
 
 #Boxplot of emissions levels by state
 
-ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Age", y = "") + theme_bw()
+ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Age", y = "") + theme_bw()
+
 ```
 
 <br><br>
@@ -218,7 +219,7 @@ Below shows the correlation between number of work hours per week and overall ha
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
-ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Work Hours per Week", y = "") + theme_bw()
+ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() + geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Work Hours per Week", y = "") + theme_bw()
 ```
 
 <br><br>
@@ -229,7 +230,7 @@ Below shows the correlation between monthly income and overall happiness levels.
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
-ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Monthly Gross Income", y = "") + theme_bw()
+ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Monthly Gross Income", y = "") + theme_bw()
 ```
 
 <br><br>
@@ -240,7 +241,7 @@ Below shows the correlation between the level of emissions per square kilometers
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
-ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "") + theme_bw()
+ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "") + theme_bw()
 ```
 
 <br><br>
@@ -251,7 +252,7 @@ Below shows the correlation between the level of emissions per capita (per perso
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
-ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Capita", y = "") + theme_bw()
+ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Emissions per Capita", y = "") + theme_bw()
 
 ```
 
@@ -263,7 +264,7 @@ Below shows the correlation between the level of concern about the environment b
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
-ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Concern about the Environment", y = "") + theme_bw()
+ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Concern about the Environment", y = "") + theme_bw()
 ```
 
 <br><br>
