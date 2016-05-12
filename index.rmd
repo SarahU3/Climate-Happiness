@@ -127,7 +127,8 @@ For the purpose of our research, the following data has been collected:
 ```{r echo=FALSE, results='hide', message=FALSE}
 # Plot map of 
 
-## Get data from from the World Bank
+## Get data from from the World Bank for country codes
+
 wbData <- WDI(country="all", indicator=c("SP.DYN.LE00.IN",
                                "SP.POP.TOTL"), start=1960, end=2011,
               extra=FALSE)
@@ -159,10 +160,12 @@ total <- merge(wbCountries, worlddata,
 
 names(total) <- c("country", "id", "iso2Code", "RegionID", "RegionValue", "ID2", "Region", "Income.Level.ID", "IncomeLevel", "LendingType", "LendingValue", "Capital", "Longitude", "Latitude", "CO2EmissionsMt", "NotA", "ChangeSince1990", "NotB", "CO2perCapita", "NotC", "CO2perSquareKM", "NotD")
 
+#set geochart options
 geoChartworld <- list(region="world", 
                    resolution="countries",
                    legend="{numberFormat:'#,###.00'}")
 
+#plot world emissions
 WorldMap <- gvisGeoChart(total, locationvar = 'iso2Code',
                       colorvar = 'CO2perSquareKM',
                       options = geoChartworld)
