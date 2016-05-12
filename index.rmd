@@ -282,6 +282,19 @@ boxplot(Emissions~State,
 )
 ```
 
+### Results
+
+Variable       | Coefficient direction and strength   | Expected direction          
+---------------|--------------------------------------|---------------
+Total Emissions  | -       | -
+Emissions per Capita   | - | -
+Emissions per Sq. KM | - | -
+Concern for the Environment | + | -
+Monthly Income | ++ | +
+Monthly Hours Worked | -- | -
+Age | -- | -
+
+
 ### Conclusions
 
 Interestingly, emissions, in total amount, per capita and per land size, does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have negative coefficients, while concern about the environment and energy use have positive coefficients.
