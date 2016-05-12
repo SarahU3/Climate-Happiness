@@ -50,14 +50,11 @@ attach(data)
 names(data)
 summary(State)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 aggregate(formula=satis_labels~Emissions+Year+State, data=data, FUN=mean)
 satislabelmeans <- aggregate(formula=satis~Year+State, data=data, FUN=mean)
 
 data[data$State=="Berlin", ]
 
-=======
 ```
 The data has a wide range in terms of the number of observations for each federal state. If we look a little closer, separating them by year, we see that some states are missing observations for a few years. Using Saarland, Nordrhein-Westfalen, and Hamburg in our analysis may require some adjustment with the missing years in mind.
 
