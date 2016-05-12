@@ -147,6 +147,7 @@ data <- merge(GSOEP, landemissions, by=c("Year","State"))
 incomedata <- merge(GSOEP_income, landemissions, by=c('Year', 'State'))
 finaldata <- merge(incomedata, emissions, by=c('Year', 'State'))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
+finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="Ã¼",replacement="ue"))
 
 #5. export merged data to single CSV file
 finaldata$satis <- as.numeric(as.character(finaldata$satis))
