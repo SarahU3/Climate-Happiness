@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ``` {r datasource, include=FALSE, cache.extra=list(file.info("~/Climate-Happiness/Data/All_Merged_Data.csv")$mtime)}
 library(repmis)
+library(grid)
 possibles <- c('~/GitHub/Climate-Happiness/', 
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/')
 set_valid_wd(possibles)
@@ -66,7 +67,7 @@ Simultaneously, the state efforts to curb their emissions and preserve local env
 Once the names of the Bundeslaender and the time frame of the three produced data frames match, they are easily merged in R into a final data set.
 
 
-``` {r variables, echo=FALSE, results = "asis"}
+``` {r variables, echo=FALSE, messages = FALSE results = "asis"}
 Variables <- names(data[, c(1:2, 4:6, 8, 11:13, 15:22)])
 Descriptions <- c("Year", "State", "Hours worked per week", "Gross monthly income (before taxes)", "Net monthly income (after taxes)", "Born in Germany (1 if yes, 2 if no)", "Life satisfaction, labeled on a scale of 1 (low) to 10 (high)", "Life satisfaction, numeric values (1-10) only", "Concern about the environment on a scale from 1 (not concerned at all) to 3 (very concerned)", "Gender", "Age", "Employment status (1 if not employed, 2 if employed)", "Family status (1 if single, 2 if with a partner)", "Total tons of CO2 emitted in each state, in 1000 tons", "State area in square kilometers", "Tons of CO2 emitted per square kilometer for each state", "Tons of CO2 emitted per capita in each state")
 varbound <- cbind(Variables, Descriptions)
@@ -116,10 +117,11 @@ aggremeans <- aggregate(data[, c("WorkHours","GrossIncome","satis","environ","ag
                                  "emp","fam","CO2perSqKm","Emissions")], list(State, Year), mean)
 
 
-indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line() +labs(y = "Average age")
-indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line() +labs(y = "Average income")
-indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line() +labs(y = "Percentage with a partner")
+indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line(colour="#2ca25f") +labs(y = "Average age") + theme_bw()
+indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line(colour="#2ca25f") +labs(y = "Average income") + theme_bw()
+indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line(colour="#2ca25f") +labs(y = "Percentage with a partner") + theme_bw()
 
+# Manual multiplot to add title 
 pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(1, 4, 4), "null"))))
 grid.text("Sample Averages Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
 print(indiplot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
@@ -127,22 +129,44 @@ print(indiplot2, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(indiplot3, vp = viewport(layout.pos.row = 3, layout.pos.col = 1:2))
 
 # scatterplots of aggregate state satisfaction over years
-plot1 <- ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth() + labs(x = "Age", y = "Life Satisfaction")
-plot2 <- ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth() + labs(x = "Work Hours per Week", y = "Life Satisfaction")
-plot3 <- ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth() + labs(x = "Monthly Gross Income", y = "")
-plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth() + labs(x = "Concern about the Environment", y = "")
-plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Capita", y = "Life Satisfaction")
-plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Sq KM", y = "")
+plot1 <- ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
+plot2 <- ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Work Hours per Week", y = "Life Satisfaction")  + theme_bw()
+plot3 <- ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Monthly Gross Income", y = "")  + theme_bw()
+plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Concern about the Environment", y = "")  + theme_bw()
+plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction")  + theme_bw()
+plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "")  + theme_bw()
 multiplot(plot1, plot2, plot5, plot3, plot4, plot6, cols=2)
-
 
 ```
 
 ### State level descriptive statistics
 ``` {r state graphs, echo = FALSE, messagses = FALSE, warnings = FALSE}
-statebox1 <- ggplot(data, aes(x=State, y=Emissions), main = "Emissions per Capita by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per capita)") +geom_boxplot(fill ="firebrick", colour="black") + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
-statebox2 <- ggplot(data, aes(x=State, y=CO2perSqKm), main = "Emissions per Square Kilometer by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per sq km)") +geom_boxplot(fill ="firebrick", colour="black") + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
-multiplot(statebox1, statebox2, cols=1)
+boxdata <- data[, c(1,2,21,22)]
+boxdata$StateCode[boxdata$State == "Baden-Wuerttemberg"] <- "BW"
+boxdata$StateCode[boxdata$State == "Bayern"] <- "BY"
+boxdata$StateCode[boxdata$State == "Bremen"] <- "HB"
+boxdata$StateCode[boxdata$State == "Berlin"] <- "BE"
+boxdata$StateCode[boxdata$State == "Brandenburg"] <- "BB"
+boxdata$StateCode[boxdata$State == "Hamburg"] <- "HH"
+boxdata$StateCode[boxdata$State == "Hessen"] <- "HE"
+boxdata$StateCode[boxdata$State == "Mecklenburg-Vorpommern"] <- "MV"
+boxdata$StateCode[boxdata$State == "Niedersachsen"] <- "NI"
+boxdata$StateCode[boxdata$State == "Nordrhein-Westfalen"] <- "NW"
+boxdata$StateCode[boxdata$State == "Rheinland-Pfalz"] <- "RP"
+boxdata$StateCode[boxdata$State == "Saarland"] <- "SL"
+boxdata$StateCode[boxdata$State == "Sachsen"] <- "SN"
+boxdata$StateCode[boxdata$State == "Sachsen-Anhalt"] <- "ST"
+boxdata$StateCode[boxdata$State == "Schleswig-Holstein"] <- "SH"
+boxdata$StateCode[boxdata$State == "Thueringen"] <- "TH"
+statebox1 <- ggplot(boxdata, aes(x=StateCode, y=Emissions)) + labs(x = "", y = "Per capita") +geom_boxplot(fill = "#2ca25f", colour="black") + theme_bw() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+statebox2 <- ggplot(boxdata, aes(x=StateCode, y=CO2perSqKm)) + labs(x= "State", y= "Per sq km") +geom_boxplot(fill ="#2ca25f", colour="black") + theme_bw() +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+ 
+# Create multiplot manually for spacing 
+pushViewport(viewport(layout = grid.layout(3, 1, heights = unit(c(1, 12, 12), "null"))))
+grid.text("Carbon Emissions in Annual Tons of CO2", vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(statebox1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
+print(statebox2, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
+
 ```
 
 
