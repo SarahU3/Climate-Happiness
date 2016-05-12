@@ -1,14 +1,13 @@
 # "Graphs"
 
-setwd('~/GitHub/Climate-Happiness/Final_Paper')
-source('~/GitHub/Climate-Happiness/Data/SourceFile.R')
-data <- read.csv("All_Merged_Data.csv")
-attach(data)
-
 #Boxplot of emissions levels by state
-ggplot(data, aes(x=State, y=Emissions), main = "Emissions by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per capita)") +geom_boxplot(aes(fill=factor(State))) + scale_colour_discrete() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+ggplot(data, aes(x=State, y=Emissions), main = "Emissions per Capita by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per capita)") +geom_boxplot(fill ="firebrick", colour="black") + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
+ggplot(data, aes(x=State, y=CO2perSqKm), main = "Emissions per Square Kilometer by State", xlab = "State", ylab = "Emissions (annual tons of CO2 per sq km)") +geom_boxplot(fill ="firebrick", colour="black") + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 
-
+#Age of sample over years
+MeanAge <- aggregate(data[, c("age")], by = list(Year), FUN = mean)
+names(MeanAge) <- c("Year", "MeanAge")
+ggplot(MeanAge, aes(x = Year, y = MeanAge)) + geom_line() +labs(y = "Age of sample")
 
 # Line graph of emissions levels by state over time
 ggplot(data, aes(x = Year, y = Emissions, group = State, color = State)) + geom_line() + scale_colour_discrete() +labs(y = "Emissions (annual tons of CO2 per capita)")
