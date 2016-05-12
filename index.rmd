@@ -10,6 +10,12 @@ library(Hmisc)
 
 library(knitr)
 library(googleVis)
+library(Zelig)
+source("Data/AnalysisSource.R")
+
+possibles <- c('~/GitHub/Climate-Happiness', 
+               '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness')
+set_valid_wd(possibles)
 ```
 
 ```{r echo=FALSE, results='hide', message=FALSE}
@@ -55,7 +61,9 @@ geoChartDE <- list(region="DE",
 
 <img src="Emissions.jpg"/> 
 
-## Introduction
+
+## Introduction 
+
 Climate change is undoubtedly a global problem, but this fact means it is also, in a way, a classic tragedy of the commons. No country wants to put itself at an economic disadvantage by restricting the use of cheap fossil fuels so all continue to emit, deteriorating the "commons" of the Earth's protective atmosphere. This can make it difficult to get citizens to identify with the problem and take responsibility; people will more likely act when something affects them individually. In this paper we want to explore this aspect: how much do people feel, consciously or unconsciously, the effects of green house gas emissions? More specifically, do emissions affect their reported health, well-being, or life satisfaction?  
 
 To examine this question, we will look at data from Germany. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices---not to mention coal's continued role as a cheap and reliable fuel---and how to transform the transportation sector. Germany therefore still does emit large amounts of green house gases. We will look at green house gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
@@ -149,18 +157,41 @@ plot(M1, tag = 'chart')
 
 <br><br>
 
-## Testing running code
+#Explected Values
 
+
+
+## What Determines Overall Satisfaction?
+
+Effects of Age on Life Satisfaction
 ```{r, echo=FALSE}
-
 #Boxplot of emissions levels by state
+ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="27AE60") + labs(x = "Age", y = "Life Satisfaction") + theme_bw()
+```
 
+Effects of Emissions per Square Kilometer on Life Satisfaction
+```{r, echo=FALSE}
+ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
+```
+
+Effects of Emissions per Capita on Life Satisfaction
+```{r, echo=FALSE}
+ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction") + theme_bw()
+```
+
+Effects of Concern for the Environment on Life Satisfaction
+```{r, echo=FALSE}
+ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() + geom_smooth(method = lm, se = FALSE, colour="#2ca25f") + labs(x = "Concern about the Environment", y = "Life Satisfaction") + theme_bw()
+```
+
+Overview of Emissions by State
+```{r, echo=FALSE}
 boxplot(Emissions~State,
   data=data,
   main="Emissions by State",
   xlab="State",
   ylab="Emissions (annual tons of CO2 per capita)",
-  col="royalblue1",
-  border="royalblue4"
+  col="#2ca25f",
+  border="#99d8c9"
 )
 ```

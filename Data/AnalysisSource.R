@@ -1,32 +1,4 @@
 
-## Quick Recap
-
-#This project aims to investigate the relationship between happiness levels across German federal states (Bundeslaender) and among individuals over the time horizon from 1990 to 2012. More specifically, this project explores whether the state level emissions, as well as some personal characteristics, affect life satisfaction of German citizens. The hypotheses state: 
-
-#> *H1: Bundeslaender with higher emissions inversely affect reported levels of life satisfaction.* 
-
-#> *H2: Reported individual concerns with the environment are, likewise, negatively reflected in the life satisfaction.*
-
-#Model 1 combines these two hypotheses:
-#$satis=\beta_0 - \beta_1*Emissions + \beta_2*EnvironConcerns + u_j + r_i$ 
-
-#The relationship between the independent and dependent variables will be explored on both individual and state level via the multilevel modelling. 
-
-
-#Data
-
-#The individual-level data is provided by the German Socio-Economic Panel Data [GSOEP]( https://paneldata.org/) conducted by the German Institute for Economic Research [DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html). Due to confidentiality restrictions, DIW could only supply a shortened sample with prior specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The original GSOEP file is cleaned and transformed into a shorter dataset with the help of the Stata Do-File. The short dataset contains the information on the main satisfaction and personal characteristic variables: reported levels of life satisfaction (on a scale from 0 to 10), subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. Detailed labels and descriptions of the variables are given in the GSOEP codebook. All GSOEP-related files are stored on the GitHub server. 
-
-#The state-level data, on the other hand, is gathered from three web-based sources: State Initiative for Core Indicators [LIKI](http://www.lanuv.nrw.de/liki/index.php?indikator=608&aufzu=1&mode=indi), [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm) and Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010). 
-
-#A university subscription to *Statista.com* enabled access to historic state emissions from 1990 to 2012 for most of the Bundeslaender, except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW involved more intensive research and data handling but were finally gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted Carbon dioxide tons per capita). Hence, the yielded data frame of emissions is comprehensive and consistent, although there are missing observations on some years. 
-
-#Simultaneously, the state efforts to curb their emissions and preserve local environment are reflected in their renewable energy indicators. This information is measured in percentage of renewables in the annual primary energy consumption, final energy consumption, and electricity consumption. The indicators had to be downloaded manually from *LIKI* in three separate excel files, which later on were cleaned, transformed and reshaped into suitable data frames in R. 
-
-#Once the names of the Bundeslaender and the time frame of the three produced data frames match, they are easily merged in R into a final data set. 
-
-
-
 library(repmis)
 
 possibles <- c('~/GitHub', 
@@ -82,21 +54,18 @@ ggplot(data, aes(x=State, y=satis), main = "Average Life Satisfaction by State",
 
 
 
-aggremeans <- aggregate(data[, c(1, 3, 6, 18, 19, 22)], list(State, Year), mean)
-ggplot(aggremeans, aes(x = Year, y = satis, group = Group.1, color = Group.1)) + geom_line() + scale_colour_discrete() +labs(y = "Life Satisfaction")
-
+aggremeans <- aggregate(data[, c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)], list(State, Year), mean)
+ggplot(aggremeans, aes(x=Group.2, y=satis, group = Group.1, color = Group.1)) + geom_line() + scale_colour_discrete() +labs(y = "Life Satisfaction")
 
 #Again using the means of each state, we can create some scatterplots showing correlation between variables. Life satisfaction appears to be positively correlated with age, energy use, and concern about the environment, but does not show a strong correlation with emissions. 
 
 
 # scatterplots of aggregate state satisfaction over years
-ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Age", y = "Life Satisfaction")
+ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Age", y = "Life Satisfaction") + theme(panel.background = element_rect(fill = "white"),
+                                                                                                                                                       axis.line = element_line(colour = "blue", size = 2))
 ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Emissions per Capita", y = "Life Satisfaction")
-ggplot(data = aggremeans, aes(x=Use, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Energy Use per Capita", y = "Life Satisfaction")
+
 ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(method = lm, se = FALSE) + labs(x = "Concern about the Environment", y = "Life Satisfaction")
-
-
-
 
 #Inferential Statistics
 
@@ -107,7 +76,7 @@ ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(m
 
 #Declare X and Y variables for panel data
 Y1<-cbind(satis)
-X1<-cbind(Emissions, Use, environ, gender, age)
+X1<-cbind(Emissions, environ, gender, age)
 
 #set data as panel data
 pdataind<-plm.data(data, index=c("pid","Year"))
@@ -211,9 +180,4 @@ summary(Model.1)
 
 #A brief overview of *Model.2*, which covers demographic characteristics, reassures the anticipation about the State emissions: the coefficient became significant after controlling for other individual factors. As a result, the difference between State- and individual-level slopes exists and permit multilevel analysis. However, the coefficient of environmental concerns is still positive, which is to be discussed together with other factors in the final paper. 
 
-
-Model.2<-lme(satis~environ+Emissions+age+fam+gender+emp,random=~1|Stateid,data=finaldata,
-             control=list(opt="optim"))
-
-summary(Model.2)
 
