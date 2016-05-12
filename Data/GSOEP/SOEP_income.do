@@ -120,9 +120,9 @@ save "C:\Users\meerim\Documents\GitHub\Climate-Happiness\Data\GSOEP\SOEP_short12
 * Merge with the other SOEP dataset
 use $SOURCE\SOEP_income_raw.dta
 drop if Year<1990
-drop if plh0011<1
+drop if plh0011<1 | plh0011==99.9
 drop if  GERMBORN<1
-drop if plc0013<0
+drop if plc0013<0 | plc0013==99999
 * count: 190
 
 merge m:m pid Year using $SOURCE\SOEP_short12.dta

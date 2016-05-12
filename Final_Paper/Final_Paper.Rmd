@@ -76,24 +76,7 @@ print(vartable, type = "LaTex")
 
 ### Individual descriptive statistics
 
-
 ``` {r individual graphs, echo = FALSE, messages = FALSE, warnings = FALSE}
-# Find some helpful averages
-individMeans <- aggregate(data[, c("GrossIncome", "age", "fam", "emp")], by = list(Year), FUN = mean)
-names(individMeans) <- c("Year", "MeanIncome", "MeanAge", "AveFam","AveEmp")
-# Set as percentage
-individMeans$AveFam <- (individMeans$AveFam-1)*100
-aggremeans <- aggregate(data[, c("WorkHours","GrossIncome","satis","environ","age",
-                                 "emp","fam","CO2perSqKm","Emissions")], list(State, Year), mean)
-
-
-indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line() +labs(y = "Average age")
-indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line() +labs(y = "Average income")
-indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line() +labs(y = "Average family status")
-indiplot4 <- ggplot(individMeans, aes(x = Year, y = AveEmp)) + geom_line() +labs(y = "Employment, 1 = unemp, 2 = emp") +ggtitle("Average Employment Status")
-multiplot(indiplot1, indiplot2, indiplot3, indiplot4, cols=2)
-
-
 # Create multiplot function to combine multiple ggplots
 multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   require(grid)
@@ -123,14 +106,34 @@ multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   }
 }
 
+
+# Find some helpful averages
+individMeans <- aggregate(data[, c("GrossIncome", "age", "fam", "emp")], by = list(Year), FUN = mean)
+names(individMeans) <- c("Year", "MeanIncome", "MeanAge", "AveFam","AveEmp")
+# Set as percentage
+individMeans$AveFam <- (individMeans$AveFam-1)*100
+aggremeans <- aggregate(data[, c("WorkHours","GrossIncome","satis","environ","age",
+                                 "emp","fam","CO2perSqKm","Emissions")], list(State, Year), mean)
+
+
+indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line() +labs(y = "Average age")
+indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line() +labs(y = "Average income")
+indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line() +labs(y = "Percentage with a partner")
+
+pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(1, 4, 4), "null"))))
+grid.text("Sample Averages Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
+print(indiplot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
+print(indiplot2, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
+print(indiplot3, vp = viewport(layout.pos.row = 3, layout.pos.col = 1:2))
+
 # scatterplots of aggregate state satisfaction over years
-plot1 <- ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth() + labs(x = "Age", y = "")
-plot2 <- ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth() + labs(x = "Work Hours per Week", y = "")
+plot1 <- ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth() + labs(x = "Age", y = "Life Satisfaction")
+plot2 <- ggplot(data = aggremeans, aes(x=WorkHours, y=satis)) + geom_point() +geom_smooth() + labs(x = "Work Hours per Week", y = "Life Satisfaction")
 plot3 <- ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth() + labs(x = "Monthly Gross Income", y = "")
 plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth() + labs(x = "Concern about the Environment", y = "")
-plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Capita", y = "")
+plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Capita", y = "Life Satisfaction")
 plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth() + labs(x = "Emissions per Sq KM", y = "")
-multiplot(plot1, plot2, plot3, plot4, plot5, plot6, cols=2)
+multiplot(plot1, plot2, plot5, plot3, plot4, plot6, cols=2)
 
 
 ```
