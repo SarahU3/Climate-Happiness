@@ -149,10 +149,15 @@ finaldata <- merge(incomedata, emissions, by=c('Year', 'State'))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="ü",replacement="ue"))
 finaldata <-as.data.frame(sapply(finaldata, gsub, pattern="Ã¼",replacement="ue"))
 
-#5. export merged data to single CSV file
+# Convert factors to numeric
 finaldata$satis <- as.numeric(as.character(finaldata$satis))
-
-finaldata[, c(5,22,23,26,32,33)] <- sapply(finaldata[, c(5,22,23,26,32,33)], as.numeric) # specifying columns to convert into numeric
+finaldata$CO2Tons <- as.numeric(as.character(finaldata$CO2Tons))
+finaldata$sqkm <- as.numeric(as.character(finaldata$sqkm))
+finaldata$CO2perSqKm <- as.numeric(as.character(finaldata$CO2perSqKm))
+finaldata$age <- as.numeric(as.character(finaldata$age))
+finaldata$plc0013 <- as.numeric(as.character(finaldata$plc0013))
+finaldata$plb0186 <- as.numeric(as.character(finaldata$plb0186))
+finaldata$Emissions <- as.numeric(as.character(finaldata$Emissions))
 
 # XConvert State variable into numeric
 finaldata$Stateid <- as.numeric(as.factor(finaldata$State))
@@ -168,17 +173,29 @@ names(finaldata) <- c("Year", "State", "pid", "WorkHours","GrossIncome","NetInco
                       "environ","Stateid","gender","age","emp","fam","CO2Tons","sqkm",
                       "CO2perSqKm","Emissions")
 
-# Relabel environmental concerns
-#finaldata$environ <- factor(finaldata$environ, levels=rev(levels(finaldata$environ)), labels=c("Not at all", "Somewhat", "Very"))
-#finaldata$env <- as.numeric(finaldata$environ)
-# Does not work - reordering data confuses lme
-
 # Export merged data to single CSV file
 export(finaldata, file="All_Merged_Data.csv")
 
 # Check the status of the data
 sapply(finaldata, class)
 sapply(finaldata, mode)
+
+
+#---------------------------------------------------------#
+# 5. Extra full dataset for Multilevel Analysis
+data <- merge(GSOEP, landemissions, by=c("Year","State"))
+data <- merge(data, emissions, by=c("Year","State"))
+data <-as.data.frame(sapply(data, gsub, pattern="ü",replacement="ue"))
+data$satis <- as.numeric(as.character(data$satis))
+data[, c(14,15,18,21,22,23,24)] <- sapply(data[, c(14,15,18,21,22,23,24)], as.numeric) # specifying columns to convert into numeric
+data$Stateid <- as.numeric(as.factor(data$State))
+data$Stateid <- factor( as.numeric(as.factor(data$State)),
+                        labels = levels(data$State))
+data <- data[,c(1:3,12,14:24)]
+names(finaldata) <- c("Year", "State", "pid", "satis_labels", "satis",
+                      "environ","Stateid","gender","age","emp","fam","CO2Tons","sqkm",
+                      "CO2perSqKm","Emissions")
+
 #---------------------------------------------------------#
 # Appendix 1: NRW information was missing from statista. Therefore, info on NRW (1990, 1995)
 # was taken from UGRdL Gase table (manually inserted into the excel file), 
