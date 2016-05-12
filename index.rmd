@@ -95,15 +95,16 @@ plot(Map, tag = 'chart')
 
 ```
 
+<br>
+
 Controlling for state- and time-fixed effects, we anticipate the following effects as a result of our model:
 
-Emissions (-)
-CO2 Per Capita (-)
-CO2 Per Square KM (-)
-Age (-)
-Monthly Income (+)
-Work Hours per Week (-)
-
+- Emissions (-)
+- CO2 Per Capita (-)
+- CO2 Per Square KM (-)
+- Age (-)
+- Monthly Income (+)
+- Work Hours per Week (-)
 
 ### Data
 
@@ -162,8 +163,6 @@ WorldMap <- gvisGeoChart(total, locationvar = 'iso2Code',
                       colorvar = 'CO2perSquareKM',
                       options = geoChartworld)
 ```
-
-<br><br>
 
 ### Global Emissions per Square Kilometer
 The map below illustrates the amount CO2e emissions (tons) per square kilometer globally. The information is based on 2007 Data from the United Nations Department of Economic and Social Affairs. Compared to the values of countries, both in the same geographic area, and globally, Germany has extremely high levels of emissions per square kilometer. 
