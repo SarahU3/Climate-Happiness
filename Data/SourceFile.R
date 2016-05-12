@@ -187,12 +187,16 @@ data <- merge(GSOEP, landemissions, by=c("Year","State"))
 data <- merge(data, emissions, by=c("Year","State"))
 data <-as.data.frame(sapply(data, gsub, pattern="ü",replacement="ue"))
 data$satis <- as.numeric(as.character(data$satis))
-data[, c(14,15,18,21,22,23,24)] <- sapply(data[, c(14,15,18,21,22,23,24)], as.numeric) # specifying columns to convert into numeric
+data$CO2Tons <- as.numeric(as.character(data$CO2Tons))
+data$sqkm <- as.numeric(as.character(data$sqkm))
+data$CO2perSqKm <- as.numeric(as.character(data$CO2perSqKm))
+data$age <- as.numeric(as.character(data$age))
+data$Emissions <- as.numeric(as.character(data$Emissions))
 data$Stateid <- as.numeric(as.factor(data$State))
 data$Stateid <- factor( as.numeric(as.factor(data$State)),
                         labels = levels(data$State))
 data <- data[,c(1:3,12,14:24)]
-names(finaldata) <- c("Year", "State", "pid", "satis_labels", "satis",
+names(data) <- c("Year", "State", "pid", "satis_labels", "satis",
                       "environ","Stateid","gender","age","emp","fam","CO2Tons","sqkm",
                       "CO2perSqKm","Emissions")
 
