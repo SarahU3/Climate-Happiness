@@ -126,7 +126,7 @@ indiplot5 <- ggplot(individMeans, aes(x = Year, y = satis)) + geom_line(colour="
 
 # Manual multiplot of 4 rows, 2 columns (first row is title) 
 pushViewport(viewport(layout = grid.layout(4, 2, heights = unit(c(1, 5, 5, 5), "null"))))
-grid.text("Averages of Sample Variables Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
+grid.text("Figure 1. Averages of Sample Variables Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
 print(indiplot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(indiplot2, vp = viewport(layout.pos.row = 3, layout.pos.col = 2))
 print(indiplot3, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
@@ -147,7 +147,7 @@ plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +g
 
 # Manual multiplot of 4 rows, 2 columns (first row is title)
 pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(1, 4, 4, 4), "null"))))
-grid.text("Life Satisfaction - Correlation with Other Variables", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
+grid.text("Figure 2. Life Satisfaction - Correlation with Other Variables", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
 print(plot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(plot3, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(plot4, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
@@ -183,7 +183,7 @@ statebox2 <- ggplot(boxdata, aes(x=StateCode, y=CO2perSqKm)) + labs(x= "State", 
  
 # Create multiplot manually for spacing 
 pushViewport(viewport(layout = grid.layout(3, 1, heights = unit(c(1, 12, 12), "null"))))
-grid.text("Carbon Emissions in Annual Tons of CO2", vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
+grid.text("Figure 3. Carbon Emissions in Annual Tons of CO2", vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
 print(statebox1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(statebox2, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 ```
@@ -194,7 +194,7 @@ When measured in square kilometers, the three city-states of Bremen, Berlin, and
 
 ``` {r emissions scatterplots, echo = FALSE, messages = FALSE, warnings = FALSE}
 pushViewport(viewport(layout = grid.layout(2, 2, heights = unit(c(1, 4), "null"))))
-grid.text("Life Satisfaction Correlation with Emissions", vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
+grid.text("Figure 4. Life Satisfaction Correlation with Emissions", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
 print(plot5, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(plot6, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 ```
@@ -314,7 +314,7 @@ model01 <- ggplot(finaldata,aes(CO2perSqKm,satis,colour=Stateid))+
   geom_line(data=pframe_carbon)+
   ylab("Satisfaction")+
   xlab("CO2 emissions/sqkm")
-model01 + ggtitle("Effect of emissions/sqkm across States")
+model01 + ggtitle("Figure 5. Effect of emissions/sqkm across States")
 ```
 
 Simultaneously, stronger environmental concerns do seem to lower well-being across all the Bundeslaender, albeit to a varying degree. Moreover, the graph shows how throughout Germany, life satisfaction level does not differ substantially if run against the environmental concerns. This may reflect that individuals tend to adjust to their life circumstances and judge their quality of life compared to their peers and neighbors.
@@ -330,7 +330,7 @@ model02 <- ggplot(finaldata,aes(environ,satis,colour=Stateid))+
   geom_line(data=pframe)+
   ylab("Satisfaction")+
   xlab("Concerns about the environment")
-model02 + ggtitle("Effects of environmental concerns across States")
+model02 + ggtitle("Figure 6. Effects of environmental concerns across States")
 ```
 
 Furthermore, fixed effects show that general emissions within any given state are indeed negatively related to the individual happiness. However, the negligible magnitude of the coefficient (-0.000063) is also not statistically significant. Consequently, the group-level effect does not significantly differ from the individual-level one. On the other hand, the coefficient of environmental concerns (-0.075) statistically differs from 0. The missing socio-demographic characteristics are explored in the further step.   
@@ -353,7 +353,7 @@ stargazer::stargazer(Model.2, single.row = TRUE,
 The Model.2 random slopes of the environmental variables, gross income, and gender demonstrate the broad variation of the coefficients' values across the Bundeslaender. 
 
 ```{r, echo=FALSE}
-plot(ranef(Model.2), font.main = 1, main="Model.2. Random slopes")
+plot(ranef(Model.2), font.main = 1, main="Figure 7. Model.2. Random slopes", col="#2ca25f", bg="white")
 ```
 
 At the same time, *Model.2a*, encompassing a broader sample of employed and unemployed respondents, yields similar results, except that the magnitude of the environmental impacts increase. Gender, on the contrary, has a substantially reduced coefficient due to the inclusion of the unemployed people. Intuitively, being employed significantly enhances individual satisfaction over time (0.214), which partially explains why increasing absolute income does not bring huge changes in life satisfaction. 
@@ -365,7 +365,7 @@ stargazer::stargazer(Model.2a, single.row = TRUE,
                      dep.var.labels = "Life Satisfaction",
                      title = 'Model.2a. Broader sample',
                      digits = 5, type = 'latex', header=FALSE)
-plot(ranef(Model.2a),font.main = 1, main="Model.2a. Random slopes")
+plot(ranef(Model.2a),font.main = 1, main="Figure 8. Model.2a. Random slopes", col="#2ca25f", bg="white")
 ```
 
 
@@ -383,7 +383,7 @@ Model3 <- ggplot(xage, aes(age, fit, color=environ)) + geom_point() + geom_error
   ylab("Predicted satisfaction values") +
   xlab("Environmental concerns [1-3]")
 
-Model3 + ggtitle("Model.3. Interaction effects of environmental concerns and age")
+Model3 + ggtitle("Figure 9. Model.3. Interaction effects of environmental concerns and age")
 ```
 
 However, as shown in the graph above, the predicted values of life satisfaction from the interaction effect between environmental concerns and age (while keeping everything else constant) are consistently negative with the same slope, which means that there is no meaningful interaction. One of the reasons might lie in the fact that very often respondents drop out from the survey and changes in their behavior over time are no longer feasible to track. Moreover, environmental concerns are only available in three categories, which constrains the analysis. The interactions results are similarly meaningless for employment. A possible explanation of the finding is that the dummy variable might not represent the full socio-economic situation of an individual. 
@@ -399,7 +399,7 @@ geom_point() + geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.4) + theme_b
   ylab("Predicted satisfaction values") +
   xlab("Employment status [1-no, 2-yes]")
   
-Model4 + ggtitle("Model.4. Interaction effects of environmental concerns\nand employment")
+Model4 + ggtitle("Figure 10. Model.4. Interaction effects of environmental concerns\nand employment")
 ```
 
 
