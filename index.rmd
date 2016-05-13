@@ -302,7 +302,7 @@ boxplot(CO2perSqKm~State,
 
 ### Results
 
-In our data, the potential negative impacts on happiness associated with various configurations of emission levels was nearly non-existent when we controlled for state-level and individual characteristics. We approached the problem of estimating the reduction in satisfaction by examining a number of regressions based on life-satisfaction that include a variety of socio-economic data to justify a person’s stated level of life satisfaction on a subjective 1-10 scale.
+In our data, the potential negative impacts on happiness associated with various configurations of emission levels was nearly non-existent (despite being statistically significant) when we controlled for state-level and individual characteristics. We approached the problem of estimating the reduction in satisfaction by examining a number of regressions based on life-satisfaction that include a variety of socio-economic data to justify a person’s stated level of life satisfaction on a subjective 1-10 scale.
 
 
 Variable       | Coefficient direction and strength   | Expected direction          
@@ -311,20 +311,20 @@ Total Emissions  | -       | -
 Emissions per Capita   | - | -
 Emissions per Sq. KM | - | -
 Concern for the Environment | - | -
-Age | - | -
+Age | -- | -
 Monthly Income | + | +
-Employment | + | +
-Having a partner | + | +
-Gender (no diff.) | ~ | +
+Employment | ++ | +
+Having a partner | ++ | +
+Gender (no diff.) | + | ~
 
 
 ### Conclusions
 
-Interestingly, emissions, whether per capita or by land area, does not appear to have a significant effect on reported life satisfaction in any of the models. The other, individual-level variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have negative coefficients, while concern about the environment and energy use have positive coefficients.
+Multilevel Coefficient Models show that the variables of interest, state-level emissions and environmental worries, demonstrate minimal negative impact on life satisfaction, despite being statistically significant. These findings might be explained by the fact that, while some Bundeslaender do emit large volumes of GHG per square kilometer, they are still relatively low compared to other energy-intensive economies like China. Thus, the impact of these emissions is neither readily tangible, nor directly relevant for the German population in terms of extreme natural disasters and environmental changes. Even the recent appearances of global climate change in the form of heat waves and extreme weather are usually common for the whole country, distorting the direct impact of the state-specific climate performance on its residents' well-being. 
 
-The output of our multi-level modeling demonstrates that the State emissions are indeed negatively related to the individual happiness. However, after controlling for the individual environmental concerns, the coefficient (-0.005) is not statistically significant. Consequently, the group-level effect does not significantly differ from the individual-level. On the other hand, the coefficient of environmental concerns statistically differs from 0, but the direction is oddly positive counter the expectations. These results point at the omitted variables (absence of the demographic characteristics) that should be included in the further model. Similarly, the surprising direction of the environmental coefficient demands investigation of endogeneity between reported happiness and environmental concerns. 
+Moreover, controlling for the socio-economic factors confirms that being employed and having a partner substantially increases one's life satisfaction, while ageing does the opposite, albeit negligibly for every year. Income also has a minimal positive effect, as well as being a woman. 
 
-In short, we find that for most invidual Germans, emissions do not seem to play a large role in determining their life satisfaction. While the results might be different in a place like China, where smog affects daily life big cities, in Germany we do not see a direct daily impact on their citizens in terms of their emissions. 
+In short, this research supports some of the previous literature when looked at in terms of statistical significance, but in terms of social significance, they  indicate that  emissions do not seem to play a large role in determining their life satisfaction. While citizens might be enjoying the benefits of green growth in more abstract ways, they do not feel the direct impacts strongly in comparison to other factors affecting their life satisfaction.
 
 <br><br><br>
 
