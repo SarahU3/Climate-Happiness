@@ -202,62 +202,52 @@ The analysis will focus on a mixture of two levels of interest: *Federal State*,
 
 ## Inferential Statistics
 
-We first test basic inferential statistics. For the models below, X1 represents the explanatory  variables of interest: emissions (both per capita and per square kilometer), gross income, concern for the environment, gender, and age. Emissions has a wide range: from 4.5 up to 31.6 annual tons of CO2 per capita. Observations in the upper range may be outliers that need to be removed; half of the observations fall between 6.5 and 13.7 tons, and the median is 7.6 compared to a mean of 10.2 tons. Energy use also varies widely, from 79.3 to 337.0 annual gigajoules (GJ) per capita, with a median of 164.0 and mean of 172.3 GJ. Concern for the environment, measured on a scale from 1 (very) to 3 (not very), has an average of 1.8. Gender is almost evenly split between males and females, and the average age is about 50 years old. 
+We first test basic inferential statistics. For the models below, X1 represents the explanatory  variables of interest: emissions (both per capita and per square kilometer), gross income, concern for the environment, gender, and age.  
 
-```{r, echo=FALSE, quiet}
+```{r, echo=FALSE, messages = FALSE, warning=FALSE}
 ##Regression using individual level data
 
 #Declare X and Y variables for panel data
 Y1<-cbind(satis)
-X1<-cbind(Emissions, environ, gender, age, GrossIncome)
-X2<-cbind(CO2perSqKm, environ, gender, age, GrossIncome)
+X1<-cbind(environ, gender, age, GrossIncome, fam)
+
 
 #set data as panel data
 pdataind<-plm.data(data, index=c("pid","Year"))
 
 ```
 
-Y1 represents "satis" (life satisfaction), measured on a scale ranging from 0 (low) to 10 (high). The data is skewed toward the upper range, with the majority of responses being more than 6 and with a mean of 6.9.
 
-``` {r, echo=FALSE}
- 
-summary(Y1, digits = 2)
-
-```
-
-
-Below, we tested various types of panel data models on our individual-level data. The data set is unbalanced because we don't have information for all years in all the states.
+Below, we tested various types of panel data models, though we know the data set is unbalanced because we don't have information for all years in all the states. The first model (pooled OLS) uses only individual-level data, in comparison with the two fixed-effects models, one using emissions per capita and one using emissions per square kilometer. 
 
 ```{r, echo=FALSE, results="asis"}
 #pooled OLS estimator
 L1<-plm(Y1~X1, data=pdataind, model="pooling")
 
-#between estimator
-L2<-plm(Y1~X1, data=pdataind, model="between")
+#fixed effects or within estimator, per cap
+L4<-plm(Y1~X1+Emissions, data=pdataind, model="within")
 
-#first difference estimator
-L3<-plm(Y1~X1, data=pdataind, model="fd")
+#fixed effects or within estimator, per sq km
+L5<-plm(Y1~X1+CO2perSqKm, data = pdataind, model = 'within')
 
-#fixed effects or within estimator
-L4<-plm(Y1~X1, data=pdataind, model="within")
 
-#LM test for fixed effects vs OLS
-pFtest(L2,L1)
-
-stargazer(L1, L2, L3, L4,
+stargazer(L1, L2, L3, L4,L5,
     title = 'Regression Estimates of Life Satisfaction',
     digits = 2, type = 'html'
     )
 ```
 
 
-In terms of explanatory power, the first difference and within estimators might be less useful than the between or pooled OLS estimators, based on their low R-squared and adjusted R-squared Values. Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have negative coefficients, while concern about the environment and energy use have positive coefficients. 
+Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have  . 
 
 We can compare the fixed effects/within and pooled OLS models using an F-test for individual and/or time effects:
 
 ```{r, echo=FALSE}
 #LM test for fixed effects vs OLS
-pFtest(L4,L1)
+testresults1 <- pFtest(L4,L1)
+testresults2 <- pFtest(L5,L1)
+stargazer(testresults1, type = "latex", title = "")
+
 
 ```
 
