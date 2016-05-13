@@ -261,11 +261,19 @@ L1<-plm(Y1~X1, data=pdataind, model="pooling")
 
 #fixed effects or within estimator, per cap
 L4<-plm(Y1~X1+Emissions, data=pdataind, model="within")
+<<<<<<< HEAD
 
 #fixed effects or within estimator, per sq km
 L5<-plm(Y1~X1+CO2perSqKm, data = pdataind, model = 'within')
 
 
+=======
+
+#fixed effects or within estimator, per sq km
+L5<-plm(Y1~X1+CO2perSqKm, data = pdataind, model = 'within')
+
+
+>>>>>>> master
 stargazer(L1, L2, L3, L4,L5,
     title = 'Regression Estimates of Life Satisfaction',
     digits = 2, type = 'html'

@@ -84,7 +84,7 @@ On the other hand, it may not be the emissions themselves that affect people's l
 
 > *H2: Reported individual concerns with the environment are, likewise, negatively reflected in the life satisfaction.* 
 
-The map below illustrates the amount CO2e emissions (tons) per square kilometer in Germany. The information is based on averaged data between 1990-2012 from Statista. The values represent the average over time in the German states.
+The map below illustrates the amount CO2e emissions (tons) per square kilometer of each state in Germany. The information is based on 2010 data from Statista. There is a wide range in the level emissions per square kilometer between the states, particularly in city-states and industrial states such as Berlin, Hamburg and Bremen.
 
 ```{r, echo=FALSE, results='asis'}
 

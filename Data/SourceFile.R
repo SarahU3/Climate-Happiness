@@ -29,7 +29,10 @@ library(stargazer)
 library(effects) # for graphing MCM
 library(repmis)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 
