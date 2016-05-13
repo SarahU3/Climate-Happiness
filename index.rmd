@@ -116,12 +116,14 @@ For the purpose of our research, the following data has been collected:
 - The **individual-level data** on individual characteristics and survey data is provided by:
     + The German Socio-Economic Panel Data ([GSOEP]( https://paneldata.org/)), conducted by the German Institute for Economic Research (DIW) 
    
+   <br>
+   
 - The **state-level data** on emissions levels, state size, and population is gathered from four web-based sources:
-     +[Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/) 
-    +Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm)  
-    +Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010) 
-    +[Federal Statistical Office and Statistical Offices of the Bundeslaender](http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp) 
-    +[Laenderarbeitskreis](http://www.lak-energiebilanzen.de/dseiten/co2BilanzenAktuelleErgebnisse.cfm)
+     + [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/) 
+    + Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm)  
+    + Agency for Renewable Agency of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010) 
+    + [Federal Statistical Office and Statistical Offices of the Bundeslaender](http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp) 
+    + [Laenderarbeitskreis](http://www.lak-energiebilanzen.de/dseiten/co2BilanzenAktuelleErgebnisse.cfm)
 
 
 ```{r echo=FALSE, results='hide', message=FALSE}
@@ -198,6 +200,7 @@ plot(M1, tag = 'chart')
 ### What Determines Overall Satisfaction?
 Using the means of each state, the scatterplots below shows the correlation between our variables of interest and overall happiness levels. 
 
+<br>
 
 #### Correlation of Age and Life Satisfaction
 
@@ -220,7 +223,7 @@ ggplot(data = aggremeans, aes(x=age, y=satis)) + geom_point() +geom_smooth(fill=
 
 ```
 
-<br><br>
+<br>
 
 #### Correlation of Gross Monthly Income and Life Satisfaction
 
@@ -231,7 +234,7 @@ Gross monthly income shows a more pronounced positive correlation, but flattens 
 ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Monthly Gross Income", y = "") + theme_bw()
 ```
 
-<br><br>
+<br>
 
 #### Correlation of Emissions and Life Satisfaction
 
@@ -244,7 +247,7 @@ ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth
 
 ```
 
-<br><br>
+<br>
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
@@ -252,7 +255,7 @@ ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smoot
 
 ```
 
-<br><br>
+<br>
 
 #### Correlation of Concern for the Environment and Life Satisfaction
 
@@ -263,7 +266,7 @@ Life satisfaction appears to be negatively correlated with environmental concern
 ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(fill="#58D68D", colour="#2ca25f") + labs(x = "Concern about the Environment", y = "") + theme_bw()
 ```
 
-<br><br>
+<br>
 
 #### Overview of Emissions by State
 In the per capita measure, Brandenburg, Saarland, Hamburg, and Nordrhein-Westfalen have the highest emissions, with Sachsen, Sachsen-Anhalt and Niedersachsen also showing higher emissions than the rest. 
@@ -279,7 +282,7 @@ boxplot(Emissions~State,
 )
 ```
 
-<br><br>
+<br>
 When measured in square kilometers, the three city-states of Bremen, Berlin, and Hamburg are unsurprisingly the highest due to their small land area, not to mention relatively dense populations. Saarland is also geographically small, which means that Nordrhein-Westfalen is the only standout in this measure as a state with both a large land area and high emissions. 
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
@@ -318,28 +321,23 @@ The output of our multi-level modeling demonstrates that the State emissions are
 
 In short, we find that for most invidual Germans, emissions do not seem to play a large role in determining their life satisfaction. While the results might be different in a place like China, where smog affects daily life big cities, in Germany we do not see a direct daily impact on their citizens in terms of their emissions. 
 
+<br><br><br>
+
 ### Sources
 
-Brereton, Finbarr, J Peter Clinch, and Susana Ferreira. 2008. “Happiness, Geography and the Environment.”
-*Ecological Economics* 65 (2). Elsevier: 386–96.
+Brereton, Finbarr, J Peter Clinch, and Susana Ferreira. 2008. “Happiness, Geography and the Environment.” *Ecological Economics* 65 (2). Elsevier: 386–96.
 
-Cuñado, Juncal, and Fernando Pérez de Gracia. 2013. “Environment and Happiness: New Evidence for
-Spain.” *Social Indicators Research* 112 (3). Springer: 549–67.
+Cuñado, Juncal, and Fernando Pérez de Gracia. 2013. “Environment and Happiness: New Evidence for Spain.” *Social Indicators Research* 112 (3). Springer: 549–67.
 
-Ferreira, Susana, and Mirko Moro. 2010. “On the Use of Subjective Well-Being Data for Environmental
-Valuation.” *Environmental and Resource Economics* 46 (3). Springer: 249–73.
+Ferreira, Susana, and Mirko Moro. 2010. “On the Use of Subjective Well-Being Data for Environmental Valuation.” *Environmental and Resource Economics* 46 (3). Springer: 249–73.
 
-Ferrer-i-Carbonell, Ada, and John M Gowdy. 2007. “Environmental Degradation and Happiness.” *Ecological
-Economics* 60 (3). Elsevier: 509–16.
+Ferrer-i-Carbonell, Ada, and John M Gowdy. 2007. “Environmental Degradation and Happiness.” *Ecological Economics* 60 (3). Elsevier: 509–16.
 
-Goetzke, Frank, and Tilmann Rave. 2015. “Regional Air Quality and Happiness in Germany.” *International
-Regional Science Review* 38 (4). SAGE Publications: 437–51.
+Goetzke, Frank, and Tilmann Rave. 2015. “Regional Air Quality and Happiness in Germany.” *International Regional Science Review* 38 (4). SAGE Publications: 437–51.
 
-Luechinger, Simon. 2009. “Valuing Air Quality Using the Life Satisfaction Approach*.” *The Economic
-Journal* 119 (536). Wiley Online Library: 482–515.
+Luechinger, Simon. 2009. “Valuing Air Quality Using the Life Satisfaction Approach*.” *The Economic 18 Journal* 119 (536). Wiley Online Library: 482–515.
 
-MacKerron, George, and Susana Mourato. 2009. “Life Satisfaction and Air Quality in London.” *Ecological
-Economics* 68 (5). Elsevier: 1441–53.
+MacKerron, George, and Susana Mourato. 2009. “Life Satisfaction and Air Quality in London.” *Ecological Economics* 68 (5). Elsevier: 1441–53.
 
 Menz, Tobias, and Heinz Welsch. 2010. “Population Aging and Environmental Preferences in OECD
 Countries: The Case of Air Pollution.” *Ecological Economics* 69 (12). Elsevier: 2582–9.
@@ -356,5 +354,4 @@ Case of Airport Noise*.” *The Economic Journal* 115 (500). Wiley Online Librar
 Welsch, Heinz. 2002. “Preferences over Prosperity and Pollution: Environmental Valuation Based on
 Happiness Surveys.” *Kyklos* 55 (4). Wiley Online Library: 473–94.
 
-———. 2006. “Environment and Happiness: Valuation of Air Pollution Using Life Satisfaction Data.”
-*Ecological Economics* 58 (4). Elsevier: 801–13.
+———. 2006. “Environment and Happiness: Valuation of Air Pollution Using Life Satisfaction Data.” *Ecological Economics* 58 (4). Elsevier: 801–13.
