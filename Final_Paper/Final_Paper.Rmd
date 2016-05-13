@@ -3,7 +3,7 @@ title: "Final_Paper"
 author: "Katie Levesque, Meerim Ruslanova, Sarah Unbehaun"
 date: "May 13, 2016"
 output: pdf_document
-bibliography: ~/GitHub/Climate-Happiness/Proposal/Climate-Happiness-Bibliography.bib
+bibliography: ~/GitHub/Climate-Happiness/Proposal/Final_Bibliography.bib
 urlcolor: blue
 ---
 
@@ -111,15 +111,15 @@ aggremeans <- aggregate(data[, c("GrossIncome","satis","environ","age",
 # Set fam status as percentage
 individMeans$AveFam <- (individMeans$AveFam-1)*100
 
-# Create scatterplots
-indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line(colour="#2ca25f") +labs(y = "Average age") + theme_bw()
-indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line(colour="#2ca25f") +labs(y = "Average income") + theme_bw()
-indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line(colour="#2ca25f") +labs(y = "% with a partner") + theme_bw()
-indiplot4 <- ggplot(observations, aes(x = Year, y = n)) + geom_line(colour="#2ca25f") +labs(y = "Observations in sample") + theme_bw()
+# Create lineplots
+indiplot1 <- ggplot(individMeans, aes(x = Year, y = MeanAge)) + geom_line(colour="#2ca25f") +labs(y = "Age") + theme_bw()
+indiplot2 <- ggplot(individMeans, aes(x = Year, y = MeanIncome)) + geom_line(colour="#2ca25f") +labs(y = "Income") + theme_bw()
+indiplot3 <- ggplot(individMeans, aes(x = Year, y = AveFam)) + geom_line(colour="#2ca25f") +labs(y = "% with partner") + theme_bw()
+indiplot4 <- ggplot(observations, aes(x = Year, y = n)) + geom_line(colour="#2ca25f") +labs(y = "Observations") + theme_bw()
 indiplot5 <- ggplot(individMeans, aes(x = Year, y = satis)) + geom_line(colour="#2ca25f") +labs(y = "Life satisfaction") + theme_bw()
 
 # Manual multiplot of 4 rows, 2 columns (first row is title) 
-pushViewport(viewport(layout = grid.layout(4, 2, heights = unit(c(1, 4, 4, 4), "null"))))
+pushViewport(viewport(layout = grid.layout(4, 2, heights = unit(c(1, 5, 5, 5), "null"))))
 grid.text("Averages of Sample Variables Over Time", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
 print(indiplot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(indiplot2, vp = viewport(layout.pos.row = 3, layout.pos.col = 2))
@@ -128,7 +128,7 @@ print(indiplot4, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(indiplot5, vp = viewport(layout.pos.row = 4, layout.pos.col = 1:2))
 ```
 
-First, we see that a large number of individuals were added to the  sample in 2000; though the number declined again in the following years, there are significantly more observations after 2000 then prior to 2000. Also, the overall average age of our sample increased over the time under observation. It makes sense that it would increase over time for a longitudinal study, but the unevenness of the increase confirms that there are dropouts and additions. The drop in average age at the year 2000 would be accounted for by the large number of additional observations, but the steeper rise after the 2000 might confirm that younger people are less availabe and willing to respond to surveys, a well-known problem for traditional data collection. The same patterns could also account for the sharp drop in the percentage of the sample whose family status indicates that they have a partner around 2000 (assuming younger individuals in the survey were less likely to have a partner), though it does not explain the decline after 2007. Similarly, an older sample would also explain the higher monthly income after 2000, though the steepness of the increase is puzzling. Finally, the average life satisfaction shows a steep drop in the early 1990s
+First, we see that a large number of individuals were added to the  sample in 2000; though the number declined again in the following years, there are significantly more observations after 2000 then prior to 2000. Also, the overall average age of our sample increased over the time under observation. It makes sense that it would increase over time for a longitudinal study, but the unevenness of the increase confirms that there are dropouts and additions. The drop in average age at the year 2000 would be accounted for by the large number of additional observations, but the steeper rise after the 2000 might confirm that younger people are less availabe and willing to respond to surveys, a well-known problem for traditional data collection. The same patterns could also account for the sharp drop in the percentage of the sample whose family status indicates that they have a partner around 2000 (assuming younger individuals in the survey were less likely to have a partner), though it does not explain the decline after 2007. Similarly, an older sample would also explain the higher monthly income after 2000, though the steepness of the increase is puzzling. Finally, the average life satisfaction shows a steep drop in the early 1990s before rising again to the early 2000s. We will test to see if emissions is affecting this, but also recognize that major changes across Germany are likely influenced by political and economic factors such as Germany's Reunification or poor economic performance. 
 
 
 ``` {r individual scatter plots, echo = FALSE, messages = FALSE, warnings = FALSE}
@@ -147,10 +147,10 @@ print(plot3, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(plot4, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 ```
 
-Looking at some correlations of these averages with our dependent variable of interest--life satisfaction--there are some identifiable trends. Age seems to be very slightly positively correlated, though the majority of observations show a fairly flat trend. Gross monthly income also shows a mor pronounced positive correlation, though it, too, flattens out. Concern about the environment also appears to be negatively related with life satisfaction, but it is also very weak. Emissions, whether measured per capita or per square kilometer, do not have an obvious relationship with life satisfaction one way or the other. 
+Looking at some correlations of these averages with our dependent variable of interest--life satisfaction--there are some identifiable trends. Age seems to be very slightly positively correlated, though the majority of observations show a fairly flat trend. Gross monthly income also shows a mor pronounced positive correlation, though it, too, flattens out. Concern about the environment also appears to be negatively related with life satisfaction, but it is also very weak.  
 
 ### State level descriptive statistics
-Our state-level variables are the two measures of emissions, per capita and per square kilometer. 
+Our state-level variables are the two measures of emissions, per capita and per square kilometer. The boxplots below, using the values for each year, illustrate some of the variance between the states. 
 
 ``` {r state graphs, echo = FALSE, messages = FALSE, warnings = FALSE}
 boxdata <- data[, c(1,2,21,22)]
@@ -180,25 +180,25 @@ print(statebox1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(statebox2, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 ```
 
+In the per capita measure, Brandenburg, Saarland, Hamburg, and Nordrhein-Westfalen have the highest emissions, with Sachsen, Sachsen-Anhalt and Niedersachsen also showing higher emissions than the rest. 
 
+When measured in square kilometers, the three city-states of Bremen, Berlin, and Hamburg are unsurprisingly the highest due to their small land area, not to mention relatively dense populations. Saarland is also geographically small, which means that Nordrhein-Westfalen is the only standout in this measure as a state with both a large land area and high emissions. 
 
 ``` {r emissions scatterplots, echo = FALSE, messages = FALSE, warnings = FALSE}
-pushViewport(viewport(layout = grid.layout(2, 1, heights = unit(c(1, 5, 5), "null"))))
+pushViewport(viewport(layout = grid.layout(2, 2, heights = unit(c(1, 4), "null"))))
 grid.text("Life Satisfaction Correlation with Emissions", vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
 print(plot5, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(plot6, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 ```
 
-
+Comparing the state-level data with life satisfaction, it seems that emissions, whether measured per capita or per square kilometer, do not have an obvious relationship with life satisfaction, though this will be tested in following analysis. 
 
 
 ## Methodology
 
 The analysis will focus on a mixture of two levels of interest: *Federal State*, e.g. reported emissions and *the individual*, e.g. the socioeconomic status of the respondent, gender, and age. In order to account for such clustering and track differences between the German States, multilevel modelling will be applied in this project. Multilevel modelling aims to identify and understand the variance among groups and identify sources of non-independence in the data *Bliese2013 - add to bibliography*. This approach, unlike the traditional multivariate regression, partitions the residual variance into a between-state component (the variance of the state-level residuals) and a within-state component (the variance of the individual-level residuals). It does so by first finding the differences in the intercepts of groups on the dependent variable and then finding the variations in the slopes across groups (the between variance) and within a group (the within variance). Such grouping will produce more robust and reliable results, which could be potentially inferred to a larger population. Therefore, multilevel modelling is preferred over a fixed effects model, which cannot separate out effects due to observed and unobserved characteristics. *Include?:* In addition, the model can be extended by exploring the temporal effects and overtime change in the individual and state level attitudes. Time-varying components of the model, consequently, will be possible to track.
 
-## Analysis
-
-### Inferential Statistics
+## Inferential Statistics
 
 We first test basic inferential statistics. For the models below, X1 represents the explanatory  variables of interest: emissions (both per capita and per square kilometer), gross income, concern for the environment, gender, and age. Emissions has a wide range: from 4.5 up to 31.6 annual tons of CO2 per capita. Observations in the upper range may be outliers that need to be removed; half of the observations fall between 6.5 and 13.7 tons, and the median is 7.6 compared to a mean of 10.2 tons. Energy use also varies widely, from 79.3 to 337.0 annual gigajoules (GJ) per capita, with a median of 164.0 and mean of 172.3 GJ. Concern for the environment, measured on a scale from 1 (very) to 3 (not very), has an average of 1.8. Gender is almost evenly split between males and females, and the average age is about 50 years old. 
 
@@ -229,24 +229,19 @@ Below, we tested various types of panel data models on our individual-level data
 ```{r, echo=FALSE, results="asis"}
 #pooled OLS estimator
 L1<-plm(Y1~X1, data=pdataind, model="pooling")
-summary(L1)
 
 #between estimator
 L2<-plm(Y1~X1, data=pdataind, model="between")
-summary(L2)
 
 #first difference estimator
 L3<-plm(Y1~X1, data=pdataind, model="fd")
-summary(L3)
 
 #fixed effects or within estimator
 L4<-plm(Y1~X1, data=pdataind, model="within")
-summary(L4)
 
 #LM test for fixed effects vs OLS
 pFtest(L2,L1)
 
-library(stargazer)
 stargazer(L1, L2, L3, L4,
     title = 'Regression Estimates of Life Satisfaction',
     digits = 2, type = 'html'
@@ -267,6 +262,150 @@ pFtest(L4,L1)
 
 The test is set up so that the null hypothesis is that OLS pooled is better than the within estimator. The small resulting p-value indicates that despite the larger R-squared values with OLS pooling, we should reject the null hypothesis that OLS pooling is better. 
 
+## Multilevel Analysis 
+
+``` {r setup multilevel analysis, include = FALSE, echo=FALSE, messages = FALSE}
+finaldata <- read.csv("~/GitHub/Climate-Happiness/Data/All_Merged_Data.csv")
+data <- read.csv("~/GitHub/Climate-Happiness/Data/Broad_Data.csv")
+attach(finaldata)
+
+```
+Since the pooled OLS and Fixed Effects Models do not account for the nested nature of the data and hence do not allow across-state analysis, Multilevel Coefficient Models (MCM) are applied in order to investigate the effects of individual and Bundesland-level factors on happiness. Not only the MCM examine individual variation within and across groups, but they also permit non-independence of individual factors from the group level variables (i.e. different slopes with varying intercepts). The first step of the MCM investigates whether statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable for the given research. The second step involves exploration of the between-group variation (random effects), while the third step completes the analysis by adding fixed effects factors (both individual- and state-level). 
+
+In addition to the general data set ($$data_1$$, 61,009 observations) familiar to the reader before, given research utilizes a broader data frame (data2, 142,224 observations) expanding the sample to both employed and non-employed respondents. Gross income, however, is dropped due to the data constraints. The models used for the multilevel analysis and corresponding datasets are summarized below.
+
+Null.Models (run on $$data_1$$) checks whether reliable and significant variation between the States exists.
+Model.1 ($$data_1$$) tests how the effects of environmental concerns emissions per sq. km. differ across the Bundeslaender.
+Model.2 ($$data_1$$) incorporates invidual-level characteristics (income, age, gender, family status) and explores how these factors impact well-being across and among States. 
+Model.2a ($$data_2$$) resembles Model.2, except runs on the broader sample of both employed and unemployed respondents dropping income. 
+Model.3 ($$data_1$$) presents an interaction effect between environmental concerns and income.
+Model.4 ($$data_2$$) presents an interaction effect between environmental concerns and age.
+
+### Step 1. Significant variation. 
+
+An unconditional model, *Null.Model*, serves the first purpose: the model only controls for the State that specifies that the variation intercept is a function of residence.
+
+
+```{r, echo=FALSE}
+Null.Model<-lme(satis~1,random=~1|Stateid,data=finaldata,
+                  control=list(opt="optim"))
+VarCorr(Null.Model)
+``` 
+
+The model examines how much of the average individual life satisfaction is explained by the residence of a respondent through R's general purpose optimization routine (opt="optim"). According to the *Null.Model*, the Bundesland variation (intercept variance) is 0.15, while the within-State residual is 2.6. 
+```{r, echo=FALSE}
+GREL.DAT<-GmeanRel(Null.Model)
+names(GREL.DAT)
+mean(GREL.DAT$MeanRel)
+Null.Model.2<-gls(satis~1,data=finaldata,
+                    control=list(opt="optim"))
+logLik(Null.Model.2)*-2
+logLik(Null.Model)*-2
+sigtest <- round((logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2), digits=3)
+```
+
+Furthermore, the *GmeanRel* function (*multilevel* package) yields the mean reliability of 16 Bundeslaender, which, in this case, is substantially high (`r round(mean(GREL.DAT$MeanRel), digits=3)`). As the cut-off point for acceptable reliability is 0.7, the Bundeslaeander group reliability meets the threshold. The difference between the -2 log likelihood values of *Null.Model* and *Null.Model.2* tests whether the between-State effect is present compared to the random variation in life satisfaction without any control variables. According to the results, the difference is more than substantially large based on the Chi-Squared distribution with 2 degrees of freedom (`r sigtest`). These results suggest that there is significant State variation in happiness level, which justifies the usage of the MCM. 
+
+### Step 2. Environmental factors
+
+The second step of the MCM looks into how both Bundesland emissions and subjective concerns about the environment influence reported individual life satisfaction. *Model.1* (*lme* function) for the time being does not control for individual characteristics, such as gender, age, employment and family status. *Model.1* serves as the basic tool to understand relationship between the group- and individual-level factors representing the environment. 
+
+```{r, echo=FALSE, results='as is'}
+Model.1<-lme(satis~environ+CO2perSqKm,random=~1+environ+CO2perSqKm|Stateid, data=finaldata,
+             control=list(opt="optim"))
+stargazer::stargazer(Model.1, single.row = TRUE,
+                     dep.var.labels = "Life Satisfaction",
+                     title = 'Model.1: Environmental Factors ',
+                     digits = 5, type = 'latex')
+```
+
+The output demonstrates that both coefficients are negative, as expected. However, a plot of the relationship between emissions and life satisfaction across all Bundeslaender demonstrates that in some States (Niedersachsen, Nordrhein-Westhafen, Baden-Wuerttemberg, Brandenburg) emissions positively influence the well-being of the residents. These results, nevertheless, do not represent the reality, as one should keep in mind numerous omitted variables from this simplistic model.   
+```{r, echo=FALSE}
+model.01 <-lme(satis~CO2perSqKm,random=~CO2perSqKm|Stateid, data=finaldata, control=list(opt="optim"))
+pframe_carbon <- with(finaldata,            expand.grid(Stateid=levels(Stateid),                           CO2perSqKm=seq(min(CO2perSqKm),max(CO2perSqKm),length=51)))
+pframe_carbon$satis <- predict(model.01,newdata=pframe_carbon,level=1)
+model01 <- ggplot(finaldata,aes(CO2perSqKm,satis,colour=Stateid))+
+  geom_point()+
+  geom_line(data=pframe_carbon)+
+  ylab("Satisfaction")+
+  xlab("CO2 emissions/sqkm")
+model01 + ggtitle("Effect of emissions/sqkm across States")
+```
+
+Simultaneously, stronger environmental concerns do seem to lower well-being across all the Bundeslaender, albeit to a varying degree. Moreover, the graph shows how throughout Germany, life satisfaction level does not differ substantially, if ran against the environmental concerns. This phenomenon is usually observed, as individuals tend to adjust to their life circumstances and judge their quality of life compared to their peers and neighbours.
+```{r, echo=FALSE}
+finaldata$environ <- as.numeric(as.character(finaldata$environ))
+model.02 <-lme(satis~environ,random=~environ|Stateid, data=finaldata, control=list(opt="optim"))
+pframe <- with(finaldata,
+               expand.grid(Stateid=levels(Stateid),                           environ=seq(min(environ),max(environ),length=3)))
+pframe$satis <- predict(model.02,newdata=pframe,level=1)
+model02 <- ggplot(finaldata,aes(environ,satis,colour=Stateid))+
+  geom_point()+
+  geom_line(data=pframe)+
+  ylab("Satisfaction")+
+  xlab("Concerns about the environment")
+model02 + ggtitle("Effects of environmental concerns across States")
+```
+
+Furthermore, fixed effects show that general emissions within any given state are indeed negatively related to the individual happiness. However, the negligent magnitude of the coefficient (-0.000063) is also not statistically significant. Consequently, the group-level effect does not significantly differ from the individual-level one. On the other hand, the coefficient of environmental concerns (-0.075) statistically differs from 0. The missing socio-demographic characteristics are explored in the further step.   
+
+### Step 3. Integrated models
+
+*Model.2* covers age, family status, gender, and gross income of the respondents in the sample. The latter two variables are included in the random slope of the model in order to see the variation in these factors across the states. Since the anticipated effects of age and family status are not contentious, these factors are classified as the fixed effects and explain variaiton within a state. 
+The fixed effects output reassures the main Hypothesis: increasing emissions at the State level, although in minimal amounts (-0.00007), negatively correlate with life satisfaction. Similarlly, stronger concerns (-0.063) reduce reported well-being. Surprisingly, increasing gross income increases happiness, albeit marginally (0.00013). Women also do seem to be happier than men in general by substantial 0.15 points. As expected, age bears a negative effect (-0.011), while family status increases well-being almost like being a woman (0.166). 
+```{r, echo=FALSE}
+Model.2 <-lme(satis~CO2perSqKm+environ+GrossIncome+gender+age+fam,random=~environ+CO2perSqKm+GrossIncome+gender|Stateid,data=finaldata,
+             control=list(opt="optim")) 
+stargazer::stargazer(Model.2, single.row = TRUE,
+                     dep.var.labels = "Life Satisfaction",
+                     title = 'Model.2: Socio-demographic factors added',
+                     digits = 5, type = 'latex')
+```
+
+Random slopes below of the environmental variables, gross income, and gender demonstrate the broad variaiton of coefficients' values across the Bundeslaender. 
+```{r, echo=FALSE}
+plot(ranef(Model.2), aug=TRUE)
+```
+
+At the same time, *Model.2a*, encompassing a broader sample of employed and unemployed respondents, yields similar results, except that the magnitude of the environmental impacts increase. Gender, on the contrary, has a substantially reduced coefficient due to the inclusion of the unemployed people. Intuitively, being employed significantly enhances individual satisfaction over time (0.214), which partially explains why increasing absolute income does not bring huge changes in life satisfaction.   
+```{r, echo=FALSE}
+Model.2a<-lme(satis~CO2perSqKm+environ+age+fam+gender+emp,random=~emp+gender+CO2perSqKm+environ|Stateid,data=data,
+             control=list(opt="optim"))
+stargazer::stargazer(Model.2a, single.row = TRUE,
+                     dep.var.labels = "Life Satisfaction",
+                     title = 'Model.2a: Broader sample',
+                     digits = 5, type = 'latex')
+plot(ranef(Model.2a))
+```
+
+### Interaction models
+
+All the models before assume linear relationship between the independent and the dependent variables. In reality, some of the factors might interact while influencing well-being. *Model.3* and *Model.4* scratch the surface of the interaction effects in looking at how environmental concerns of individuals interact with their age and employment status respectively. Age is particularly interesting, since the global issue of climate change has become public only in the recent decades. Hence, older generations might perceive negative environmental changes independently from their subjective well-being, while younger generations might indeed treat environmental conditions as inextricable to their life satisfaction. Therefore, negative effects of environmental degradation might be more acutely felt for the younger cohorts. Simultaneously, older age might signal stronger tendency to adoptoing convervative values. As a result, either cohort or age effect might interact with environmental concerns of the respondents in shaping their well-being perception. 
+
+Likewise, employment, as as indicator of material well-being, might also 
+```{r, echo=FALSE, results='asis'}
+Model.3<-lme(satis~fam+gender+environ*age+CO2perSqKm+GrossIncome,
+random=~1+environ*age|Stateid,data=finaldata,control=list(opt="optim"))
+efage <- effect("environ*age", Model.age)
+xage <- as.data.frame(efage)
+Mode3 <- ggplot(xage, aes(age, fit, color=environ)) + geom_point() + geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.4) + theme_bw(base_size = 12)+
+  ylab("Predicted satisfaction values") +
+  xlab("Environmental concerns [1-3]") +
+theme(plot.title = element_text(lineheight=.8, face="bold"))
+Model3 + ggtitle("Model.3: Interaction effects of environmental concerns and environment 4")
+```
+However, as shown in the graph above, the predicted values of life satisfaction from the interaction effect between environmental concerns and age (while keeping everything else constant) are consistently negative with the same slope, which means that there is no meaningful interaction. One of the reasons might lie in the fact that very often respondents drop out from the survey and overtime changes in their behavior are no longer feasible to track. Moreover, environmental concerns are only available in three categories, which constraints the analysis. 
+
+``` {r, echo=FALSE, results='asis'}
+data$emp <- as.factor(data$emp)
+Model.4<-lme(satis~fam+gender+environ*emp+CO2perSqKm+age,
+            random=~1+environ*emp|Stateid,data=data,control=list(opt="optim"))
+efemp <- effect("environ*emp", Model.emp)
+xemp <- as.data.frame(efemp)
+Model4 <- ggplot(xemp, aes(emp, fit, color=environ))+
+geom_point() + geom_errorbar(aes(ymin=fit-se, ymax=fit+se), width=0.4) + theme_bw(base_size=12)
+Model4 + ggtitle("Model.4: Interaction effects of environmental concerns and employment")
+```
 
 ## Discussion
 
