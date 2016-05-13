@@ -5,7 +5,7 @@ possibles <- c('~/GitHub/Climate-Happiness',
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness')
 set_valid_wd(possibles)
 
-source('Data/SourceFile.R')
+source("Data/SourceFile.R")
 
 set_valid_wd(possibles)
 
