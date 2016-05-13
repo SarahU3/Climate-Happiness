@@ -11,7 +11,7 @@ output: pdf_document
 
 ## 1. Background
 
-This project focuses on the relationship between objective and subjective aspects of climate on the reported well-being. The research centers on the German Bundeslaender and their residents from 1990 to 2012. The aim of the project is to analyse the relationship between the objective measures of GHG emissions (CO2 per squared kilometer) of each State and subjective individual concerns about the environment on one hand, and individual life satisfaction levels on the other. The demographic characteristics (age, gender, employment status, income, family status), as well as the time-component, also present an interest for this research. In addition to the simple Fixed Effects Model, a multilevel analysis is applied in order to analyse the relationships between the climate-factors and well-being on both State and individual levels.
+This project focuses on the relationship between objective and subjective aspects of climate on the reported well-being. The research centers on the German Bundeslaender and their residents from 1990 to 2012. The aim of the project is to analyze the relationship between the objective measures of GHG emissions (CO2 per squared kilometer) of each state and subjective individual concerns about the environment on one hand, and individual life satisfaction levels on the other. The demographic characteristics (age, gender, employment status, income, family status), as well as the time-component, also present an interest for this research. In addition to the simple fixed effects model, a multilevel analysis is applied in order to analyze the relationships between the climate-factors and well-being on both state and individual levels.
 
 
 ## 2. Data
