@@ -1,5 +1,5 @@
 ---
-title: "Final_Paper"
+title: "Emissions Levels and Life Satisfaction: A Study on the German States"
 author: "Katie Levesque, Meerim Ruslanova, Sarah Unbehaun"
 date: "May 13, 2016"
 output: pdf_document
@@ -28,22 +28,23 @@ attach(data)
 ## Introduction and Motivation 
 Climate change is undoubtedly a global problem, but this fact means it is also a classic tragedy of the commons. No country wants to put itself at an economic disadvantage by restricting the use of cheap fossil fuels so all continue to emit, deteriorating the "commons" of the Earth's protective atmosphere. This can make it difficult to get citizens to identify with the problem and take responsibility; people will more likely act when something affects them individually. On the other hand, some also argue that "green growth," i.e. economic growth with strict environmental regulations, has positive effects both economically and on individual weel-being. In this paper we want to explore these arguments: in an environmentally-conscious country like Germany, how much do people feel, consciously or unconsciously, the effects of green house gas emissions? More specifically, do emissions affect their reported well-being or life satisfaction?
 
+
 ## Theoretical Framework - Recent Developments in Analyzing Environment and Well-Being
 Since the conventional theory on life satisfaction has largely been focusing on economic (income, unemployment, inflation) and social (health, demographics, education) determinants, an environmental component is missing from the standard theoretical framework [@Sekulova2013, p.18]. Therefore, the theoretical basis of the main hypothesis builds on both environmental and subjective well-being literature. 
 
-In light of the rising pressure of climate change, mankind has been facing twin challenges of expanding economic and development opportunities for a quickly growing population while also staying within the boundaries of environmental constraints. During the onset of the climate discourse in the 1990s and 2000s, the global community labeled the the attempt to address the twin challenges as "sustainable development" [@Jakob2014]. Recently, the issue of reconciling development with natural resources adopted a fresh theoretical notion of "green growth," advocated by major international organizations (World Bank, United National Environmental Protection, Organization for Economic Cooperation and Development) (Ibid). The strong green growth proponents argue that stringent environmental policies would have positive impacts on economic growth even in the short term, while their more moderate counterparts emphasize that sound climate actions are necessary in order to preserve the world for future generations in addition to avoiding devastating changes in the present world (Ibid). 
+In light of the rising pressure of climate change, mankind has been facing twin challenges of expanding economic and development opportunities for a quickly growing population while also staying within the boundaries of environmental constraints. During the onset of the climate discourse in the 1990s and 2000s, the global community labeled the attempt to address the twin challenges as "sustainable development" [@Jakob2014]. Recently, the issue of reconciling development with natural resources adopted a fresh theoretical notion of "green growth," advocated by major international organizations (World Bank, United National Environmental Protection, Organization for Economic Cooperation and Development) (Ibid). The strong green growth proponents argue that stringent environmental policies would have positive impacts on economic growth even in the short term, while their more moderate counterparts emphasize that sound climate actions are necessary in order to preserve the world for future generations in addition to avoiding devastating changes in the present world (Ibid). 
 
 Although the green growth theory does not explicitly juxtapose climate economics with the theory of life satisfaction, it recognizes the "natural factor as a factor of production and its role in enhancing well-being" and points to the adverse effects of climate change and environmental degradation on human progress [@OECD2011, p. 20]. The OECD has lately added a group of socio-economic indicators to its scorecard of the green growth strategy in order to link it to social goals such as poverty reduction, social inequity and inclusion [@OECD2014, p. 21]. Moreover, the OECD has initiated guidelines for measuring subjective well-being as a proxy of quality of life alongside other social and economic dimensions in order to have a potential framework for measuring the progress of green growth policies on individual happiness (Ibid). These developments support the main hypothesis of this research project: "greener" performance in Germany, reflected in lower GHG emissions and weaker environmental concerns, will likely increase individual well-being due to the benefits of the green growth approach in the current climate situation. 
 
-Simultaneously, the traditional social outlook on life satisfaction justifies the inclusion of other variables (age, gender, employment, and family status) into the empirical model, as these individual-level characteristics play an inextricable role in one's quality of life and thus should be included as controls in regression analysis to avoid generating biases in the estimations [@Bandura, p.13]. Furthermore, these socio-demographic factors may be life-changing events, which can permanently impact life satisfaction (e.g., divorce, unemployment due to acquirement of disability, etc.) (Ibid). This research paper anticipates that older age negatively affects life satisfaction, as older individuals tend to report worse health conditions and more unfortunate life events (e.g., death of a partner and relatives). There are empirical studies claiming U-shaped effect of age on happiness based on Western experiences [@Blanchflower2008; @BlanchflowerandOswald2007a; @Helliwell2003]. Nevertheless, a number of other factors and cohort effects should be included in the model to observe robust U-shaped relationships. For simplicity, this research assumes negative linear relationship between age and happiness. Gender appears in the model for merely exploratory reasons, and the anticipated effects of employment and family statuses are intuitively expected to be positive. 
+Simultaneously, the traditional social outlook on life satisfaction justifies the inclusion of other variables (age, gender, and family status) into the empirical model, as these individual-level characteristics play an inextricable role in one's quality of life and thus should be included as controls in regression analysis to avoid generating biases in the estimations [@Bandura, p.13]. Furthermore, these socio-demographic factors may be life-changing events, which can permanently impact life satisfaction (e.g., divorce, unemployment due to acquirement of disability, etc.) (Ibid). This research paper anticipates that older age negatively affects life satisfaction, as older individuals tend to report worse health conditions and more unfortunate life events (e.g., death of a partner and relatives). There are empirical studies claiming U-shaped effect of age on happiness based on Western experiences [@Blanchflower2008; @BlanchflowerandOswald2007a; @Helliwell2003]. Nevertheless, a number of other factors and cohort effects should be included in the model to observe robust U-shaped relationships. For simplicity, this research assumes negative linear relationship between age and happiness. Gender appears in the model for merely exploratory reasons, and the anticipated effect of family status is intuitively expected to be positive. 
 
-The inclusion of individual income as one of the economic factors is more contentious. Easterlin found a positive effect of individual income on life satisfaction, although with rapidly diminishing returns [@Easterlin1974]. However, the same study also established the "Easterlin Paradox": aggregate national happiness over time was stable despite increasing GDP per capita. Therefore, a separate model is run on a reduced sample of solely employed respondents in order to test whether or not income plays a positive role at the individual-level. 
+The inclusion of an individual income as one of the economic factors is more contentious. Easterlin found a positive effect of individual income on life satisfaction, although with rapidly diminishing returns [@Easterlin1974]. However, the same study also established the "Easterlin Paradox": aggregate national happiness over time was stable despite increasing GDP per capita. Hence, while gross monthly income is accounted by the general empirical model, a comparative analysis with employment status instead of the income is also presented.
+
 
 ## Literature Review
+In recent years, there has been a large body of empirical literature on the happiness and the effects of climate variables. In general, the findings highlight the importance of environmental conditions on individual's happiness. A significant share of the studies find a negative correlation between negative environmental conditions and overall life satisfaction.
 
-In recent years, there has been a large body of empirical literature on the happiness of individuals and the effects of climate and pollution variables. In general, the findings highlight the importance of environmental conditions on individual's happiness. A significant share of the studies find a negative correlation between pollution or negative environmental conditions and overall life satisfaction, or happiness.
-
-@welsch2002 published an initial happiness-related study on how self-reported well-being fluctuates with different levels of prosperity and environmental quality. The study used cross-sectional data on 54 countries to illustrate how individuals are willing to calculate the trade-off between wealth and environmental conditions [@welsch2002]. The study found a negative effect of poor air quality on overall happiness of individuals, however was unable to control for heterogeneity across countries as the analysis was conducted on an aggregate level [@welsch2002; @goetzke2015]. @welsch2006 used a combined cross-section time-series framework to address this problem with annual data for 10 European countries from 1990-1997. By using this panel method, he was able to use country-fixed effects to eliminate problems of unobserved heterogeneity across countries. In this more robust study, @welsch2006 finds that air pollution has a statistically significant function in predicting inter-temporal and inter-country differences in levels of happiness.    
+@welsch2002 published an initial happiness-related study on how self-reported well-being fluctuates with different levels of prosperity and environmental quality. The study used cross-sectional data on 54 countries to illustrate how individuals are willing to calculate the trade-off between wealth and environmental conditions [@welsch2002]. The study found a negative effect of poor air quality on overall happiness of individuals, however was unable to control for heterogeneity across countries as the analysis was conducted on an aggregate level [@welsch2002; @goetzke2015]. @welsch2006 used a combined cross-section time-series framework to address this problem with annual data for 10 European countries from 1990-1997. By using this panel method, he was able to use country-fixed effects to eliminate problems of unobserved heterogeneity and found that air pollution has a statistically significant function in predicting inter-temporal and inter-country differences in levels of happiness.    
 
 @rehdanz2008 used the SOEP (German Socio-Economic Panel) surveys to analyze the relationship between perceived noise and air pollution, and self-reported well-being in Germany. The evidence suggests that even when controlling for a range of variables such as demographic differences, economic status and neighborhood individualities, higher levels of noise and air pollution reduce overall levels of happiness [@rehdanz2008]. Similarly,  @brereton2008 conducted a study in Ireland using data at the individual level and found that overall climate conditions had a statistically significant influence on individual happiness. The study found that proximity to waste facilities and transport routes was highly relevant in explaining the variation in happiness levels.
 
@@ -55,8 +56,9 @@ In another study, @menz2010 further estimate the effect of air pollution on life
 
 Most recently, @goetzke2015 expand on the ideas of @vanpraag2005, @mackerron2009 and @ferreira2010 to account for the endogeneity problem between perceived air pollution and happiness. The endogeneity inherent in this analysis is that individuals bothered by air pollution are less happy, but simultaneously that unhappy people are more disturbed by air pollution [@goetzke2015]. Using the German socio-economic panel data along with annual sulfur dioxide readings, @goetzke2015 analyze the impact of air pollution on happiness in Germany based on both the subjective perceptions of pollution and the objectively measured environmental conditions. Using the IV-ordered probit model developed by @rivers1988, they find in controlling for simultaneity that perceived environmental conditions do not have a statistically significant effect on happiness [@goetzke2015].
 
+
 ## Hypotheses
-Drawing on this body of literature, we aim to test whether emissions affect life satisfaction in the German federal states. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices and how to transform the transportation sector, not to mention coal's continued role as a cheap and reliable fuel. Germany therefore still does emit large amounts of green house gases. We will look at carbon dioxide (CO2) emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
+Drawing on this body of literature, we aim to test whether environmental factors affect life satisfaction in the German federal states. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices and how to transform the transportation sector, not to mention coal's continued role as a cheap and reliable fuel. Germany therefore still does emit large amounts of green house gases. We will look at carbon dioxide (CO2) emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
 
 > *H1: Bundeslaender with higher emissions will have lower reported levels of  life satisfaction.* 
 
@@ -70,7 +72,7 @@ The analysis will focus on a mixture of two levels of interest: *federal state*,
 
 
 ## Data
-The individual-level data is provided by the German Socio-Economic Panel Data ([GSOEP](https://paneldata.org/)) conducted by the German Institute for Economic Research ([DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html)). Due to confidentiality restrictions, DIW could only supply a shortened sample with specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The short dataset contains the information on the personal characteristics: reported levels of life satisfaction, subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. 
+The individual-level data is provided by the German Socio-Economic Panel Data ([GSOEP](https://paneldata.org/)) conducted by the German Institute for Economic Research ([DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html)). Due to confidentiality restrictions, DIW could only supply a shortened sample with specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored in the GitHub Climate-Happiness Repository. The short dataset contains the information on reported levels of life satisfaction, subjective concerns about the environment, age, gender, income, employment, family status, and state residence of a respondent. 
 
 The state-level data, on the other hand, is gathered from web-based sources: [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm),  Agency for Renewable Energy of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010), [Federal Statistical Office and Statistical Offices of the Bundeslaender](http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp), and [Laenderarbeitskreis](http://www.lak-energiebilanzen.de/dseiten/co2BilanzenAktuelleErgebnisse.cfm). 
 
@@ -96,7 +98,7 @@ varbound <- cbind(Variables, Descriptions)
 stargazer(varbound, type = "latex", title = "Variables", header = FALSE)
 ```
 
-For most of our analyses, we used six of these variables: age, gender, gross monthly income, environmental concern, and the two measures of emissions. The data used for the following descriptive statistics is limited to individuals with income data, i.e. employed individuals. The summary statistics (Table 2) provide a sense of the data.
+For most of our analyses, we used six of these variables: age, gender, gross monthly income, environmental concern, and the two measures of emissions. The data used for the following descriptive statistics is limited to individuals with income data, i.e. employed individuals ($data_1$). The summary statistics (Table 2) provide a sense of the data.
 
 ``` {r summaries, echo = FALSE, results = 'asis'}
 summaries <- data[,c("age","gender","GrossIncome","environ","Emissions","CO2perSqKm")]
@@ -104,6 +106,7 @@ stargazer(summaries, type = "latex", title = "Summary statistics", digits = 2, h
 ```
 
 Age ranges from 17 to 86, but is clearly centered around middle age, with a mean of approximately 44 years old. Because 2 on the gender variable represents a female, we see that our sample is slightly more male (46%) than female (54%). Gross monthly income ranges all the way up to 80,000, even after some extreme outliers were removed. The sample seems to be somewhat but not very concerned about the environment with an average rating of 2.2. As graphs will show in better detail, the levels of CO2 emissions vary from 4,500 to 24,700 tons per capita and, even more widely, from 403 to 34,970 tons per square kilometer. 
+
 
 ### Individual descriptive statistics
 
@@ -139,7 +142,7 @@ print(indiplot4, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(indiplot5, vp = viewport(layout.pos.row = 4, layout.pos.col = 1:2))
 ```
 
-First, we see that a large number of individuals were added to the  sample in 2000; though the number declined again in the following years, there are significantly more observations after 2000 then prior to 2000. Also, the overall average age of our sample increased over the time under observation. It makes sense that it would increase over time for a longitudinal study, but the unevenness of the increase confirms that there are dropouts and additions. The drop in average age at the year 2000 would be accounted for by the large number of additional observations, but the steeper rise after the 2000 might confirm that younger people are less availabe and willing to respond to surveys, a well-known problem for traditional data collection. The same patterns could also account for the sharp drop in the percentage of the sample whose family status indicates that they have a partner around 2000 (assuming younger individuals in the survey were less likely to have a partner), though it does not explain the decline after 2007. Similarly, an older sample would also explain the higher monthly income after 2000, though the steepness of the increase is puzzling. Finally, the average life satisfaction shows a steep drop in the early 1990s before rising again to the early 2000s. We will test to see if emissions is affecting this, but also recognize that major changes across Germany are likely influenced by political and economic factors such as Germany's Reunification or poor economic performance. 
+First, we see that a large number of individuals were added to the  sample in 2000; though the number declined again in the following years, there are significantly more observations after 2000 then prior to 2000. Also, the overall average age of our sample increased over the time under observation. It would increase over time for a longitudinal study anyway, but the unevenness of the increase confirms that there are dropouts and additions. The drop in average age at the year 2000 would be accounted for by the large number of additional observations, but the steeper rise after the 2000 might confirm that younger people are less availabe and willing to respond to surveys, a well-known problem for traditional data collection. The same patterns could also account for the sharp drop in the percentage of the sample whose family status indicates that they have a partner around 2000 (assuming younger individuals in the survey were less likely to have a partner), though it does not explain the decline after 2007. Similarly, an older sample would also explain the higher monthly income after 2000, though the steepness of the increase is puzzling. Finally, the average life satisfaction shows a steep drop in the early 1990s before rising again to the early 2000s. We will test to see if emissions is affecting this, but also recognize that major changes across Germany are likely influenced by political and economic factors such as Germany's Reunification or poor economic performance. 
 
 
 ``` {r individual scatter plots, echo = FALSE, messages = FALSE, warnings = FALSE}
@@ -289,7 +292,6 @@ stargazer(L1,L4,L5,
     )
 ```
 
-
 The personal characteristic variables are statistically significant in all the models and the directions of the relationships are the same across models: environment and age have a negative relationship to life satisfaction, while income, being female, and having a partner have a positive relationship. Emissions, by either measure, show a negative but insignificant relationship. It is also important to note that the expanatory power of these models, as measured in R-squared, is quite low: the models explain a very small portion of the differences in life satisfaction. These are simplistic analyses, though, which is why the next section will elaborate further by using multilevel analysis. 
 
 
@@ -302,9 +304,9 @@ attach(finaldata)
 
 ```
 
-Since the pooled OLS and fixed effects models do not account for the nested nature of the data and hence do not allow across-state analysis, multilevel coefficient models (MCM) are applied in order to investigate the effects of individual and Bundesland-level factors on happiness. The first step of the MCM investigates whether statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable for the given research. The second step involves exploration of the between-group variation (random effects), while the third step completes the analysis by adding fixed effects factors (both individual- and state-level). 
+Since the pooled OLS and fixed effects models do not account for the nested nature of the data and hence do not allow across-state analysis, multilevel coefficient models (MCM) are applied in order to investigate the effects of individual and Bundesland-level factors on happiness. The first step of the MCM confirms if statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable. The second step involves exploration of the between-group variation (random effects), while the third step completes the analysis by adding fixed effects factors (both individual- and state-level). 
 
-In addition to the general data set ($data_1$, 61,009 observations) used in the OLS and fixed effects models above, the multilevel analysis utilizes a broader data frame (data2, 142,224 observations) expanding the sample to both employed and non-employed respondents. Gross income, however, is therefore dropped since it is missing from the additional observations. The models used for the multilevel analysis and corresponding data sets are summarized below.
+In addition to the general data set ($data_1$, 61,009 observations) used earlier, the multilevel analysis utilizes a broader data frame ($data_2$, 142,224 observations) expanding the sample to both employed and non-employed respondents. Gross income, however, is therefore dropped since it is missing from the additional observations. The models used for the multilevel analysis and corresponding data sets are summarized below.
 
 * Null.Models (run on $data_1$) checks whether reliable and significant variation between the States exists.
 
@@ -318,8 +320,8 @@ In addition to the general data set ($data_1$, 61,009 observations) used in the 
 
 * Model.4 ($data_2$) presents an interaction effect between environmental concerns and employment.
 
-### Step 1. Significant variation. 
 
+### Step 1. Significant variation. 
 The first, unconditional model, *Null.Model*, only controls for state and therefore specifies that the variation in the intercept is a function of residence.
 
 ```{r, echo=FALSE}
@@ -341,8 +343,8 @@ stargazer(Null.Model.2, type = "latex", title = "Null.Model.2 Results", header =
 
 Furthermore, the *GmeanRel* function yields the mean reliability of the 16 Bundeslaender, which, in this case, is substantially high (`r round(mean(GREL.DAT$MeanRel), digits=3)`). As the cut-off point for acceptable reliability is 0.7, the Bundeslaender group reliability meets the threshold. The difference between the -2 log likelihood values of *Null.Model* and *Null.Model.2* tests whether the between-State effect is present compared to the random variation in life satisfaction without any control variables. According to the results, the difference is more than substantially large based on the Chi-Squared distribution with 2 degrees of freedom (`r sigtest`). These results suggest that there is significant state variation in happiness level, which justifies the usage of the MCM. 
 
-### Step 2. Environmental factors
 
+### Step 2. Environmental factors
 The second step of the MCM looks into how both Bundesland emissions and subjective concerns about the environment influence reported individual life satisfaction. *Model.1*, for the time being, does not control for individual characteristics, such as gender, age, employment and family status. *Model.1* serves as the basic tool to understand the relationship between the group- and individual-level factors representing the environment. 
 
 ```{r, echo=FALSE, messages=FALSE, warnings=FALSE, results = "asis"}
@@ -386,9 +388,10 @@ model02 + ggtitle("Effects of environmental concerns across States")
 
 Furthermore, fixed effects show that general emissions within any given state are indeed negatively related to the individual happiness. However, the negligible magnitude of the coefficient (-0.000063) is also not statistically significant. Consequently, the group-level effect does not significantly differ from the individual-level one. On the other hand, the coefficient of environmental concerns (-0.075) statistically differs from 0. The missing socio-demographic characteristics are explored in the further step.   
 
-### Step 3. Integrated models
 
+### Step 3. Integrated models
 *Model.2* covers age, family status, gender, and gross income of the respondents in the sample. The latter two variables are included in the random slope of the model in order to see the variation in these factors across the states. Since the anticipated effects of age and family status are not contentious, these factors are classified as the fixed effects and explain variation within a state. 
+
 The fixed effects output provides some evidence for the first hypothesis: increasing emissions at the state level, although in minimal amounts (-0.00007), are negatively correlated with life satisfaction. Similarly for the second hypothesis, stronger concerns about the environment (-0.063) reduce reported well-being. Increasing gross income increases happiness, albeit marginally (0.00013). Women also do seem to be happier than men by a substantial 0.15 points. As expected, age shows a negative effect (-0.011), while family status increases well-being similarly to being female (0.166). 
 
 ```{r, echo=FALSE, messages=FALSE, warnings=FALSE, results = "asis"}
@@ -418,8 +421,8 @@ stargazer::stargazer(Model.2a, single.row = TRUE,
 plot(ranef(Model.2a),font.main = 1, main="Model.2a. Random slopes")
 ```
 
-### Interaction models
 
+### Interaction models
 All the models before assume linear relationship between the independent and the dependent variables. In reality, some of the factors might interact while influencing well-being. *Model.3* and *Model.4* scratch the surface of the interaction effects in looking at how environmental concerns of individuals interact with their age and employment status respectively. Age is particularly interesting, since the global issue of climate change has become public only in the recent decades. Hence, older generations might perceive negative environmental changes independently from their subjective well-being, while younger generations might indeed treat environmental conditions as inextricable to their life satisfaction. Therefore, negative effects of environmental degradation might be more acutely felt for the younger cohorts. Simultaneously, older age might signal stronger tendency to adopting conservative values. As a result, either cohort or age effect might interact with environmental concerns of the respondents in shaping their well-being perception. 
 
 Likewise, material well-being, as measured by the employment status of an individual, could be thought to be associated with greater concerns pertaining to the environment. Following the logic held in Maslow's hierarchy of needs, people whose material (and by extension social) needs are met, would tend to focus their attention towards higher goals. Therefore, the stronger environmental concerns are anticipated to have a higher negative effect on the employed respondents compared to their unemployed counterparts. 
@@ -454,8 +457,7 @@ Model4 + ggtitle("Model.4. Interaction effects of environmental concerns\nand em
 
 
 ## Discussion
-
-This paper presents a multilevel analysis that adds to the increasing number of studies that evaluate the effects of air pollution and emissions on people’s life satisfaction. The variables of interest, state-level emissions and environmental worries, demonstrate statistically significant negative impacts on subjective well-being.
+This paper presents a multilevel analysis that adds to the increasing number of studies that evaluate the effects of air pollution and emissions on life satisfaction. The variables of interest, state-level emissions and environmental worries, demonstrate statistically significant negative impacts on subjective well-being.
 
 However, the magnitude of the former coefficient is not large. This finding might be explained by the fact that, while some Bundeslaender do emit large volumes of GHG per square kilometer, they are still relatively low compared to other energy-intensive economies like China. Thus, the impact of these emissions is not easily tangible for the German population in terms of extreme natural disasters and environmental changes. Even the recent appearances of global climate change in the form of heat waves and extreme weather are usually common for the whole country, distorting the direct impact of the state-specific climate performance on their residents' well-being. Therefore, a variable representing local environmental conditions would be a better fit for a model that could be tackled in further studies. Moreover, state-level financial performance is missing from the current model and might be useful to consider in order to control for higher energy intensity being associated with greater wealth and higher subjective well-being. 
 
@@ -478,11 +480,11 @@ xtable.
 Dragulescu, Adrian A. 2014a. Xlsx: Read, Write, Format Excel 2007 and Excel 97/2000/XP/2003 Files.
 https://CRAN.R-project.org/package=xlsx.
 
-———. 2014b. Xlsxjars: Package Required POI Jars for the Xlsx Package. https://CRAN.R-project.org/
+---. 2014b. Xlsxjars: Package Required POI Jars for the Xlsx Package. https://CRAN.R-project.org/
 package=xlsxjars.
 
 Fox, John. 2009. "Effect Displays in R for Generalised Linear Models." Journal of Statistical Software 8 (15):
-1–27. http://www.jstatsoft.org/v08/i15/.
+1-27. http://www.jstatsoft.org/v08/i15/.
 
 Fox, John, and Sanford Weisberg. 2011. An R Companion to Applied Regression. Second. Thousand Oaks
 CA: Sage. http://socserv.socsci.mcmaster.ca/jfox/Books/Companion.
@@ -500,7 +502,7 @@ Lang, Duncan Temple, and the CRAN Team. 2015. XML: Tools for Parsing and Generat
 and S-Plus. https://CRAN.R-project.org/package=XML.
 
 Leifeld, Philip. 2013. "texreg: Conversion of Statistical Model Output in R to LaTeX and HTML Tables."
-Journal of Statistical Software 55 (8): 1–24. http://www.jstatsoft.org/v55/i08/.
+Journal of Statistical Software 55 (8): 1-24. http://www.jstatsoft.org/v55/i08/.
 
 Pinheiro, Jose, Douglas Bates, Saikat DebRoy, Deepayan Sarkar, and R Core Team. 2016. nlme: Linear and
 Nonlinear Mixed Effects Models. http://CRAN.R-project.org/package=nlme.
@@ -508,7 +510,7 @@ Nonlinear Mixed Effects Models. http://CRAN.R-project.org/package=nlme.
 R Core Team. 2015a. Foreign: Read Data Stored by Minitab, S, SAS, SPSS, Stata, Systat, Weka, DBase, .
 https://CRAN.R-project.org/package=foreign.
 
-———. 2015b. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation
+---. 2015b. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation
 for Statistical Computing. https://www.R-project.org/.
 
 Revelle, William. 2015. Psych: Procedures for Psychological, Psychometric, and Personality Research.
@@ -519,13 +521,13 @@ Urbanek, Simon. 2016. RJava: Low-Level R to Java Interface. https://CRAN.R-proje
 Wickham, Hadley. 2009. Ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York. http:
 //ggplot2.org.
 
-———. 2015a. Rvest: Easily Harvest (Scrape) Web Pages. https://CRAN.R-project.org/package=rvest.
+---. 2015a. Rvest: Easily Harvest (Scrape) Web Pages. https://CRAN.R-project.org/package=rvest.
 
-———. 2015b. Xml2: Parse XML. https://CRAN.R-project.org/package=xml2.
+---. 2015b. Xml2: Parse XML. https://CRAN.R-project.org/package=xml2.
 
-———. 2016a. Httr: Tools for Working with URLs and HTTP. https://CRAN.R-project.org/package=httr.
+---. 2016a. Httr: Tools for Working with URLs and HTTP. https://CRAN.R-project.org/package=httr.
 
-———. 2016b. Tidyr: Easily Tidy Data with 'spread()' and 'gather()' Functions. https://CRAN.R-project.org/package=tidyr.
+---. 2016b. Tidyr: Easily Tidy Data with 'spread()' and 'gather()' Functions. https://CRAN.R-project.org/package=tidyr.
 
 Wickham, Hadley, and Romain Francois. 2015. Dplyr: A Grammar of Data Manipulation. https://CRAN.
 R-project.org/package=dplyr.
