@@ -1,0 +1,40 @@
+---
+title: "R Bibliography"
+output: pdf_document
+bibliography: ~/GitHub/Climate-Happiness/Final_Paper/rpackages.bib
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## References
+---
+nocite: | 
+@R
+@dplyr 
+@car
+@httr
+@foreign
+@rJava
+@xlsxjars
+@xlsx
+@ggplot2
+@tidyr
+@repmis
+@rio
+@XML
+@xml2
+@rvest
+@psych
+@plm
+@gsubfn
+@multilevel
+@nlme
+@texreg
+@xtable
+@stargazer
+@effects
+@repmis
+---
