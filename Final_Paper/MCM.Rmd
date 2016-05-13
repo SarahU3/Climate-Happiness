@@ -6,7 +6,6 @@ output: pdf_document
 
 ```{r, include=FALSE}
 library(repmis)
-library(effects)
 possibles <- c('~/GitHub', 
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/')
 set_valid_wd(possibles)
@@ -126,7 +125,8 @@ plot(ranef(Model.2a))
 
 All the models before assume linear relationship between the independent and the dependent variables. In reality, some of the factors might interact while influencing well-being. *Model.3* and *Model.4* scratch the surface of the interaction effects in looking at how environmental concerns of individuals interact with their age and employment status respectively. Age is particularly interesting, since the global issue of climate change has become public only in the recent decades. Hence, older generations might perceive negative environmental changes independently from their subjective well-being, while younger generations might indeed treat environmental conditions as inextricable to their life satisfaction. Therefore, negative effects of environmental degradation might be more acutely felt for the younger cohorts. Simultaneously, older age might signal stronger tendency to adoptoing convervative values. As a result, either cohort or age effect might interact with environmental concerns of the respondents in shaping their well-being perception. 
 
-Likewise, employment, as as indicator of material well-being, might also 
+Likewise, material well-being, as measured by the employment status of an individual, could be thought to be associated with greater concerns pertaining to the environment. Following the logic held in Maslow's hierarchy of needs, people whose material (and by extension social) needs are met, would tend to focus their attention towards higher goals. Therefore, the stronger environmental concenrs are anticipated to have a higher negatove effect on the employed respondents compared to their unemployed counterparts. 
+
 ```{r, echo=FALSE}
 Model.3<-lme(satis~fam+gender+environ*age+CO2perSqKm+GrossIncome,
 random=~1+environ*age|Stateid,data=finaldata,control=list(opt="optim"))
@@ -139,7 +139,7 @@ theme(plot.title = element_text(lineheight=.8, face="bold"))
 
 Model3 + ggtitle("Model.3: Interaction effects of environmental concerns and environment")
 ```
-However, as shown in the graph above, the predicted values of life satisfaction from the interaction effect between environmental concerns and age (while keeping everything else constant) are consistently negative with the same slope, which means that there is no meaningful interaction. One of the reasons might lie in the fact that very often respondents drop out from the survey and overtime changes in their behavior are no longer feasible to track. Moreover, environmental concerns are only available in three categories, which constraints the analysis. 
+However, as shown in the graph above, the predicted values of life satisfaction from the interaction effect between environmental concerns and age (while keeping everything else constant) are consistently negative with the same slope, which means that there is no meaningful interaction. One of the reasons might lie in the fact that very often respondents drop out from the survey and overtime changes in their behavior are no longer feasible to track. Moreover, environmental concerns are only available in three categories, which constraints the analysis. The interactions results are similarly meaningless for employment. A possible explanaiton of the finding is that the dummy variable might not represent the full socio-economic situation of an individual. 
 
 ``` {r, echo=FALSE}
 data$emp <- as.factor(data$emp)

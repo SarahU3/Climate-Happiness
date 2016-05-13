@@ -28,7 +28,6 @@ library(xtable)
 library(stargazer)
 library(effects) # for graphing MCM
 library(repmis)
-library(ggplot)
 
 # Setting relative path
 possibles <- c('~/GitHub/Climate-Happiness/Data', 
