@@ -140,21 +140,19 @@ plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +ge
 plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq Km", y = "")  + theme_bw()
 
 # Manual multiplot of 4 rows, 2 columns (first row is title)
-pushViewport(viewport(layout = grid.layout(4, 2, heights = unit(c(1, 4, 4, 4), "null"))))
+pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(1, 4, 4, 4), "null"))))
 grid.text("Life Satisfaction - Correlation with Other Variables", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
 print(plot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(plot3, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(plot4, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
-print(plot5, vp = viewport(layout.pos.row = 3, layout.pos.col = 2))
-print(plot6, vp = viewport(layout.pos.row = 4, layout.pos.col = 2))
 ```
 
 Looking at some correlations of these averages with our dependent variable of interest--life satisfaction--there are some identifiable trends. Age seems to be very slightly positively correlated, though the majority of observations show a fairly flat trend. Gross monthly income also shows a mor pronounced positive correlation, though it, too, flattens out. Concern about the environment also appears to be negatively related with life satisfaction, but it is also very weak. Emissions, whether measured per capita or per square kilometer, do not have an obvious relationship with life satisfaction one way or the other. 
 
 ### State level descriptive statistics
-Looking a bit more closely 
+Our state-level variables are the two measures of emissions, per capita and per square kilometer. 
 
-``` {r state graphs, echo = FALSE, messagses = FALSE, warnings = FALSE}
+``` {r state graphs, echo = FALSE, messages = FALSE, warnings = FALSE}
 boxdata <- data[, c(1,2,21,22)]
 boxdata$StateCode[boxdata$State == "Baden-Wuerttemberg"] <- "BW"
 boxdata$StateCode[boxdata$State == "Bayern"] <- "BY"
@@ -182,6 +180,14 @@ print(statebox1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(statebox2, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 ```
 
+
+
+``` {r emissions scatterplots, echo = FALSE, messages = FALSE, warnings = FALSE}
+pushViewport(viewport(layout = grid.layout(2, 1, heights = unit(c(1, 5, 5), "null"))))
+grid.text("Life Satisfaction Correlation with Emissions", vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(plot5, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
+print(plot6, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
+```
 
 
 
