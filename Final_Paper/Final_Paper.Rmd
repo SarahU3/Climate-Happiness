@@ -56,7 +56,7 @@ In another study, @menz2010 further estimate the effect of air pollution on life
 Most recently, @goetzke2015 expand on the ideas of @vanpraag2005, @mackerron2009 and @ferreira2010 to account for the endogeneity problem between perceived air pollution and happiness. The endogeneity inherent in this analysis is that individuals bothered by air pollution are less happy, but simultaneously that unhappy people are more disturbed by air pollution [@goetzke2015]. Using the German socio-economic panel data along with annual sulfur dioxide readings, @goetzke2015 analyze the impact of air pollution on happiness in Germany based on both the subjective perceptions of pollution and the objectively measured environmental conditions. Using the IV-ordered probit model developed by @rivers1988, they find in controlling for simultaneity that perceived environmental conditions do not have a statistically significant effect on happiness [@goetzke2015].
 
 ## Hypotheses
-Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices and how to transform the transportation sector, not to mention coal's continued role as a cheap and reliable fuel. Germany therefore still does emit large amounts of green house gases. We will look at green house gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
+Drawing on this body of literature, we aim to test whether emissions affect life satisfaction in the German federal states. Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices and how to transform the transportation sector, not to mention coal's continued role as a cheap and reliable fuel. Germany therefore still does emit large amounts of green house gases. We will look at carbon dioxide (CO2) emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
 
 > *H1: Bundeslaender with higher emissions will have lower reported levels of  life satisfaction.* 
 
@@ -66,19 +66,19 @@ On the other hand, it may not be the emissions themselves that affect people's l
 
 
 ## Methodology
-The analysis will focus on a mixture of two levels of interest: *Federal State*, e.g. reported emissions and *the individual*, e.g. the socioeconomic status of the respondent, gender, and age. In order to account for such clustering and track differences between the German States, multilevel modelling will be applied in this project. Multilevel modelling aims to identify and understand the variance among groups and identify sources of non-independence in the data [@Bliese2013]. This approach, unlike the traditional multivariate regression, partitions the residual variance into a between-state component (the variance of the state-level residuals) and a within-state component (the variance of the individual-level residuals). It does so by first finding the differences in the intercepts of groups on the dependent variable and then finding the variations in the slopes across groups (the between variance) and within a group (the within variance). Such grouping will produce more robust and reliable results, which could be potentially inferred to a larger population. Therefore, multilevel modelling is preferred over a fixed effects model, which cannot separate out effects due to observed and unobserved characteristics. In addition, the model can be extended by exploring the temporal effects and overtime change in the individual and state level attitudes. Time-varying components of the model, consequently, will be possible to track.
+The analysis will focus on a mixture of two levels of interest: *federal state*, e.g., reported emissions, and *the individual*, e.g., socio-economic and demographic characteristics of the respondent. In order to account for clustering and track differences between the German States, multilevel modelling will be applied. Multilevel modelling aims to identify and understand the variance among groups and identify sources of non-independence in the data [@Bliese2013]. This approach, unlike the traditional multivariate regression, partitions the residual variance into a between-state component (the variance of the state-level residuals) and a within-state component (the variance of the individual-level residuals). It does so by first finding the differences in the intercepts of groups on the dependent variable, and then finding the variations in the slopes across groups (the between variance) and within a group (the within variance). Such grouping will produce more robust and reliable results, which could be potentially inferred to a larger population. Therefore, multilevel modelling is preferred over a fixed effects model, which cannot separate out effects due to observed and unobserved characteristics. 
 
 
 ## Data
-The individual-level data is provided by the German Socio-Economic Panel Data [GSOEP]( https://paneldata.org/) conducted by the German Institute for Economic Research [DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html). Due to confidentiality restrictions, DIW could only supply a shortened sample with prior specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The original GSOEP file is cleaned and transformed into a shorter dataset with the help of the Stata Do-File. The short dataset contains the information on the main satisfaction and personal characteristic variables: reported levels of life satisfaction (on a scale from 0 to 10), subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. Detailed labels and descriptions of the variables are given in the GSOEP codebook. All GSOEP-related files are stored on the GitHub server. 
+The individual-level data is provided by the German Socio-Economic Panel Data ([GSOEP](https://paneldata.org/)) conducted by the German Institute for Economic Research ([DIW]( https://www.diw.de/en/diw_02.c.101738.en/about_us/about_us.html)). Due to confidentiality restrictions, DIW could only supply a shortened sample with specified variables in a *.dta* format. Therefore, the GSOEP dataset is stored on the local drives and GitHub Climate-Happiness Repository. The short dataset contains the information on the personal characteristics: reported levels of life satisfaction, subjective concerns about the environment, age, gender, employment, family status, and state residence of a respondent. 
 
 The state-level data, on the other hand, is gathered from web-based sources: [Statista.com]( http://de.statista.com/statistik/daten/studie/258063/umfrage/kohlendioxid-emissionen-je-einwohner-in-nordrhein-westfalen/), Environmental-Economic Accounting of the Bundeslaender [UGRdL](http://www.ugrdl.de/tab34.htm),  Agency for Renewable Energy of North Rhine-Westphalia [AfEE](http://www.foederal-erneuerbar.de/landesinfo/bundesland/NRW/kategorie/wirtschaft/ordnung/2010), [Federal Statistical Office and Statistical Offices of the Bundeslaender](http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp), and [Laenderarbeitskreis](http://www.lak-energiebilanzen.de/dseiten/co2BilanzenAktuelleErgebnisse.cfm). 
 
-A university subscription to *Statista.com* enabled access to historic state emissions per capita from 1990 to 2012 for most of the Bundeslaender, except North Rhine-Westphalia (NRW). Since the website allows data downloads only in *Excel* and provides no unique URLs for each of them, 15 individual files were downloaded manually on a local machine, while manipulations were conducted with the help of R loops. The information on NRW involved more intensive research and data handling but were finally gathered and combined from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012) with R web-scraping functions. Fortunately, emissions are measured in the same units (annually emitted carbon dioxide tons per capita). Hence, the yielded data frame of emissions per capita is comprehensive and consistent, although there are missing observations on some years. 
+A university subscription to *Statista.com* enabled access to historic state emissions per capita from 1990 to 2012 for most of the Bundeslaender, except North Rhine-Westphalia (NRW). The information on NRW were gathered from the UGRdL (from 1990 to 2000) and *AfEE* (from 2000 to 2012). Fortunately, emissions are measured in the same units of annually emitted carbon dioxide tons per capita. Hence, the yielded data on emissions per capita is comprehensive and consistent, although there are missing observations on some years. 
 
-Because the Bundeslaender vary so much in geographic size as awell as population, we also added emissions data by square kilometer for each state, since that might better represent the concentration of emissions. The *Laenderarbeitskreis* maintains a publicly available database of CO2 emissions in total tons per state and per year, which can be downloaded as CSV or Excel files. The states' areas in square kilometers were then pulled from an table on the website of the Federal Statistical Office and Statistical Offices of the Bundeslaender and merged to create a dataset, in which CO2 emissions per square kilometer could be calculated. 
+Because the Bundeslaender vary so much in geographic size as awell as population, we also added emissions data by square kilometer for each state to better represent the concentration of emissions. The *Laenderarbeitskreis* maintains a publicly available database of CO2 emissions in total tons per state per year. The states' areas in square kilometers were then pulled from the website of the Federal Statistical Office and Statistical Offices of the Bundeslaender and merged with the emissions data to create a dataset in which CO2 emissions per square kilometer could be calculated. 
 
-Once the names of the Bundeslaender and the time frame of the resulting data frames were matched, they were merged in R into a final data set. The variables in our data set are listed in Table 1 below. 
+The GSOEP and emissions data frames were merged into a final data set; the variables are listed in Table 1 below. 
 
 
 ``` {r variables, echo=FALSE, messages=FALSE, warnings=FALSE, results = "asis"}
@@ -88,14 +88,14 @@ varbound <- cbind(Variables, Descriptions)
 stargazer(varbound, type = "latex", title = "Variables", header = FALSE)
 ```
 
-For most of our analyses, we used six of these variables: age, gender, gross monthly income, environmental concern, and the two measures of emissions. The summary statistics (Table 2) provides a sense of the data.
+For most of our analyses, we used six of these variables: age, gender, gross monthly income, environmental concern, and the two measures of emissions. The data used for the following descriptive statistics is limited to individuals with income data, i.e. employed individuals. The summary statistics (Table 2) provide a sense of the data.
 
 ``` {r summaries, echo = FALSE, results = 'asis'}
 summaries <- data[,c("age","gender","GrossIncome","environ","Emissions","CO2perSqKm")]
 stargazer(summaries, type = "latex", title = "Summary statistics", digits = 2, header = FALSE)
 ```
 
-Age ranges from 17 to 86, but is clearly centered around middle age, with a mean of approximately 44 years old. Because 2 on the gender variable represents a female, we see that our sample is slightly more male (46%) than female (54%). Gross monthly income ranges all the way up to 80,000, even after some extreme outliers were removed. The sample seems to be somewhat but not very concerned about the environment with an average rating of 2.2. As graphs will show in better detail, the levels of CO2 emissions vary, from 4,500 to 24,700 tons per capita and, even more widely, from 403 to 34,970 tons per square kilometer. 
+Age ranges from 17 to 86, but is clearly centered around middle age, with a mean of approximately 44 years old. Because 2 on the gender variable represents a female, we see that our sample is slightly more male (46%) than female (54%). Gross monthly income ranges all the way up to 80,000, even after some extreme outliers were removed. The sample seems to be somewhat but not very concerned about the environment with an average rating of 2.2. As graphs will show in better detail, the levels of CO2 emissions vary from 4,500 to 24,700 tons per capita and, even more widely, from 403 to 34,970 tons per square kilometer. 
 
 ### Individual descriptive statistics
 
@@ -150,9 +150,9 @@ print(plot3, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(plot4, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 ```
 
-Looking at some correlations of these averages with our dependent variable of interest--life satisfaction--there are some identifiable trends. Age seems to be very slightly positively correlated, though the majority of observations in the middle show a fairly flat trend. Gross monthly income also shows a more pronounced positive correlation, though it, too, flattens out. Concern about the environment also appears to be negatively related with life satisfaction, but it is also very weak.  
+Looking at some correlations of these averages with our dependent variable of interest---life satisfaction---there are some identifiable trends. Age seems to be very slightly positively correlated, though the majority of observations in the middle show a fairly flat trend. Gross monthly income also shows a more pronounced positive correlation, though it, too, flattens out. Concern about the environment also appears to be negatively related with life satisfaction, but it is also very weak.  
 
-### State level descriptive statistics
+### State-level descriptive statistics
 Our state-level variables are the two measures of emissions, per capita and per square kilometer. The boxplots below, using the values for each year, illustrate some of the variance between the states. 
 
 ``` {r state graphs, echo = FALSE, messages = FALSE, warnings = FALSE}
@@ -185,7 +185,7 @@ print(statebox1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(statebox2, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 ```
 
-In the per capita measure, Brandenburg, Saarland, Hamburg, and Nordrhein-Westfalen have the highest emissions, with Sachsen, Sachsen-Anhalt and Niedersachsen also showing higher emissions than the rest. 
+In the per capita measure, Brandenburg, Saarland, Hamburg, and Nordrhein-Westfalen have the highest emissions, with Sachsen, Sachsen-Anhalt and Niedersachsen also showing higher emissions than the rest. Hamburg's high emissions are unexpected; as a city-state with a decently large population, one would expect a per capita measure to be lower. 
 
 When measured in square kilometers, the three city-states of Bremen, Berlin, and Hamburg are unsurprisingly the highest due to their small land area, not to mention relatively dense populations. Saarland is also geographically small, which means that Nordrhein-Westfalen is the only standout in this measure as a state with both a large land area and high emissions. 
 
@@ -201,9 +201,9 @@ Comparing the state-level emissions data with life satisfaction, it seems that e
 
 ## Inferential Statistics
 
-We first test basic inferential statistics. For the models below, X1 represents the explanatory  variables of interest: emissions (both per capita and per square kilometer), gross income, concern for the environment, gender, and age.  
+We first test basic inferential statistics. For the models below, X1 represents the explanatory  variables of interest: emissions (both per capita and per square kilometer), gross income, concern for the environment, gender, and age. Again, this data is limited to employed individuals with income data.
 
-```{r, echo=FALSE, messages = FALSE, warnings=FALSE}
+```{r OLS setup 1, echo=FALSE, messages = FALSE, warnings=FALSE, include=FALSE}
 ##Regression using individual level data
 
 #Declare X and Y variables for panel data
@@ -217,9 +217,9 @@ pdataind<-plm.data(data, index=c("pid","Year"))
 ```
 
 
-Below, we tested various types of panel data models, though we know the data set is unbalanced because we don't have information for all years in all the states. The first model (pooled OLS) uses only individual-level data, in comparison with the two fixed-effects models, one using emissions per capita and one using emissions per square kilometer. 
+As shown in Table 3, we tested various types of panel data models, although we know the data set is unbalanced because we don't have information for all years in all the states. Model 1 (pooled OLS) uses only individual-level data, in comparison with two fixed-effects models, one using emissions per capita (Model 2) and one using emissions per square kilometer (Model 3). 
 
-```{r, echo=FALSE, messages = FALSE, warnings = FALSE, results="asis"}
+```{r OLS setup 2, echo=FALSE, messages = FALSE, warnings = FALSE, results="asis", include=FALSE}
 #pooled OLS estimator
 L1<-plm(Y1~X1, data=pdataind, model="pooling")
 
@@ -228,16 +228,16 @@ L4<-plm(Y1~X1+Emissions, data=pdataind, model="within")
 
 #fixed effects or within estimator, per sq km
 L5<-plm(Y1~X1+CO2perSqKm, data = pdataind, model = 'within')
-
-
+```
+```{r, echo=FALSE, messages = FALSE, warnings = FALSE, results="asis"}
 stargazer(L1,L4,L5,
     title = 'Regression Estimates of Life Satisfaction',
-    digits = 2, type = 'latex', header = FALSE
+    digits = 2, type = 'latex', dep.var.labels = "Life Satisfaction", header = FALSE
     )
 ```
 
 
-Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: environment and age have a negative relationship to life satisfaction, while income and having a partner have a positive relationship. Emissions, by either measure, also show a negative relationship. These are simplistic analyses, though, which is why the next section will elaborate further by using multilevel analysis. 
+The personal characteristic variables are statistically significant in all the models and the directions of the relationships are the same across models: environment and age have a negative relationship to life satisfaction, while income, being female, and having a partner have a positive relationship. Emissions, by either measure, show a negative but insignificant relationship. It is also important to note that the expanatory power of these models, as measured in R-squared, is quite low: the models explain a very small portion of the differences in life satisfaction. These are simplistic analyses, though, which is why the next section will elaborate further by using multilevel analysis. 
 
 
 ## Multilevel Analysis 
@@ -249,9 +249,9 @@ attach(finaldata)
 
 ```
 
-Since the pooled OLS and Fixed Effects Models do not account for the nested nature of the data and hence do not allow across-state analysis, Multilevel Coefficient Models (MCM) are applied in order to investigate the effects of individual and Bundesland-level factors on happiness. Not only the MCM examine individual variation within and across groups, but they also permit non-independence of individual factors from the group level variables (i.e. different slopes with varying intercepts). The first step of the MCM investigates whether statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable for the given research. The second step involves exploration of the between-group variation (random effects), while the third step completes the analysis by adding fixed effects factors (both individual- and state-level). 
+Since the pooled OLS and fixed effects models do not account for the nested nature of the data and hence do not allow across-state analysis, multilevel coefficient models (MCM) are applied in order to investigate the effects of individual and Bundesland-level factors on happiness. The first step of the MCM investigates whether statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable for the given research. The second step involves exploration of the between-group variation (random effects), while the third step completes the analysis by adding fixed effects factors (both individual- and state-level). 
 
-In addition to the general data set ($data_1$, 61,009 observations) familiar to the reader before, given research utilizes a broader data frame (data2, 142,224 observations) expanding the sample to both employed and non-employed respondents. Gross income, however, is dropped due to the data constraints. The models used for the multilevel analysis and corresponding data sets are summarized below.
+In addition to the general data set ($data_1$, 61,009 observations) used in the OLS and fixed effects models above, the multilevel analysis utilizes a broader data frame (data2, 142,224 observations) expanding the sample to both employed and non-employed respondents. Gross income, however, is therefore dropped since it is missing from the additional observations. The models used for the multilevel analysis and corresponding data sets are summarized below.
 
 * Null.Models (run on $data_1$) checks whether reliable and significant variation between the States exists.
 
@@ -259,7 +259,7 @@ In addition to the general data set ($data_1$, 61,009 observations) familiar to 
 
 * Model.2 ($data_1$) incorporates individual-level characteristics (income, age, gender, family status) and explores how these factors impact well-being across and among States. 
 
-* Model.2a ($data_2$) resembles Model.2, except runs on the broader sample of both employed and unemployed respondents dropping income. 
+* Model.2a ($data_2$) resembles Model.2 but runs on the broader sample of both employed and unemployed respondents dropping income. 
 
 * Model.3 ($data_1$) presents an interaction effect between environmental concerns and age.
 
@@ -267,7 +267,7 @@ In addition to the general data set ($data_1$, 61,009 observations) familiar to 
 
 ### Step 1. Significant variation. 
 
-An unconditional model, *Null.Model*, serves the first purpose: the model only controls for the State that specifies that the variation intercept is a function of residence.
+The first, unconditional model, *Null.Model*, only controls for state and therefore specifies that the variation in the intercept is a function of residence.
 
 ```{r, echo=FALSE}
 Null.Model<-lme(satis~1,random=~1|Stateid,data=finaldata,
@@ -275,21 +275,22 @@ Null.Model<-lme(satis~1,random=~1|Stateid,data=finaldata,
 VarCorr(Null.Model)
 ``` 
 
-The model examines how much of the average individual life satisfaction is explained by the residence of a respondent through R's general purpose optimization routine (opt="optim"). According to the *Null.Model*, the Bundesland variation (intercept variance) is 0.15, while the within-State residual is 2.6.
+The model examines how much of the average individual life satisfaction is explained by respondent's state of residence through R's general purpose optimization routine (opt="optim"). According to the *Null.Model*, the Bundesland variation (intercept variance) is 0.15, while the within-State residual is 2.6.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results ='asis'}
 GREL.DAT<-GmeanRel(Null.Model)
 x <- mean(GREL.DAT$MeanRel)
 Null.Model.2<-gls(satis~1,data=finaldata,
                     control=list(opt="optim"))
 sigtest <- round((logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2), digits=3)
+stargazer(Null.Model.2, type = "latex", title = "Null.Model.2 Results", header = FALSE)
 ```
 
-Furthermore, the *GmeanRel* function (*multilevel* package) yields the mean reliability of 16 Bundeslaender, which, in this case, is substantially high (`r round(mean(GREL.DAT$MeanRel), digits=3)`). As the cut-off point for acceptable reliability is 0.7, the Bundeslaender group reliability meets the threshold. The difference between the -2 log likelihood values of *Null.Model* and *Null.Model.2* tests whether the between-State effect is present compared to the random variation in life satisfaction without any control variables. According to the results, the difference is more than substantially large based on the Chi-Squared distribution with 2 degrees of freedom (`r sigtest`). These results suggest that there is significant State variation in happiness level, which justifies the usage of the MCM. 
+Furthermore, the *GmeanRel* function yields the mean reliability of the 16 Bundeslaender, which, in this case, is substantially high (`r round(mean(GREL.DAT$MeanRel), digits=3)`). As the cut-off point for acceptable reliability is 0.7, the Bundeslaender group reliability meets the threshold. The difference between the -2 log likelihood values of *Null.Model* and *Null.Model.2* tests whether the between-State effect is present compared to the random variation in life satisfaction without any control variables. According to the results, the difference is more than substantially large based on the Chi-Squared distribution with 2 degrees of freedom (`r sigtest`). These results suggest that there is significant state variation in happiness level, which justifies the usage of the MCM. 
 
 ### Step 2. Environmental factors
 
-The second step of the MCM looks into how both Bundesland emissions and subjective concerns about the environment influence reported individual life satisfaction. *Model.1* (*lme* function) for the time being does not control for individual characteristics, such as gender, age, employment and family status. *Model.1* serves as the basic tool to understand relationship between the group- and individual-level factors representing the environment. 
+The second step of the MCM looks into how both Bundesland emissions and subjective concerns about the environment influence reported individual life satisfaction. *Model.1*, for the time being, does not control for individual characteristics, such as gender, age, employment and family status. *Model.1* serves as the basic tool to understand the relationship between the group- and individual-level factors representing the environment. 
 
 ```{r, echo=FALSE, messages=FALSE, warnings=FALSE, results = "asis"}
 Model.1<-lme(satis~environ+CO2perSqKm,random=~1+environ+CO2perSqKm|Stateid, data=finaldata,
@@ -300,7 +301,7 @@ stargazer::stargazer(Model.1, single.row = TRUE,
                      digits = 5, type = 'latex', header=FALSE)
 ```
 
-The output demonstrates that both coefficients are negative, as expected. However, a plot of the relationship between emissions and life satisfaction across all Bundeslaender demonstrates that in some States (Niedersachsen, Nordrhein-Westhafen, Baden-Wuerttemberg, Brandenburg) emissions positively influence the well-being of the residents. These results, nevertheless, do not represent the reality, as one should keep in mind numerous omitted variables from this simplistic model. 
+The output demonstrates that both coefficients are negative, as expected. However, a plot of the relationship between emissions and life satisfaction across all Bundeslaender demonstrates that in some States (Niedersachsen, Nordrhein-Westfalen, Baden-Wuerttemberg, Brandenburg) emissions positively influence the well-being of the residents. These results, nevertheless, do not represent the reality, as one should keep in mind numerous omitted variables from this simplistic model. 
 
 ```{r, echo=FALSE}
 model.01 <-lme(satis~CO2perSqKm,random=~CO2perSqKm|Stateid, data=finaldata, control=list(opt="optim"))
@@ -314,7 +315,7 @@ model01 <- ggplot(finaldata,aes(CO2perSqKm,satis,colour=Stateid))+
 model01 + ggtitle("Effect of emissions/sqkm across States")
 ```
 
-Simultaneously, stronger environmental concerns do seem to lower well-being across all the Bundeslaender, albeit to a varying degree. Moreover, the graph shows how throughout Germany, life satisfaction level does not differ substantially, if ran against the environmental concerns. This phenomenon is usually observed, as individuals tend to adjust to their life circumstances and judge their quality of life compared to their peers and neighbors.
+Simultaneously, stronger environmental concerns do seem to lower well-being across all the Bundeslaender, albeit to a varying degree. Moreover, the graph shows how throughout Germany, life satisfaction level does not differ substantially if run against the environmental concerns. This may reflect that individuals tend to adjust to their life circumstances and judge their quality of life compared to their peers and neighbors.
 
 ```{r, echo=FALSE}
 finaldata$environ <- as.numeric(as.character(finaldata$environ))
@@ -330,12 +331,12 @@ model02 <- ggplot(finaldata,aes(environ,satis,colour=Stateid))+
 model02 + ggtitle("Effects of environmental concerns across States")
 ```
 
-Furthermore, fixed effects show that general emissions within any given state are indeed negatively related to the individual happiness. However, the negligent magnitude of the coefficient (-0.000063) is also not statistically significant. Consequently, the group-level effect does not significantly differ from the individual-level one. On the other hand, the coefficient of environmental concerns (-0.075) statistically differs from 0. The missing socio-demographic characteristics are explored in the further step.   
+Furthermore, fixed effects show that general emissions within any given state are indeed negatively related to the individual happiness. However, the negligible magnitude of the coefficient (-0.000063) is also not statistically significant. Consequently, the group-level effect does not significantly differ from the individual-level one. On the other hand, the coefficient of environmental concerns (-0.075) statistically differs from 0. The missing socio-demographic characteristics are explored in the further step.   
 
 ### Step 3. Integrated models
 
 *Model.2* covers age, family status, gender, and gross income of the respondents in the sample. The latter two variables are included in the random slope of the model in order to see the variation in these factors across the states. Since the anticipated effects of age and family status are not contentious, these factors are classified as the fixed effects and explain variation within a state. 
-The fixed effects output reassures the main Hypothesis: increasing emissions at the State level, although in minimal amounts (-0.00007), negatively correlate with life satisfaction. Similarly, stronger concerns (-0.063) reduce reported well-being. Surprisingly, increasing gross income increases happiness, albeit marginally (0.00013). Women also do seem to be happier than men in general by substantial 0.15 points. As expected, age bears a negative effect (-0.011), while family status increases well-being almost like being a woman (0.166). 
+The fixed effects output provides some evidence for the first hypothesis: increasing emissions at the state level, although in minimal amounts (-0.00007), are negatively correlated with life satisfaction. Similarly for the second hypothesis, stronger concerns about the environment (-0.063) reduce reported well-being. Increasing gross income increases happiness, albeit marginally (0.00013). Women also do seem to be happier than men by a substantial 0.15 points. As expected, age shows a negative effect (-0.011), while family status increases well-being similarly to being female (0.166). 
 
 ```{r, echo=FALSE, messages=FALSE, warnings=FALSE, results = "asis"}
 Model.2 <-lme(satis~CO2perSqKm+environ+GrossIncome+gender+age+fam,random=~environ+CO2perSqKm+GrossIncome+gender|Stateid,data=finaldata,
@@ -346,7 +347,7 @@ stargazer::stargazer(Model.2, single.row = TRUE,
                      digits = 5, type = 'latex', header=FALSE)
 ```
 
-Random slopes below of the environmental variables, gross income, and gender demonstrate the broad variation of coefficients' values across the Bundeslaender. 
+The Model.2 random slopes of the environmental variables, gross income, and gender demonstrate the broad variation of the coefficients' values across the Bundeslaender. 
 
 ```{r, echo=FALSE}
 plot(ranef(Model.2), font.main = 1, main="Model.2. Random slopes")
@@ -382,7 +383,7 @@ Model3 <- ggplot(xage, aes(age, fit, color=environ)) + geom_point() + geom_error
 Model3 + ggtitle("Model.3. Interaction effects of environmental concerns and age")
 ```
 
-However, as shown in the graph above, the predicted values of life satisfaction from the interaction effect between environmental concerns and age (while keeping everything else constant) are consistently negative with the same slope, which means that there is no meaningful interaction. One of the reasons might lie in the fact that very often respondents drop out from the survey and overtime changes in their behavior are no longer feasible to track. Moreover, environmental concerns are only available in three categories, which constraints the analysis. The interactions results are similarly meaningless for employment. A possible explanation of the finding is that the dummy variable might not represent the full socio-economic situation of an individual. 
+However, as shown in the graph above, the predicted values of life satisfaction from the interaction effect between environmental concerns and age (while keeping everything else constant) are consistently negative with the same slope, which means that there is no meaningful interaction. One of the reasons might lie in the fact that very often respondents drop out from the survey and changes in their behavior over time are no longer feasible to track. Moreover, environmental concerns are only available in three categories, which constrains the analysis. The interactions results are similarly meaningless for employment. A possible explanation of the finding is that the dummy variable might not represent the full socio-economic situation of an individual. 
 
 ``` {r, echo=FALSE}
 data$emp <- as.factor(data$emp)
@@ -403,11 +404,11 @@ Model4 + ggtitle("Model.4. Interaction effects of environmental concerns\nand em
 
 This paper presents a multilevel analysis that adds to the increasing number of studies that evaluate the effects of air pollution and emissions on people’s life satisfaction. The variables of interest, state-level emissions and environmental worries, demonstrate statistically significant negative impacts on subjective well-being.
 
-However, the magnitude of the former coefficient is not large. This finding might be explained by the fact that, while some Bundeslaender do emit large volumes of GHG per sq. km., they are still relatively low compared to other energy-intensive economies like China. Thus, the impact of these emissions is not easily tangible for the German population in terms of extreme natural disasters and environmental changes. Even the recent appearances of global climate change in the form of heat waves and extreme weather are usually common for the whole country, distorting the direct impact of the state-specific climate performance on their residents' well-being. Therefore, a variable representing local environmental conditions would be a better fit for a model that could be tackled in further studies. Moreover, state-level financial performance is missing from the current model and might be useful to consider in order to control for higher energy intensity being associated with greater wealth and higher subjective well-being. 
+However, the magnitude of the former coefficient is not large. This finding might be explained by the fact that, while some Bundeslaender do emit large volumes of GHG per square kilometer, they are still relatively low compared to other energy-intensive economies like China. Thus, the impact of these emissions is not easily tangible for the German population in terms of extreme natural disasters and environmental changes. Even the recent appearances of global climate change in the form of heat waves and extreme weather are usually common for the whole country, distorting the direct impact of the state-specific climate performance on their residents' well-being. Therefore, a variable representing local environmental conditions would be a better fit for a model that could be tackled in further studies. Moreover, state-level financial performance is missing from the current model and might be useful to consider in order to control for higher energy intensity being associated with greater wealth and higher subjective well-being. 
 
-Simultaneously, individual-level environmental concerns does slightly lower happiness, as expected by the main Hypothesis. Expanding the classification of the variable would enhance the analysis and potentially reveal more findings about the interaction of the concerns with other variables. Likewise, controlling for the socio-economic factors confirms that being employed and having a partner substantially increases one's life satisfaction, while ageing does the opposite, albeit in neglogently with every year. Income also has a minimal positive effect, as well as being a woman. 
+Simultaneously, individual-level environmental concerns does slightly lower happiness, as expected by the main Hypothesis. Expanding the classification of the variable would enhance the analysis and potentially reveal more findings about the interaction of the concerns with other variables. Likewise, controlling for the socio-economic factors confirms that being employed and having a partner substantially increases one's life satisfaction, while ageing does the opposite, albeit negligibly for every year. Income also has a minimal positive effect, as well as being a woman. 
 
-The findings of the paper leave hopes for stronger climate action triggered by the citizens themselves voicing their concerns and supporting more stringent environmental policies.
+In short, the findings of the paper support some of the previous literature when looked at in terms of statistical significance, but in terms of social significance, they  indicate that  emissions do not seem to play a large role in determining their life satisfaction. While citizens might be enjoying the benefits of green growth in more abstract ways, they do not feel the direct impacts strongly in comparison to other factors affecting their life satisfaction.  
 
 ## R Citations
 Bliese, Paul. 2013. Multilevel: Multilevel Functions. https://CRAN.R-project.org/package=multilevel.
