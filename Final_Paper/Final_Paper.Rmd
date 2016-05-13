@@ -85,14 +85,14 @@ Once the names of the Bundeslaender and the time frame of the resulting data fra
 Variables <- names(data[, c(1:2, 5:6, 8, 11:13, 15:22)])
 Descriptions <- c("Year", "State", "Gross monthly income (before taxes)", "Net monthly income (after taxes)", "Born in Germany (1 if yes, 2 if no)", "Life satisfaction, labeled on a scale of 1 (low) to 10 (high)", "Life satisfaction, numeric values (1-10) only", "Concern about the environment on a scale from 1 (not concerned at all) to 3 (very concerned)", "Gender", "Age", "Employment status (1 if not employed, 2 if employed)", "Family status (1 if single, 2 if with a partner)", "Total tons of CO2 emitted in each state, in 1000 tons", "State area in square kilometers", "Tons of CO2 emitted per square kilometer for each state", "Tons of CO2 emitted per capita in each state")
 varbound <- cbind(Variables, Descriptions)
-stargazer(varbound, type = "latex", title = "Variables")
+stargazer(varbound, type = "latex", title = "Variables", header = FALSE)
 ```
 
 For most of our analyses, we used six of these variables: age, gender, gross monthly income, environmental concern, and the two measures of emissions. The summary statistics (Table 2) provides a sense of the data.
 
 ``` {r summaries, echo = FALSE, results = 'asis'}
 summaries <- data[,c("age","gender","GrossIncome","environ","Emissions","CO2perSqKm")]
-stargazer(summaries, type = "latex", title = "Summary statistics", digits = 2)
+stargazer(summaries, type = "latex", title = "Summary statistics", digits = 2, header = FALSE)
 ```
 
 Age ranges from 17 to 86, but is clearly centered around middle age, with a mean of approximately 44 years old. Because 2 on the gender variable represents a female, we see that our sample is slightly more male (46%) than female (54%). Gross monthly income ranges all the way up to 80,000, even after some extreme outliers were removed. The sample seems to be somewhat but not very concerned about the environment with an average rating of 2.2. As graphs will show in better detail, the levels of CO2 emissions vary, from 4,500 to 24,700 tons per capita and, even more widely, from 403 to 34,970 tons per square kilometer. 
@@ -232,26 +232,13 @@ L5<-plm(Y1~X1+CO2perSqKm, data = pdataind, model = 'within')
 
 stargazer(L1,L4,L5,
     title = 'Regression Estimates of Life Satisfaction',
-    digits = 2, type = 'html'
+    digits = 2, type = 'latex', header = FALSE
     )
 ```
 
 
-Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: emissions and age have  . 
+Interestingly, gender does not appear to have a significant effect on reported life satisfaction in any of the models. The other variables are statistically significant in all the models. For variables other than gender, the directions of the relationships are also the same across models: environment and age have a negative relationship to life satisfaction, while income and having a partner have a positive relationship. Emissions, by either measure, also show a negative relationship. These are simplistic analyses, though, which is why the next section will elaborate further by using multilevel analysis. 
 
-We can compare the fixed effects/within and pooled OLS models using an F-test for individual and/or time effects:
-
-```{r, echo=FALSE, messages = FALSE, warnings = FALSE}
-#LM test for fixed effects vs OLS
-testresults1 <- pFtest(L4,L1)
-testresults2 <- pFtest(L5,L1)
-stargazer(testresults1, testresults2, type = "latex", title = "F-test Results")
-
-
-```
-
-
-The test is set up so that the null hypothesis is that OLS pooled is better than the within estimator. The small resulting p-value indicates that despite the larger R-squared values with OLS pooling, we should reject the null hypothesis that OLS pooling is better. 
 
 ## Multilevel Analysis 
 
