@@ -3,7 +3,6 @@
 
 ```{r, include = FALSE}
 
-
 library(DataCombine)
 library(WDI)
 library(survival)
@@ -22,9 +21,7 @@ possibles <- c('~/GitHub/Climate-Happiness/',
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/')
 set_valid_wd(possibles)
 
-
-data3 <- read.csv("All_Merged_Data.csv")
-attach(data3)
+attach(data2)
 
 ```
 
@@ -35,9 +32,9 @@ attach(data3)
 suppressPackageStartupMessages(library(googleVis))
 
 #aggregate yearly emissions data by state
-agg <- aggregate(cbind(CO2perSqKm) ~ State + Year + Stateid, FUN=mean, data=data3)
+agg <- aggregate(cbind(CO2perSqKm) ~ State + Year, FUN=mean, data=data2)
 
-allvar <- aggregate(cbind(CO2perSqKm, satis, environ, GrossIncome) ~ State + Year + Stateid, FUN=mean, data=data3)
+allvar <- aggregate(cbind(CO2perSqKm, satis, environ, GrossIncome) ~ State + Year + Stateid, FUN=mean, data=data2)
 
 #Transform yearly data to numeric
 transform(agg, Year = as.numeric(Year))
@@ -60,6 +57,9 @@ New <- FindReplace(data=allvar, Var = "Stateid", replaceData = Replaces, from = 
 
 New[, c(2,4)] <- sapply(New[, c(2,4)], as.numeric)
 
+#2012 only
+
+year2010 <- New[ which(New$Year=='2010'),]
 
 ## Create Geo Charts option code for geovis plot
 
@@ -67,7 +67,6 @@ geoChartDE <- list(region="DE",
                    resolution="provinces",
                    legend="{numberFormat:'#,###.00'}") 
 ```
-
 
 ### Introduction 
 
@@ -87,10 +86,11 @@ On the other hand, it may not be the emissions themselves that affect people's l
 
 The map below illustrates the amount CO2e emissions (tons) per square kilometer in Germany. The information is based on averaged data between 1990-2012 from Statista. The values represent the average over time in the German states.
 
-```{r, echo=FALSE, fig.align = 'center', fig.cap = "State Emissions per Sq KM", results='asis'}
+```{r, echo=FALSE, results='asis'}
+
 # Plot map of german emissions
 
-Map <- gvisGeoChart(New, locationvar = 'State',
+Map <- gvisGeoChart(year2010, locationvar = 'Stateid',
                       colorvar = 'CO2perSqKm',
                       options = geoChartDE)
 
@@ -209,12 +209,12 @@ Age seems to be very slightly positively correlated, though the majority of obse
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 
 # Find some helpful averages
-individMeans <- aggregate(data3[, c("GrossIncome", "age", "fam", "emp")], by = list(Year), FUN = mean)
+individMeans <- aggregate(data2[, c("GrossIncome", "age", "fam", "emp")], by = list(Year), FUN = mean)
 names(individMeans) <- c("Year", "MeanIncome", "MeanAge", "AveFam","AveEmp")
 
 # Set as percentage
 individMeans$AveFam <- (individMeans$AveFam-1)*100
-aggremeans <- aggregate(data3[, c("WorkHours","GrossIncome","satis","environ","age",
+aggremeans <- aggregate(data2[, c("WorkHours","GrossIncome","satis","environ","age",
                                  "emp","fam","CO2perSqKm","Emissions")], list(State, Year), mean)
 
 #Boxplot of emissions levels by state
@@ -273,7 +273,7 @@ In the per capita measure, Brandenburg, Saarland, Hamburg, and Nordrhein-Westfal
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 boxplot(Emissions~State,
-  data=data3,
+  data=data2,
   main="Emissions by State - per capita",
   xlab="State",
   ylab="Emissions (annual tons of CO2)",
@@ -287,7 +287,7 @@ When measured in square kilometers, the three city-states of Bremen, Berlin, and
 
 ```{r, echo=FALSE, fig.align='center', fig.width=8, fig.height=3}
 boxplot(CO2perSqKm~State,
-  data=data3,
+  data=data2,
   main="Emissions by State - per square kilometer",
   xlab="State",
   ylab="Emissions (annual tons of CO2)",
