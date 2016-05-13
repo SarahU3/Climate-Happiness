@@ -70,6 +70,7 @@ geoChartDE <- list(region="DE",
                    resolution="provinces",
                    legend="{numberFormat:'#,###.00'}") 
 ```
+A research project by [Katie Levesque](https://github.com/Katie-Levesque), [Sarah Unbehaun](https://github.com/SarahU3) and [Meerim Ruslanova](https://github.com/mruslanova)
 
 ### Introduction 
 
@@ -373,11 +374,11 @@ Menz, Tobias, and Heinz Welsch. 2010. “Population Aging and Environmental Pref
 Countries: The Case of Air Pollution.” *Ecological Economics* 69 (12). Elsevier: 2582–9.
 
 OECD. 2011. “Towards Green Growth.” *OECD Green Growth Studies*. OECD Publishing.
-doi:[link](http://dx.doi.org/10.1787/9789264111318-en).
+doi: [link](http://dx.doi.org/10.1787/9789264111318-en).
 
 ———. 2014. “Green Growth Indicators 2014.” *OECD Green Growth Studies*. OECD Publishing.
 20
-doi:[link(http://dx.doi.org/10.1787/9789264202030-en).
+doi: [link](http://dx.doi.org/10.1787/9789264202030-en).
 
 Rehdanz, Katrin, and David Maddison. 2008. “Local Environmental Quality and Life-Satisfaction in
 Germany.” *Ecological Economics* 64 (4). Elsevier: 787–97.
