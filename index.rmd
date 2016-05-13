@@ -3,7 +3,7 @@
 
 ```{r, include = FALSE}
 
-
+library(repmis)
 possibles <- c('~/GitHub/Climate-Happiness/', 
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/')
 set_valid_wd(possibles)
@@ -19,10 +19,6 @@ library(knitr)
 library(googleVis)
 library(Zelig)
 source("Data/AnalysisSource.R")
-
-
-library(repmis)
-
 
 possibles <- c('~/GitHub/Climate-Happiness/', 
                '~/Documents/Hertie 2016/Collaborative Social Science Data/Research Project/GitHub/Climate-Happiness/')
@@ -192,7 +188,7 @@ plot(WorldMap, tag = 'chart')
 
 ```
 
-<br><br>
+<br>
 
 ### Comparing Effects of Variables on Life Satisfaction by State
 
@@ -204,7 +200,7 @@ plot(M1, tag = 'chart')
 
 ```
 
-<br><br>
+<br>
 
 
 ### What Determines Overall Satisfaction?
@@ -337,22 +333,51 @@ In short, this research supports some of the previous literature when looked at 
 
 ### Sources
 
-Brereton, Finbarr, J Peter Clinch, and Susana Ferreira. 2008. “Happiness, Geography and the Environment.” *Ecological Economics* 65 (2). Elsevier: 386–96.
+Blanchflower, David G., and Andrew Oswald. 2007. “Is Well-Being U-Shaped over the Life Cycle?” no.
+12935. National Bureau of Economic Research.
 
-Cuñado, Juncal, and Fernando Pérez de Gracia. 2013. “Environment and Happiness: New Evidence for Spain.” *Social Indicators Research* 112 (3). Springer: 549–67.
+Bliese, Paul. 2013. “Multilevel Models in R,” 1–88. [link](https://cran.r-project.org/doc/contrib/Bliese_Multilevel.pdf).
 
-Ferreira, Susana, and Mirko Moro. 2010. “On the Use of Subjective Well-Being Data for Environmental Valuation.” *Environmental and Resource Economics* 46 (3). Springer: 249–73.
+Brereton, Finbarr, J Peter Clinch, and Susana Ferreira. 2008. “Happiness, Geography and the Environment.”
+*Ecological Economics* 65 (2). Elsevier: 386–96.
+
+Conceicao, Pedro, and Romina Bandura. n.d. “Measuring Subjective Wellbeing: A Summary Review
+of the Literature.” Office of Development Studies, United Nations Development Programme (UNDP).
+[link](http://web.undp.org/developmentstudies/docs/subjective_wellbeing_conceicao_bandura.pdf).
+
+Cunado, Juncal, and Fernando Perez de Gracia. 2013. “Environment and Happiness: New Evidence for
+Spain.” *Social Indicators Research* 112 (3). Springer: 549–67.
+
+Easterlin, Richard. 1974. “Does Economic Growth Improve the Human Lot? Some Empirical Evidence.” In
+*Nations and Households in Economic Growth: Essays in Honour of Moses Abramovit*, edited by P. David
+and M. Reder. Academic Press.
+
+Ferreira, Susana, and Mirko Moro. 2010. “On the Use of Subjective Well-Being Data for Environmental
+Valuation.” *Environmental and Resource Economics* 46 (3). Springer: 249–73.
 
 Ferrer-i-Carbonell, Ada, and John M Gowdy. 2007. “Environmental Degradation and Happiness.” *Ecological Economics* 60 (3). Elsevier: 509–16.
 
 Goetzke, Frank, and Tilmann Rave. 2015. “Regional Air Quality and Happiness in Germany.” *International Regional Science Review* 38 (4). SAGE Publications: 437–51.
 
-Luechinger, Simon. 2009. “Valuing Air Quality Using the Life Satisfaction Approach*.” *The Economic 18 Journal* 119 (536). Wiley Online Library: 482–515.
+Helliwell, John F. 2003. “How’s Life? Combining Individual and National Variables to Explain Subjective
+Well-Being.” *Economic Modelling* 20 (2): 331–60.
+
+Jakob, O. Edenhofer, M. 2014. “Green Growth, Degrowth and the Commons.” *Oxford Review of Economic Policy* 30: 447–68.
+
+Luechinger, Simon. 2009. “Valuing Air Quality Using the Life Satisfaction Approach.” *The Economic Journal*
+119 (536). Wiley Online Library: 482–515.
 
 MacKerron, George, and Susana Mourato. 2009. “Life Satisfaction and Air Quality in London.” *Ecological Economics* 68 (5). Elsevier: 1441–53.
 
 Menz, Tobias, and Heinz Welsch. 2010. “Population Aging and Environmental Preferences in OECD
 Countries: The Case of Air Pollution.” *Ecological Economics* 69 (12). Elsevier: 2582–9.
+
+OECD. 2011. “Towards Green Growth.” *OECD Green Growth Studies*. OECD Publishing.
+doi:[link](http://dx.doi.org/10.1787/9789264111318-en).
+
+———. 2014. “Green Growth Indicators 2014.” *OECD Green Growth Studies*. OECD Publishing.
+20
+doi:[link(http://dx.doi.org/10.1787/9789264202030-en).
 
 Rehdanz, Katrin, and David Maddison. 2008. “Local Environmental Quality and Life-Satisfaction in
 Germany.” *Ecological Economics* 64 (4). Elsevier: 787–97.
@@ -360,10 +385,14 @@ Germany.” *Ecological Economics* 64 (4). Elsevier: 787–97.
 Rivers, Douglas, and Quang H Vuong. 1988. “Limited Information Estimators and Exogeneity Tests for
 Simultaneous Probit Models.” *Journal of Econometrics* 39 (3). Elsevier: 347–66.
 
+Sekulova, Filka. 2013. “On the Economics of Happiness and Climate Change.” PhD thesis, Universitat
+Autonoma de Barcelona & Institut de Ciencia i Tecnologia Ambientals. [link](https://ddd.uab.cat/pub/tesis/2013/hdl_10803_120213/fs1de1.pdf).
+
 Van Praag, Bernard, and Barbara E Baarsma. 2005. “Using Happiness Surveys to Value Intangibles: The
-Case of Airport Noise*.” *The Economic Journal* 115 (500). Wiley Online Library: 224–46.
+Case of Airport Noise.” *The Economic Journal* 115 (500). Wiley Online Library: 224–46.
 
 Welsch, Heinz. 2002. “Preferences over Prosperity and Pollution: Environmental Valuation Based on
 Happiness Surveys.” *Kyklos* 55 (4). Wiley Online Library: 473–94.
 
-———. 2006. “Environment and Happiness: Valuation of Air Pollution Using Life Satisfaction Data.” *Ecological Economics* 58 (4). Elsevier: 801–13.
+———. 2006. “Environment and Happiness: Valuation of Air Pollution Using Life Satisfaction Data.”
+*Ecological Economics* 58 (4). Elsevier: 801–13.

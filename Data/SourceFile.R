@@ -28,13 +28,7 @@ library(xtable)
 library(stargazer)
 library(effects) # for graphing MCM
 library(repmis)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> master
-=======
->>>>>>> master
 
 # Setting relative path
 possibles <- c('~/GitHub/Climate-Happiness/Data', 
@@ -118,7 +112,7 @@ names(TotalEmissions) <- c("State", "Year", "CO2Tons")
 PopURL <- "http://www.statistik-portal.de/Statistik-Portal/en/en_jb01_jahrtab1.asp"
 AreaTableHTML <- PopURL %>% read_html() %>%
   html_nodes("#tblen") %>%
-  html_table(,fill=TRUE) %>% 
+  html_table(fill=TRUE) %>% 
   as.data.frame
 # clean resulting data frame
 AreaTable <- AreaTableHTML[c(5:20), 1:2]
