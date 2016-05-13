@@ -3,6 +3,7 @@ title: "Emissions Levels and Life Satisfaction: A Study on the German States"
 author: "Katie Levesque, Meerim Ruslanova, Sarah Unbehaun"
 date: "May 13, 2016"
 output: pdf_document
+fig_caption: true
 bibliography: Final_Bibliography.bib
 urlcolor: blue
 ---
