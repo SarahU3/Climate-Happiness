@@ -174,10 +174,8 @@ boxdata$StateCode[boxdata$State == "Sachsen"] <- "SN"
 boxdata$StateCode[boxdata$State == "Sachsen-Anhalt"] <- "ST"
 boxdata$StateCode[boxdata$State == "Schleswig-Holstein"] <- "SH"
 boxdata$StateCode[boxdata$State == "Thueringen"] <- "TH"
-Replaces <- data.frame(from = c("Baden-Wuerttemberg", "Bayern", "Bremen", "Berlin", "Brandenburg", "Hamburg" , "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz", "Sachsen", "Sachsen-Anhalt", "Schleswig-Holstein", "Saarland", "Thueringen"), to = c("BW", "BY", "HB", "BE", "BB", "HH", "HE", "MV", "NI", "NW", "RP", "SN", "ST", "SH", "SL", "TH"))
 
-boxdata <- FindReplace(data=boxdata, Var = "Stateid", replaceData = Replaces, from = "from", to = "to",
-  exact = TRUE, vector = FALSE)
+#create emissions boxplots
 statebox1 <- ggplot(boxdata, aes(x=StateCode, y=Emissions)) + labs(x = "", y = "Per capita") +geom_boxplot(fill = "#2ca25f", colour="black") + theme_bw() + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
 statebox2 <- ggplot(boxdata, aes(x=StateCode, y=CO2perSqKm)) + labs(x= "State", y= "Per sq km") +geom_boxplot(fill ="#2ca25f", colour="black") + theme_bw() +theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5)) + guides(fill=FALSE)
  
@@ -206,7 +204,7 @@ Comparing the state-level emissions data with life satisfaction, it seems that e
 
 We first test basic inferential statistics. For the models below, X1 represents the explanatory  variables of interest: emissions (both per capita and per square kilometer), gross income, concern for the environment, gender, and age.  
 
-```{r, echo=FALSE, messages = FALSE, warning=FALSE}
+```{r, echo=FALSE, messages = FALSE, warnings=FALSE}
 ##Regression using individual level data
 
 #Declare X and Y variables for panel data
@@ -222,7 +220,7 @@ pdataind<-plm.data(data, index=c("pid","Year"))
 
 Below, we tested various types of panel data models, though we know the data set is unbalanced because we don't have information for all years in all the states. The first model (pooled OLS) uses only individual-level data, in comparison with the two fixed-effects models, one using emissions per capita and one using emissions per square kilometer. 
 
-```{r, echo=FALSE, results="asis"}
+```{r, echo=FALSE, messages = FALSE, warnings = FALSE, results="asis"}
 #pooled OLS estimator
 L1<-plm(Y1~X1, data=pdataind, model="pooling")
 
@@ -233,7 +231,7 @@ L4<-plm(Y1~X1+Emissions, data=pdataind, model="within")
 L5<-plm(Y1~X1+CO2perSqKm, data = pdataind, model = 'within')
 
 
-stargazer(L1, L2, L3, L4,L5,
+stargazer(L1,L4,L5,
     title = 'Regression Estimates of Life Satisfaction',
     digits = 2, type = 'html'
     )
@@ -244,11 +242,11 @@ Interestingly, gender does not appear to have a significant effect on reported l
 
 We can compare the fixed effects/within and pooled OLS models using an F-test for individual and/or time effects:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, messages = FALSE, warnings = FALSE}
 #LM test for fixed effects vs OLS
 testresults1 <- pFtest(L4,L1)
 testresults2 <- pFtest(L5,L1)
-stargazer(testresults1, type = "latex", title = "")
+stargazer(testresults1, testresults2, type = "latex", title = "F-test Results")
 
 
 ```
