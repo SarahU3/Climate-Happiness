@@ -3,14 +3,13 @@ title: "Final_Paper"
 author: "Katie Levesque, Meerim Ruslanova, Sarah Unbehaun"
 date: "May 13, 2016"
 output: pdf_document
-bibliography: ~/GitHub/Climate-Happiness/Proposal/Final_Bibliography.bib
+bibliography: Final_Bibliography.bib
 urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-options(xtable.comment = FALSE)
-options(stargazer.comment = FALSE)
+
 ```
 
 ``` {r datasource, include=FALSE, cache.extra=list(file.info("~/Climate-Happiness/Data/All_Merged_Data.csv")$mtime)}
@@ -423,6 +422,71 @@ Simultaneously, individual-level environmental concerns does slightly lower happ
 
 The findings of the paper leave hopes for stronger climate action triggered by the citizens themselves voicing their concerns and supporting more stringent environmental policies.
 
+## R Citations
+Bliese, Paul. 2013. Multilevel: Multilevel Functions. https://CRAN.R-project.org/package=multilevel.
 
+Chan, Chung-hong, Geoffrey CH Chan, and Thomas J. Leeper. 2016. Rio: A Swiss-Army Knife for Data
+File I/O.
+
+Croissant, Yves, and Giovanni Millo. 2008. “Panel Data Econometrics in R: The plm Package.” Journal of
+Statistical Software 27 (2). http://www.jstatsoft.org/v27/i02/.
+
+Dahl, David B. 2016. Xtable: Export Tables to LaTeX or HTML. https://CRAN.R-project.org/package=
+xtable.
+
+Dragulescu, Adrian A. 2014a. Xlsx: Read, Write, Format Excel 2007 and Excel 97/2000/XP/2003 Files.
+https://CRAN.R-project.org/package=xlsx.
+
+———. 2014b. Xlsxjars: Package Required POI Jars for the Xlsx Package. https://CRAN.R-project.org/
+package=xlsxjars.
+
+Fox, John. 2009. “Effect Displays in R for Generalised Linear Models.” Journal of Statistical Software 8 (15):
+1–27. http://www.jstatsoft.org/v08/i15/.
+
+Fox, John, and Sanford Weisberg. 2011. An R Companion to Applied Regression. Second. Thousand Oaks
+CA: Sage. http://socserv.socsci.mcmaster.ca/jfox/Books/Companion.
+
+Gandrud, Christopher. 2016. Repmis: Miscellaneous Tools for Reproducible Research. https://CRAN.
+R-project.org/package=repmis.
+
+Grothendieck, G. 2014. Gsubfn: Utilities for Strings and Function Arguments. https://CRAN.R-project.org/
+package=gsubfn.
+
+Hlavac, Marek. 2015. Stargazer: Well-Formatted Regression and Summary Statistics Tables. Cambridge,
+USA: Harvard University. http://CRAN.R-project.org/package=stargazer.
+
+Lang, Duncan Temple, and the CRAN Team. 2015. XML: Tools for Parsing and Generating XML Within R
+and S-Plus. https://CRAN.R-project.org/package=XML.
+
+Leifeld, Philip. 2013. “texreg: Conversion of Statistical Model Output in R to LaTeX and HTML Tables.”
+Journal of Statistical Software 55 (8): 1–24. http://www.jstatsoft.org/v55/i08/.
+
+Pinheiro, Jose, Douglas Bates, Saikat DebRoy, Deepayan Sarkar, and R Core Team. 2016. nlme: Linear and
+Nonlinear Mixed Effects Models. http://CRAN.R-project.org/package=nlme.
+
+R Core Team. 2015a. Foreign: Read Data Stored by Minitab, S, SAS, SPSS, Stata, Systat, Weka, DBase, .
+https://CRAN.R-project.org/package=foreign.
+
+———. 2015b. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation
+for Statistical Computing. https://www.R-project.org/.
+
+Revelle, William. 2015. Psych: Procedures for Psychological, Psychometric, and Personality Research.
+Evanston, Illinois: Northwestern University. http://CRAN.R-project.org/package=psych.
+
+Urbanek, Simon. 2016. RJava: Low-Level R to Java Interface. https://CRAN.R-project.org/package=rJava.
+
+Wickham, Hadley. 2009. Ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York. http:
+//ggplot2.org.
+
+———. 2015a. Rvest: Easily Harvest (Scrape) Web Pages. https://CRAN.R-project.org/package=rvest.
+
+———. 2015b. Xml2: Parse XML. https://CRAN.R-project.org/package=xml2.
+
+———. 2016a. Httr: Tools for Working with URLs and HTTP. https://CRAN.R-project.org/package=httr.
+
+———. 2016b. Tidyr: Easily Tidy Data with ‘spread()‘ and ‘gather()‘ Functions. https://CRAN.R-project.org/package=tidyr.
+
+Wickham, Hadley, and Romain Francois. 2015. Dplyr: A Grammar of Data Manipulation. https://CRAN.
+R-project.org/package=dplyr.
 
 ## Bibliography
