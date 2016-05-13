@@ -142,6 +142,7 @@ plot3 <- ggplot(data = aggremeans, aes(x=GrossIncome, y=satis)) + geom_point() +
 plot4 <- ggplot(data = aggremeans, aes(x=environ, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Concern about the Environment", y = "")  + theme_bw()
 plot5 <- ggplot(data = aggremeans, aes(x=Emissions, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Capita", y = "Life Satisfaction")  + theme_bw()
 <<<<<<< HEAD
+<<<<<<< HEAD
 plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq KM", y = "")  + theme_bw()
 
 # Manually
@@ -154,6 +155,8 @@ print(plot4, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(plot5, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 print(plot6, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 =======
+=======
+>>>>>>> master
 plot6 <- ggplot(data = aggremeans, aes(x=CO2perSqKm, y=satis)) + geom_point() +geom_smooth(colour="#2ca25f") + labs(x = "Emissions per Sq Km", y = "")  + theme_bw()
 
 # Manual multiplot of 4 rows, 2 columns (first row is title)
@@ -162,6 +165,9 @@ grid.text("Life Satisfaction - Correlation with Other Variables", vp = viewport(
 print(plot1, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(plot3, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 print(plot4, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 ```
 
@@ -205,6 +211,7 @@ print(statebox2, vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
 In the per capita measure, Brandenburg, Saarland, Hamburg, and Nordrhein-Westfalen have the highest emissions, with Sachsen, Sachsen-Anhalt and Niedersachsen also showing higher emissions than the rest. 
 
 When measured in square kilometers, the three city-states of Bremen, Berlin, and Hamburg are unsurprisingly the highest due to their small land area, not to mention relatively dense populations. Saarland is also geographically small, which means that Nordrhein-Westfalen is the only standout in this measure as a state with both a large land area and high emissions. 
+<<<<<<< HEAD
 
 ``` {r emissions scatterplots, echo = FALSE, messages = FALSE, warnings = FALSE}
 pushViewport(viewport(layout = grid.layout(2, 2, heights = unit(c(1, 4), "null"))))
@@ -213,6 +220,16 @@ print(plot5, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(plot6, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
 ```
 
+=======
+
+``` {r emissions scatterplots, echo = FALSE, messages = FALSE, warnings = FALSE}
+pushViewport(viewport(layout = grid.layout(2, 2, heights = unit(c(1, 4), "null"))))
+grid.text("Life Satisfaction Correlation with Emissions", vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(plot5, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
+print(plot6, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
+```
+
+>>>>>>> master
 Comparing the state-level emissions data with life satisfaction, it seems that emissions, whether measured per capita or per square kilometer, both appear almost flat, though with an interesting peak in lower emissions per capita.
 ## Methodology
 
