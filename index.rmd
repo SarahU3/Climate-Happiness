@@ -76,7 +76,7 @@ Climate change is undoubtedly a global problem, but this fact means it is also a
 
 ### Our Research
 
-Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. One one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices and how to transform the transportation sector, not to mention coal's continued role as a cheap and reliable fuel. Germany therefore still does emit large amounts of green house gases. We will look at greenhouse gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
+Germany is a leader in protecting the environment while also having a long history as an industrial power and coal producer. On one hand, its energy transition (*Energiewende*) is considered one of the most ambitious climate policy projects in the world. On the other hand, it has struggled with appropriate incentives, a drop in oil prices and how to transform the transportation sector, not to mention coal's continued role as a cheap and reliable fuel. Germany therefore still does emit large amounts of green house gases. We will look at greenhouse gas emissions data by federal state (*Bundesland*) and compare that with life satisfaction data to examine our first hypothesis:
 
 > *H1: Bundeslaender with higher emissions will have lower reported levels of  life satisfaction.* 
 
@@ -84,7 +84,7 @@ On the other hand, it may not be the emissions themselves that affect people's l
 
 > *H2: Reported individual concerns with the environment are, likewise, negatively reflected in the life satisfaction.* 
 
-The map below illustrates the amount CO2e emissions (tons) per square kilometer of each state in Germany. The information is based on 2010 data from Statista. There is a wide range in the level emissions per square kilometer between the states, particularly in city-states and industrial states such as Berlin, Hamburg and Bremen.
+The map below illustrates the amount CO2e emissions (tons) per square kilometer of each state in Germany. The information is based on 2010 data from Laenderarbeitskreis. There is a wide range in the level emissions per square kilometer between the states, particularly in city-states and industrial states such as Berlin, Hamburg and Bremen.
 
 ```{r, echo=FALSE, results='asis'}
 
@@ -104,9 +104,12 @@ Controlling for state- and time-fixed effects, we anticipate the following effec
 
 - CO2 Emissions Per Capita (-)
 - CO2 Emissions Per Square KM (-)
-- Age (-)
-- Monthly Income (+)
 - Concern About the Environment (-)
+- Age (-)
+- Monthly Income/Employment (+)
+- Having a partner (+)
+- Gender (no diff.)
+
 
 
 ### Data
@@ -307,10 +310,12 @@ Variable       | Coefficient direction and strength   | Expected direction
 Total Emissions  | -       | -
 Emissions per Capita   | - | -
 Emissions per Sq. KM | - | -
-Concern for the Environment | + | -
-Monthly Income | ++ | +
-Monthly Hours Worked | -- | -
-Age | -- | -
+Concern for the Environment | - | -
+Age | - | -
+Monthly Income | + | +
+Employment | + | +
+Having a partner | + | +
+Gender (no diff.) | ~ | +
 
 
 ### Conclusions
