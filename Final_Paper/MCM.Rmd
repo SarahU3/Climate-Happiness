@@ -19,14 +19,14 @@ attach(finaldata)
 ```
 Since the pooled OLS and Fixed Effects Models do not account for the nested nature of the data and hence do not allow across-state analysis, Multilevel Coefficient Models (MCM) are applied in order to investigate the effects of individual and Bundesland-level factors on happiness. Not only the MCM examine individual variation within and across groups, but they also permit non-independence of individual factors from the group level variables (i.e. different slopes with varying intercepts). The first step of the MCM investigates whether statistically significant variation between Bundeslaender in terms of mean individual satisfaction exists. Otherwise, simpler OLS and panel-data models are more applicable for the given research. The second step involves exploration of the between-group variation (random effects), while the third step completes the analysis by adding fixed effects factors (both individual- and state-level). 
 
-In addition to the general data set ($$data_1$$, 61,009 observations) familiar to the reader before, given research utilizes a broader data frame (data2, 142,224 observations) expanding the sample to both employed and non-employed respondents. Gross income, however, is dropped due to the data constraints. The models used for the multilevel analysis and corresponding datasets are summarized below.
+In addition to the general data set ($data_1$, 61,009 observations) familiar to the reader before, given research utilizes a broader data frame (data2, 142,224 observations) expanding the sample to both employed and non-employed respondents. Gross income, however, is dropped due to the data constraints. The models used for the multilevel analysis and corresponding datasets are summarized below.
 
-Null.Models (run on $$data_1$$) checks whether reliable and significant variation between the States exists.
-Model.1 ($$data_1$$) tests how the effects of environmental concerns emissions per sq. km. differ across the Bundeslaender.
-Model.2 ($$data_1$$) incorporates invidual-level characteristics (income, age, gender, family status) and explores how these factors impact well-being across and among States. 
-Model.2a ($$data_2$$) resembles Model.2, except runs on the broader sample of both employed and unemployed respondents dropping income. 
-Model.3 ($$data_1$$) presents an interaction effect between environmental concerns and income.
-Model.4 ($$data_2$$) presents an interaction effect between environmental concerns and age.
+Null.Models (run on $data_1$) checks whether reliable and significant variation between the States exists.
+Model.1 ($data_1$) tests how the effects of environmental concerns and emissions per sq. km. differ across the Bundeslaender.
+Model.2 ($data_1$) incorporates invidual-level characteristics (income, age, gender, family status) and explores how these factors impact well-being across and among States. 
+Model.2a ($data_2$) resembles Model.2, except runs on the broader sample of both employed and unemployed respondents dropping income. 
+Model.3 ($data_1$) presents an interaction effect between environmental concerns and age.
+Model.4 ($data_2$) presents an interaction effect between environmental concerns and employment.
 
 ### Step 1. Significant variation. 
 
@@ -42,12 +42,9 @@ VarCorr(Null.Model)
 The model examines how much of the average individual life satisfaction is explained by the residence of a respondent through R's general purpose optimization routine (opt="optim"). According to the *Null.Model*, the Bundesland variation (intercept variance) is 0.15, while the within-State residual is 2.6. 
 ```{r, echo=FALSE}
 GREL.DAT<-GmeanRel(Null.Model)
-names(GREL.DAT)
-mean(GREL.DAT$MeanRel)
+x <- mean(GREL.DAT$MeanRel)
 Null.Model.2<-gls(satis~1,data=finaldata,
                     control=list(opt="optim"))
-logLik(Null.Model.2)*-2
-logLik(Null.Model)*-2
 sigtest <- round((logLik(Null.Model.2)*-2)-(logLik(Null.Model)*-2), digits=3)
 ```
 
@@ -57,7 +54,7 @@ Furthermore, the *GmeanRel* function (*multilevel* package) yields the mean reli
 
 The second step of the MCM looks into how both Bundesland emissions and subjective concerns about the environment influence reported individual life satisfaction. *Model.1* (*lme* function) for the time being does not control for individual characteristics, such as gender, age, employment and family status. *Model.1* serves as the basic tool to understand relationship between the group- and individual-level factors representing the environment. 
 
-```{r, echo=FALSE, results='as is'}
+```{r, echo=FALSE, messages=FALSE, warnings=FALSE, results = "asis"}
 Model.1<-lme(satis~environ+CO2perSqKm,random=~1+environ+CO2perSqKm|Stateid, data=finaldata,
              control=list(opt="optim"))
 stargazer::stargazer(Model.1, single.row = TRUE,
@@ -100,7 +97,7 @@ Furthermore, fixed effects show that general emissions within any given state ar
 
 *Model.2* covers age, family status, gender, and gross income of the respondents in the sample. The latter two variables are included in the random slope of the model in order to see the variation in these factors across the states. Since the anticipated effects of age and family status are not contentious, these factors are classified as the fixed effects and explain variaiton within a state. 
 The fixed effects output reassures the main Hypothesis: increasing emissions at the State level, although in minimal amounts (-0.00007), negatively correlate with life satisfaction. Similarlly, stronger concerns (-0.063) reduce reported well-being. Surprisingly, increasing gross income increases happiness, albeit marginally (0.00013). Women also do seem to be happier than men in general by substantial 0.15 points. As expected, age bears a negative effect (-0.011), while family status increases well-being almost like being a woman (0.166). 
-```{r, echo=FALSE}
+```{r, messages=FALSE, warnings=FALSE, results = "asis"}
 Model.2 <-lme(satis~CO2perSqKm+environ+GrossIncome+gender+age+fam,random=~environ+CO2perSqKm+GrossIncome+gender|Stateid,data=finaldata,
              control=list(opt="optim")) 
 stargazer::stargazer(Model.2, single.row = TRUE,
@@ -111,11 +108,11 @@ stargazer::stargazer(Model.2, single.row = TRUE,
 
 Random slopes below of the environmental variables, gross income, and gender demonstrate the broad variaiton of coefficients' values across the Bundeslaender. 
 ```{r, echo=FALSE}
-plot(ranef(Model.2), aug=TRUE)
+plot(ranef(Model.2))
 ```
 
 At the same time, *Model.2a*, encompassing a broader sample of employed and unemployed respondents, yields similar results, except that the magnitude of the environmental impacts increase. Gender, on the contrary, has a substantially reduced coefficient due to the inclusion of the unemployed people. Intuitively, being employed significantly enhances individual satisfaction over time (0.214), which partially explains why increasing absolute income does not bring huge changes in life satisfaction.   
-```{r, echo=FALSE}
+```{r, messages=FALSE, warnings=FALSE, results = "asis"}
 Model.2a<-lme(satis~CO2perSqKm+environ+age+fam+gender+emp,random=~emp+gender+CO2perSqKm+environ|Stateid,data=data,
              control=list(opt="optim"))
 stargazer::stargazer(Model.2a, single.row = TRUE,
@@ -139,7 +136,8 @@ Model3 <- ggplot(xage, aes(age, fit, color=environ)) + geom_point() + geom_error
   ylab("Predicted satisfaction values") +
   xlab("Environmental concerns [1-3]") +
 theme(plot.title = element_text(lineheight=.8, face="bold"))
-Model3 + ggtitle("Model.3: Interaction effects of environmental concerns and environment 4")
+
+Model3 + ggtitle("Model.3: Interaction effects of environmental concerns and environment")
 ```
 However, as shown in the graph above, the predicted values of life satisfaction from the interaction effect between environmental concerns and age (while keeping everything else constant) are consistently negative with the same slope, which means that there is no meaningful interaction. One of the reasons might lie in the fact that very often respondents drop out from the survey and overtime changes in their behavior are no longer feasible to track. Moreover, environmental concerns are only available in three categories, which constraints the analysis. 
 
